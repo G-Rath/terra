@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "./",
+    "baseUrl": "./",
+    "outDir": "dist",
+    "paths": {
+      "@src/*": [ "./src/*" ],
+      "@test/*": [ "./test/*" ]
+    },
+    "allowJs": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "suppressImplicitAnyIndexErrors": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "pretty": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "esModuleInterop": true,
+    "plugins": [ { "transform": "ts-transform-paths" } ]
+  },
+  "exclude": [ "node_modules" ]
+}

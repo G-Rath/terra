@@ -1,0 +1,24 @@
+{
+  "name": "terraport",
+  "version": "0.0.0",
+  "description": "Command-line tool for generating and importing assets into Terraform.",
+  "homepage": "https://github.com/G-Rath/terraport#readme",
+  "bugs": {
+    "url": "https://github.com/G-Rath/terraport/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G-Rath/terraport.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
