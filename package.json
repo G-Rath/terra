@@ -1,0 +1,24 @@
+{
+  "name": "terra",
+  "version": "0.0.0",
+  "description": "Command-line tool for generating and importing assets into Terraform.",
+  "homepage": "https://github.com/G-Rath/terra#readme",
+  "bugs": {
+    "url": "https://github.com/G-Rath/terra/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/G-Rath/terra.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
