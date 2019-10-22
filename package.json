@@ -17,8 +17,13 @@
     "test": "test"
   },
   "scripts": {
+    "check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "ts-transform-paths": "^2.0.0",
+    "ttypescript": "^1.5.7",
+    "typescript": "^3.7.0-beta"
+  }
 }
