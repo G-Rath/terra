@@ -19,18 +19,46 @@
   "scripts": {
     "check": "tsc --noEmit",
     "lint": "eslint \"**.{t,j}s\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json",
+      "jsx",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^@src/(.*)$": "<rootDir>/src/$1",
+      "^@test/(.*)$": "<rootDir>/test/$1"
+    },
+    "resetMocks": true,
+    "restoreMocks": true,
+    "setupFilesAfterEnv": [
+      "./test/setupExpectEachTestHasAssertions.ts"
+    ],
+    "testRunner": "jest-circus/runner",
+    "transform": {
+      "\\.tsx?": "ts-jest"
+    }
   },
   "dependencies": {},
   "devDependencies": {
+    "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-jest": "^22.20.0",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
+    "jest": "^24.9.0",
+    "jest-circus": "^24.9.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
+    "ts-jest": "^24.1.0",
     "ts-transform-paths": "^2.0.0",
     "ttypescript": "^1.5.7",
     "typescript": "^3.7.0-beta"
