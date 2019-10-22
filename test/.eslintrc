@@ -5,7 +5,6 @@
     "plugin:eslint-plugin-jest/style"
   ],
   "rules": {
-    "@typescript-eslint/no-non-null-assertion": "off",
     "jest/no-test-return-statement": "warn",
     "jest/no-test-callback": "error",
     "jest/no-truthy-falsy": "error",
@@ -14,10 +13,11 @@
     "jest/prefer-todo": "warn",
     "jest/prefer-strict-equal": "warn",
     "jest/prefer-called-with": "warn",
+    "jest/valid-title": "warn",
     "jest/expect-expect": [
       "error",
       {
-        "assertFunctionNames": ["expect", "request"]
+        "assertFunctionNames": ["expect"]
       }
     ],
     "jest/require-tothrow-message": "warn",
