@@ -60,7 +60,7 @@
     "no-multiple-empty-lines": "error",
     "no-plusplus": [ "error", { "allowForLoopAfterthoughts": true } ],
     "no-nested-ternary": "error",
-    "no-shadow": "error",
+    "no-shadow": "warn",
     "no-shadow-restricted-names": "error",
     "no-trailing-spaces": "error",
     "no-this-before-super": "off",
