@@ -22,6 +22,13 @@
     "test": "jest --coverage"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "astTransformers": [
+          "ts-nameof"
+        ]
+      }
+    },
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -47,6 +54,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^24.0.19",
+    "@types/ts-nameof": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "eslint": "^6.5.1",
@@ -59,6 +67,7 @@
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
+    "ts-nameof": "^4.0.3",
     "ts-transform-paths": "^2.0.0",
     "ttypescript": "^1.5.7",
     "typescript": "^3.7.0-beta"
