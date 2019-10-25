@@ -57,6 +57,33 @@ describe('printBlockBody', () => {
         ).toMatchSnapshot();
       });
     });
+
+    describe('when the element is a dynamic', () => {
+      it('prints as expected', () => {
+        expect(
+          printBlockBody([
+            {
+              type: TFNodeType.Dynamic,
+              forEach: 'aws_nat_gateway.nat_gws',
+              name: 'route',
+              labels: [],
+              content: [
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'cidr_block',
+                  expression: '"0.0.0.0/0"'
+                },
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'nat_gateway_id',
+                  expression: 'route.value.id'
+                }
+              ]
+            }
+          ])
+        ).toMatchSnapshot();
+      });
+    });
   });
   describe('when the body contains multiple elements', () => {
     describe('when the elements are just arguments', () => {
@@ -140,6 +167,51 @@ describe('printBlockBody', () => {
                   type: TFNodeType.Argument,
                   identifier: 'security_groups',
                   expression: ['aws_security_group.wordpress_server.id']
+                }
+              ]
+            }
+          ])
+        ).toMatchSnapshot();
+      });
+    });
+
+    describe('when the elements are just dynamics', () => {
+      it('prints as expected', () => {
+        expect(
+          printBlockBody([
+            {
+              type: TFNodeType.Dynamic,
+              forEach: 'aws_nat_gateway.nat_gws',
+              name: 'route',
+              labels: [],
+              content: [
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'cidr_block',
+                  expression: '"0.0.0.0/0"'
+                },
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'nat_gateway_id',
+                  expression: 'route.value.id'
+                }
+              ]
+            },
+            {
+              type: TFNodeType.Dynamic,
+              forEach: 'aws_nat_gateway.nat_gws',
+              name: 'route',
+              labels: [],
+              content: [
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'cidr_block',
+                  expression: '"0.0.0.0/0"'
+                },
+                {
+                  type: TFNodeType.Argument,
+                  identifier: 'nat_gateway_id',
+                  expression: 'route.value.id'
                 }
               ]
             }
