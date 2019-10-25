@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`printResourceBlock prints as expected 1`] = `
+"resource \\"aws_route53_zone\\" \\"imnotcrazy_info\\" {
+  name = \\"imnotcrazy.info\\"
+  tags = merge(
+    # FIXME - FUNCTIONS NOT YET SUPPORTED
+  )
+}"
+`;
+
+exports[`printResourceBlock prints as expected 2`] = `
+"resource \\"aws_route53_record\\" \\"imnotcrazy_info_ns\\" {
+  allow_overwrite = true
+  name = \\"\\"
+  ttl = 300
+  type = \\"NS\\"
+  zone_id = aws_route53_zone.imnotcrazy_info.zone_id
+  records = [
+    aws_route53_zone.imnotcrazy_info.name_servers.0,
+    aws_route53_zone.imnotcrazy_info.name_servers.1,
+    aws_route53_zone.imnotcrazy_info.name_servers.2,
+    aws_route53_zone.imnotcrazy_info.name_servers.3
+  ]
+}"
+`;
+
+exports[`printResourceBlock prints as expected 3`] = `
+"resource \\"aws_cloudfront_distribution\\" \\"distribution\\" {
+  allowed_methods = [
+    \\"GET\\",
+    \\"HEAD\\"
+  ]
+  cached_methods = [
+    \\"GET\\",
+    \\"HEAD\\"
+  ]
+  compress = true
+  default_ttl = 31536000
+  max_ttl = 31536000
+  min_ttl = 0
+  path_pattern = \\"/static/*\\"
+  smooth_streaming = false
+  target_origin_id = \\"S3-app.mine/test\\"
+  viewer_protocol_policy = \\"https-only\\"
+  trusted_signers = [
+
+  ]
+  forwarded_values {
+    headers = [
+
+    ]
+    query_string = false
+    query_string_cache_keys = [
+
+    ]
+    cookies {
+      forward = \\"none\\"
+      whitelisted_names = [
+
+      ]
+    }
+  }
+}"
+`;
