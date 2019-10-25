@@ -1,6 +1,7 @@
 export enum TFNodeType {
   Argument = 'argument',
   Function = 'function',
+  Block = 'block',
   Map = 'map'
 }
 
@@ -33,4 +34,17 @@ export interface TFArgument {
   expression: TFLiteralExpression;
 }
 
-export type TFBlockBody = TFArgument[];
+export interface TFBlockLiteral {
+  type: TFNodeType.Block;
+
+  /**
+   * The name of the block literal
+   */
+  name: string;
+  /**
+   * The arguments that make up the resource.
+   */
+  body: TFBlockBody;
+}
+
+export type TFBlockBody = Array<TFArgument | TFBlockLiteral>;
