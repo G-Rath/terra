@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`printBlockBody when the body contains a single element when the element is an argument prints as expected 1`] = `
+"{
+  hello = \\"world\\"
+}"
+`;
+
+exports[`printBlockBody when the body contains multiple elements when the elements are just arguments prints as expected 1`] = `
+"{
+  hello = \\"world\\"
+  enabled = false
+  common_tags = {
+    MyMap = {
+      Name = \\"MyName\\"
+      TTL = 300
+    }
+  }
+}"
+`;
+
+exports[`printBlockBody when the body contains no elements prints empty braces on one line 1`] = `"{}"`;

@@ -32,3 +32,5 @@ export interface TFArgument {
   identifier: string;
   expression: TFLiteralExpression;
 }
+
+export type TFBlockBody = TFArgument[];
