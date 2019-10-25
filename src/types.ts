@@ -1,4 +1,7 @@
+import { AwsResourceType } from '@src/utils';
+
 export enum TFNodeType {
+  Resource = 'resource',
   Dynamic = 'dynamic',
   Argument = 'argument',
   Function = 'function',
@@ -58,3 +61,32 @@ interface TFDynamicBlock {
 }
 
 export type TFBlockBody = Array<TFArgument | TFBlockLiteral | TFDynamicBlock>;
+
+export enum RandomResourceType {
+  RandomString = 'random_string',
+  RandomPet = 'random_pet',
+  RandomId = 'random_id'
+}
+
+export type ResourceType =
+  | AwsResourceType //
+  | RandomResourceType
+  | string;
+
+export type TFTopLevelBlock = TFResourceBlock;
+
+export interface TFResourceBlock {
+  type: TFNodeType.Resource;
+  /**
+   * The type of this resource.
+   */
+  resource: ResourceType;
+  /**
+   * The name of this resource.
+   */
+  name: string;
+  /**
+   * The body of this resource block.
+   */
+  body: TFBlockBody;
+}
