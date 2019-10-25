@@ -26,3 +26,9 @@ interface TFFunctionCall {
   name: string;
   args: unknown[];
 }
+
+export interface TFArgument {
+  type: TFNodeType.Argument;
+  identifier: string;
+  expression: TFLiteralExpression;
+}
