@@ -1,4 +1,4 @@
-import { printArgument } from '@src/printers';
+import { printArgument, printBlockLiteral } from '@src/printers';
 import { TFBlockBody, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
@@ -13,6 +13,10 @@ export const printBlockBody = (body: TFBlockBody): string => {
       .map(node => {
         if (node.type === TFNodeType.Argument) {
           return printArgument(node);
+        }
+
+        if (node.type === TFNodeType.Block) {
+          return printBlockLiteral(node);
         }
 
         throw new Error(`structural error: unknown node type "${node}"`);
