@@ -19,6 +19,10 @@ export const printBlockBody = (body: TFBlockBody): string => {
           return printBlockLiteral(node);
         }
 
+        if (node.type === TFNodeType.Dynamic) {
+          return `# FIXME: ${node.type} is not yet supported`;
+        }
+
         throw new Error(`structural error: unknown node type "${node}"`);
       })
       .map(str => indentString(str, 2)),

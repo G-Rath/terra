@@ -13,6 +13,12 @@ exports[`printBlockBody when the body contains a single element when the element
 }"
 `;
 
+exports[`printBlockBody when the body contains a single element when the element is a dynamic prints as expected 1`] = `
+"{
+  # FIXME: dynamic is not yet supported
+}"
+`;
+
 exports[`printBlockBody when the body contains a single element when the element is an argument prints as expected 1`] = `
 "{
   hello = \\"world\\"
@@ -87,6 +93,13 @@ exports[`printBlockBody when the body contains multiple elements when the elemen
       aws_security_group.wordpress_server.id
     ]
   }
+}"
+`;
+
+exports[`printBlockBody when the body contains multiple elements when the elements are just dynamics prints as expected 1`] = `
+"{
+  # FIXME: dynamic is not yet supported
+  # FIXME: dynamic is not yet supported
 }"
 `;
 

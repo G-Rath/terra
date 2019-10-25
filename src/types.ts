@@ -1,4 +1,5 @@
 export enum TFNodeType {
+  Dynamic = 'dynamic',
   Argument = 'argument',
   Function = 'function',
   Block = 'block',
@@ -47,4 +48,13 @@ export interface TFBlockLiteral {
   body: TFBlockBody;
 }
 
-export type TFBlockBody = Array<TFArgument | TFBlockLiteral>;
+interface TFDynamicBlock {
+  type: TFNodeType.Dynamic;
+  name: string;
+  content: unknown;
+  labels: string[];
+  forEach: unknown;
+  iterator?: string;
+}
+
+export type TFBlockBody = Array<TFArgument | TFBlockLiteral | TFDynamicBlock>;
