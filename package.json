@@ -46,6 +46,7 @@
     "setupFilesAfterEnv": [
       "./test/setupExpectEachTestHasAssertions.ts"
     ],
+    "testEnvironment": "node",
     "testRunner": "jest-circus/runner",
     "transform": {
       "\\.tsx?": "ts-jest"
