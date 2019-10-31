@@ -53,6 +53,7 @@
     }
   },
   "dependencies": {
+    "aws-sdk": "^2.556.0",
     "indent-string": "^4.0.0"
   },
   "devDependencies": {
