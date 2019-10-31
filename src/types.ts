@@ -32,13 +32,13 @@ interface TFFunctionCall {
   args: unknown[];
 }
 
-export interface TFArgument {
+export interface TFArgument<TIdentifier extends string = string> {
   type: TFNodeType.Argument;
-  identifier: string;
+  identifier: TIdentifier;
   expression: TFLiteralExpression;
 }
 
-export interface TFBlockLiteral {
+export interface TFBlockLiteral<TIdentifier extends string = string> {
   type: TFNodeType.Block;
 
   /**
@@ -48,7 +48,7 @@ export interface TFBlockLiteral {
   /**
    * The arguments that make up the resource.
    */
-  body: TFBlockBody;
+  body: TFBlockBody<TIdentifier>;
 }
 
 interface TFDynamicBlock {
@@ -60,7 +60,9 @@ interface TFDynamicBlock {
   iterator?: string;
 }
 
-export type TFBlockBody = Array<TFArgument | TFBlockLiteral | TFDynamicBlock>;
+export type TFBlockBody<TIdentifier extends string = string> = Array<
+  TFArgument<TIdentifier> | TFBlockLiteral | TFDynamicBlock
+>;
 
 export enum RandomResourceType {
   RandomString = 'random_string',
@@ -75,7 +77,7 @@ export type ResourceType =
 
 export type TFTopLevelBlock = TFResourceBlock;
 
-export interface TFResourceBlock {
+export interface TFResourceBlock<TIdentifier extends string = string> {
   type: TFNodeType.Resource;
   /**
    * The type of this resource.
@@ -88,5 +90,5 @@ export interface TFResourceBlock {
   /**
    * The body of this resource block.
    */
-  body: TFBlockBody;
+  body: TFBlockBody<TIdentifier>;
 }
