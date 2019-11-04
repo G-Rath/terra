@@ -44,7 +44,8 @@
     "resetMocks": true,
     "restoreMocks": true,
     "setupFilesAfterEnv": [
-      "./test/setupExpectEachTestHasAssertions.ts"
+      "./test/setupExpectEachTestHasAssertions.ts",
+      "./test/matchers/index.ts"
     ],
     "testEnvironment": "node",
     "testRunner": "jest-circus/runner",
