@@ -51,12 +51,19 @@ export interface TFBlockLiteral<TIdentifier extends string = string> {
   body: TFBlockBody<TIdentifier>;
 }
 
-interface TFDynamicBlock {
+export interface TFDynamicBlock<TIdentifier extends string = string> {
   type: TFNodeType.Dynamic;
+  /**
+   * The label of the dynamic block, which specifies what kind of nested block to generate.
+   */
   name: string;
-  content: unknown;
+  content: TFBlockBody<TIdentifier>;
   labels: string[];
   forEach: unknown;
+  /**
+   * Sets the name of a temporary variable that represents the current element of the complex value.
+   * If omitted, the name of the variable defaults to the label of the dynamic block.
+   */
   iterator?: string;
 }
 
