@@ -8,6 +8,8 @@ import {
 import {
   asResourceName,
   AwsResourceType,
+  makeTFArgument,
+  makeTFStringArgument,
   normaliseRoute53Name
 } from '@src/utils';
 import { Route53 } from 'aws-sdk';
@@ -79,21 +81,9 @@ const buildAliasBlock = (
   type: TFNodeType.Block,
   name: 'alias',
   body: [
-    {
-      type: TFNodeType.Argument,
-      identifier: 'zone_id',
-      expression: `"${aliasTarget.HostedZoneId}"`
-    },
-    {
-      type: TFNodeType.Argument,
-      identifier: 'name',
-      expression: `"${aliasTarget.DNSName}"`
-    },
-    {
-      type: TFNodeType.Argument,
-      identifier: 'evaluate_target_health',
-      expression: aliasTarget.EvaluateTargetHealth
-    }
+    makeTFStringArgument('zone_id', aliasTarget.HostedZoneId),
+    makeTFStringArgument('name', aliasTarget.DNSName),
+    makeTFArgument('evaluate_target_health', aliasTarget.EvaluateTargetHealth)
   ]
 });
 
@@ -129,18 +119,11 @@ const buildRecordsArgumentsOrAliasBlock = (
   }
 
   return [
-    {
-      type: TFNodeType.Argument,
-      identifier: 'ttl',
-      expression: resourceRecordSet.TTL
-    },
-    {
-      type: TFNodeType.Argument,
-      identifier: 'records',
-      expression: (resourceRecordSet.ResourceRecords || []).map(
-        ({ Value }) => Value
-      )
-    }
+    makeTFArgument('ttl', resourceRecordSet.TTL),
+    makeTFArgument(
+      'records',
+      (resourceRecordSet.ResourceRecords || []).map(({ Value }) => `"${Value}"`)
+    )
   ];
 };
 
@@ -169,22 +152,10 @@ export const buildRoute53RecordResource = (
   );
 
   const body: TFBlockBody<keyof TFRoute53RecordResource> = [
-    {
-      type: TFNodeType.Argument,
-      identifier: 'name',
-      expression: `"${normalRecordName}"`
-    },
-    {
-      type: TFNodeType.Argument,
-      identifier: 'type',
-      expression: `"${resourceRecordSet.Type}"`
-    },
+    makeTFStringArgument('name', normalRecordName),
+    makeTFStringArgument('type', resourceRecordSet.Type),
     ...buildRecordsArgumentsOrAliasBlock(resourceRecordSet),
-    {
-      type: TFNodeType.Argument,
-      identifier: 'zone_id',
-      expression: `"${zoneId}"`
-    }
+    makeTFStringArgument('zone_id', zoneId)
   ];
 
   return {
