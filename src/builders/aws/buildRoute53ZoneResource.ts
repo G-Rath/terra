@@ -2,6 +2,7 @@ import { TFBlockBody, TFNodeType, TFResourceBlock } from '@src/types';
 import {
   asResourceName,
   AwsResourceType,
+  makeTFStringArgument,
   normaliseRoute53Name
 } from '@src/utils';
 import { Route53 } from 'aws-sdk';
@@ -53,20 +54,14 @@ export const buildRoute53ZoneResource = (
 ): TFResourceBlock<keyof TFRoute53ZoneResource> => {
   const normalisedZoneName = normaliseRoute53Name(hostedZone.Name);
   const body: TFBlockBody<keyof TFRoute53ZoneResource> = [
-    {
-      type: TFNodeType.Argument,
-      identifier: 'name',
-      expression: `"${normalisedZoneName}"`
-    }
+    makeTFStringArgument('name', `"${normalisedZoneName}"`)
   ];
 
   if (hostedZone.Config) {
     if (hostedZone.Config.Comment) {
-      body.push({
-        type: TFNodeType.Argument,
-        identifier: 'comment',
-        expression: `"${hostedZone.Config.Comment}"`
-      });
+      body.push(
+        makeTFStringArgument('comment', `"${hostedZone.Config.Comment}"`)
+      );
     }
   }
 
