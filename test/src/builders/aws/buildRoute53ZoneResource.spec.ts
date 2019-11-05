@@ -1,5 +1,4 @@
 import { buildRoute53ZoneResource } from '@src/builders/aws';
-import { TFArgument, TFNodeType, TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53ZoneResource', () => {
@@ -24,53 +23,29 @@ describe('buildRoute53ZoneResource', () => {
   });
 
   it('normalizes the "name" argument', () => {
-    const expectedArgument: TFArgument<'name'> = {
-      type: TFNodeType.Argument,
-      identifier: 'name',
-      expression: '"imnotcrazy.info"'
-    };
-
     const { body } = buildRoute53ZoneResource({
       Id: '/hostedzone/ZGOHJFV44YG7Z',
       Name: 'imnotcrazy.info.',
       CallerReference: 'nonce'
     });
 
-    expect(body).toContainEqual(expectedArgument);
+    expect(body).toContainTFArgumentWithExpression('name', '"imnotcrazy.info"');
   });
 
   it('includes only the name in the body', () => {
-    const expectedAST: TFResourceBlock = {
-      type: TFNodeType.Resource,
-      resource: AwsResourceType.AWS_ROUTE53_ZONE,
-      name: 'imnotcrazy_info',
-      body: [
-        {
-          type: TFNodeType.Argument,
-          identifier: 'name',
-          expression: '"imnotcrazy.info"'
-        }
-      ]
-    };
+    const { body } = buildRoute53ZoneResource({
+      Id: '/hostedzone/ZGOHJFV44YG7Z',
+      Name: 'imnotcrazy.info',
+      CallerReference: 'nonce'
+    });
 
-    expect(
-      buildRoute53ZoneResource({
-        Id: '/hostedzone/ZGOHJFV44YG7Z',
-        Name: 'imnotcrazy.info',
-        CallerReference: 'nonce'
-      })
-    ).toStrictEqual(expectedAST);
+    expect(body).toContainTFArgumentWithExpression('name', '"imnotcrazy.info"');
   });
 
   describe('when hostedZone includes Config', () => {
     describe('when Comment is set', () => {
       it('is mapped to the "comment" argument', () => {
         const comment = 'This is my zone!';
-        const expectedArgument: TFArgument<'comment'> = {
-          type: TFNodeType.Argument,
-          identifier: 'comment',
-          expression: `"${comment}"`
-        };
 
         const { body } = buildRoute53ZoneResource({
           Id: '/hostedzone/ZGOHJFV44YG7Z',
@@ -79,7 +54,10 @@ describe('buildRoute53ZoneResource', () => {
           Config: { Comment: comment }
         });
 
-        expect(body).toContainEqual(expectedArgument);
+        expect(body).toContainTFArgumentWithExpression(
+          'comment',
+          `"${comment}"`
+        );
       });
     });
 
@@ -92,12 +70,7 @@ describe('buildRoute53ZoneResource', () => {
           Config: { Comment: '' }
         });
 
-        expect(body).not.toContainEqual(
-          expect.objectContaining({
-            type: TFNodeType.Argument,
-            identifier: 'comment'
-          })
-        );
+        expect(body).not.toContainTFArgument('comment');
       });
     });
   });
