@@ -1,9 +1,9 @@
+import { buildRoute53RecordResource } from '@src/builders/aws';
 import {
-  buildRoute53RecordResource,
-  TFRoute53RecordAlias
-} from '@src/builders/aws';
-import { TFArgument, TFBlockLiteral, TFNodeType } from '@src/types';
-import { AwsResourceType } from '@src/utils';
+  AwsResourceType,
+  makeTFArgument,
+  makeTFStringArgument
+} from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
   it('builds an aws_route53_record resource', () => {
@@ -50,12 +50,6 @@ describe('buildRoute53RecordResource', () => {
   });
   describe('the required arguments', () => {
     it('includes the "name" argument', () => {
-      const expectedArgument: TFArgument<'name'> = {
-        type: TFNodeType.Argument,
-        identifier: 'name',
-        expression: '""'
-      };
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -65,16 +59,10 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedArgument);
+      expect(body).toContainTFArgumentWithExpression('name', '""');
     });
 
     it('includes the "zone_id" argument', () => {
-      const expectedArgument: TFArgument<'zone_id'> = {
-        type: TFNodeType.Argument,
-        identifier: 'zone_id',
-        expression: '"/hostedzone/ZGOHJFV44YG7Z"'
-      };
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -84,18 +72,13 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedArgument);
+      expect(body).toContainTFArgumentWithExpression(
+        'zone_id',
+        '"/hostedzone/ZGOHJFV44YG7Z"'
+      );
     });
 
     it('includes the "type" argument', () => {
-      const expectedArgument: TFArgument<'type'> = {
-        type: TFNodeType.Argument,
-        identifier: 'type',
-        expression: '"NS"'
-      };
-
-      // expect().toContainArgumentUnique();
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -105,34 +88,12 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedArgument);
+      expect(body).toContainTFArgumentWithExpression('type', '"NS"');
     });
   });
 
   describe('when the record has an AliasTarget', () => {
     it('includes it as a block', () => {
-      const expectedBlock: TFBlockLiteral<keyof TFRoute53RecordAlias> = {
-        type: TFNodeType.Block,
-        name: 'alias',
-        body: [
-          {
-            type: TFNodeType.Argument,
-            identifier: 'zone_id',
-            expression: '"Z2FDTNDATAQYW2"'
-          },
-          {
-            type: TFNodeType.Argument,
-            identifier: 'name',
-            expression: '"d1qgcauaj18ot9.cloudfront.net."'
-          },
-          {
-            type: TFNodeType.Argument,
-            identifier: 'evaluate_target_health',
-            expression: false
-          }
-        ]
-      };
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -147,7 +108,11 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedBlock);
+      expect(body).toContainTFBlockLiteralWithBody('alias', [
+        makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),
+        makeTFStringArgument('name', 'd1qgcauaj18ot9.cloudfront.net.'),
+        makeTFArgument('evaluate_target_health', false)
+      ]);
     });
 
     it('omits the alias block', () => {
@@ -161,23 +126,12 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).not.toContainEqual(
-        expect.objectContaining({
-          type: TFNodeType.Block,
-          name: 'alias'
-        })
-      );
+      expect(body).not.toContainTFBlockLiteral('alias');
     });
   });
 
   describe('when the record has a TTL', () => {
     it('includes it as an argument', () => {
-      const expectedArgument: TFArgument<'ttl'> = {
-        type: TFNodeType.Argument,
-        identifier: 'ttl',
-        expression: 300
-      };
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -189,16 +143,10 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedArgument);
+      expect(body).toContainTFArgumentWithExpression('ttl', 300);
     });
 
     it('includes the records argument', () => {
-      const expectedArgument: TFArgument<'records'> = {
-        type: TFNodeType.Argument,
-        identifier: 'records',
-        expression: ['"192.168.1.42"']
-      };
-
       const { body } = buildRoute53RecordResource(
         {
           Type: 'NS',
@@ -210,7 +158,9 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).toContainEqual(expectedArgument);
+      expect(body).toContainTFArgumentWithExpression('records', [
+        '"192.168.1.42"'
+      ]);
     });
 
     it('omits the alias block', () => {
@@ -224,12 +174,7 @@ describe('buildRoute53RecordResource', () => {
         'imnotcrazy.info'
       );
 
-      expect(body).not.toContainEqual(
-        expect.objectContaining({
-          type: TFNodeType.Block,
-          name: 'alias'
-        })
-      );
+      expect(body).not.toContainTFBlockLiteral('alias');
     });
   });
 });
