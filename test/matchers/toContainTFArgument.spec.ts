@@ -13,7 +13,7 @@ describe('toContainTFArgument', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgument('ttl', 300);
+          expect<TFBlockBody>(body).toContainTFArgument('ttl');
         }).toThrow(
           'Body contains zero arguments with the expected identifier.'
         );
@@ -21,37 +21,12 @@ describe('toContainTFArgument', () => {
     });
 
     describe('when body contains one argument with the given identifier', () => {
-      describe('when the argument has the expected expression', () => {
-        it('passes', () => {
-          const body = [expectedArgument];
+      it('passes', () => {
+        const body = [expectedArgument];
 
-          expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument('ttl', 300);
-          }).not.toThrow();
-        });
-      });
-
-      describe('when the argument has an unexpected expression', () => {
-        it('fails', () => {
-          const body = [expectedArgument];
-
-          expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument('ttl', '300');
-          }).toThrow('Argument has unexpected expression.');
-        });
-      });
-
-      describe('when using expect.any for the expression', () => {
-        it('passes', () => {
-          const body = [expectedArgument];
-
-          expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(
-              'ttl',
-              expect.any(Number)
-            );
-          }).not.toThrow();
-        });
+        expect(() => {
+          expect<TFBlockBody>(body).toContainTFArgument('ttl');
+        }).not.toThrow();
       });
     });
 
@@ -60,7 +35,7 @@ describe('toContainTFArgument', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgument('ttl', 300);
+          expect<TFBlockBody>(body).toContainTFArgument('ttl');
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
     });
@@ -71,10 +46,7 @@ describe('toContainTFArgument', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(
-              expect.any(String),
-              300
-            );
+            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
           }).not.toThrow();
         });
       });
@@ -84,10 +56,7 @@ describe('toContainTFArgument', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(
-              expect.any(String),
-              300
-            );
+            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
           }).not.toThrow();
         });
       });
@@ -97,10 +66,7 @@ describe('toContainTFArgument', () => {
           const body: TFBlockBody = [];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(
-              expect.any(String),
-              300
-            );
+            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
           }).toThrow(
             'Body contains zero arguments with the expected identifier.'
           );
@@ -115,7 +81,7 @@ describe('toContainTFArgument', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgument('ttl', 300);
+          expect<TFBlockBody>(body).not.toContainTFArgument('ttl');
         }).not.toThrow();
       });
     });
@@ -125,11 +91,7 @@ describe('toContainTFArgument', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgument(
-            'ttl',
-            300
-            // expect.anything()
-          );
+          expect<TFBlockBody>(body).not.toContainTFArgument('ttl');
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
     });
