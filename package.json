@@ -18,6 +18,7 @@
     "test": "test"
   },
   "scripts": {
+    "build": "npm run clean && ttsc -b tsconfig.build.json",
     "check": "tsc --noEmit",
     "clean": "rm -rf lib",
     "lint": "eslint \"**.{t,j}s\"",
