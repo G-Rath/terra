@@ -3,7 +3,7 @@
 .terraform/
 coverage/
 node_modules/
-dist/
+lib/
 
 pids
 *.pid

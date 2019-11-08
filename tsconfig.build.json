@@ -3,7 +3,7 @@
   "compilerOptions": {
     "declarationMap": false,
     "rootDir": "src",
-    "outDir": "dist",
+    "outDir": "lib",
     "paths": {
       "@src/*": [ "./src/*" ]
     }
