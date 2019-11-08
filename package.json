@@ -19,6 +19,7 @@
   },
   "scripts": {
     "check": "tsc --noEmit",
+    "clean": "rm -rf lib",
     "lint": "eslint \"**.{t,j}s\"",
     "test": "jest --coverage"
   },
