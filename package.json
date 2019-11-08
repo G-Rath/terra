@@ -22,6 +22,7 @@
     "check": "tsc --noEmit",
     "clean": "rm -rf lib",
     "lint": "eslint \"**.{t,j}s\"",
+    "prepack": "npm run build",
     "test": "jest --coverage"
   },
   "jest": {
