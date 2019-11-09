@@ -31,6 +31,7 @@
     "build-manifest": "node -r tsconfig-paths/register node_modules/.bin/oclif-dev manifest",
     "check": "tsc --noEmit",
     "clean": "rm -rf lib",
+    "cli": "node -r tsconfig-paths/register bin/terra",
     "lint": "eslint \"**.{t,j}s\"",
     "prepack": "npm run build",
     "test": "jest --coverage"
