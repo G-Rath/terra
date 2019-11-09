@@ -12,6 +12,10 @@
   },
   "license": "ISC",
   "author": "",
+  "files": [
+    "/bin",
+    "/lib"
+  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "directories": {
