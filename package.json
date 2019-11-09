@@ -74,7 +74,7 @@
     "@oclif/errors": "^1.2.2",
     "@oclif/plugin-autocomplete": "^0.1.4",
     "@oclif/plugin-help": "^2.2.1",
-    "aws-sdk": "^2.556.0",
+    "aws-sdk": "^2.568.0",
     "indent-string": "^4.0.0"
   },
   "devDependencies": {
