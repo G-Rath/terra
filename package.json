@@ -32,6 +32,7 @@
     "check": "tsc --noEmit",
     "clean": "rm -rf lib",
     "lint": "eslint \"**.{t,j}s\"",
+    "local": "node -r tsconfig-paths/register bin/terraport",
     "prepack": "npm run build",
     "test": "jest --coverage"
   },
