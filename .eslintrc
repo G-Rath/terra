@@ -89,14 +89,7 @@
     "semi": [ "off", "always" ],
     "semi-spacing": "error",
     "padded-blocks": [ "error", "never" ],
-    "space-before-function-paren": [
-      "error",
-      {
-        "anonymous": "always",
-        "named": "never",
-        "asyncArrow": "always"
-      }
-    ],
+    "space-before-function-paren": "off",
     "comma-spacing": "error",
     "spaced-comment": [
       "warn",
