@@ -97,7 +97,7 @@
     "ts-node": "^8.4.1",
     "ts-transform-paths": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
-    "ttypescript": "^1.5.7",
+    "ttypescript": "^1.5.8",
     "typescript": "^3.7.2"
   },
   "oclif": {
