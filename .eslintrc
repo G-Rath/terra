@@ -54,6 +54,8 @@
     "no-return-await": "error",
     "no-throw-literal": "error",
     "no-sparse-arrays": "error",
+    "no-param-reassign": "error",
+    "no-ex-assign": "error",
     "no-underscore-dangle": "off",
     "no-useless-constructor": "off",
     "no-with": "error",
