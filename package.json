@@ -18,6 +18,9 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": {
+    "terraport": "./bin/terraport"
+  },
   "directories": {
     "test": "test"
   },
@@ -62,6 +65,9 @@
     }
   },
   "dependencies": {
+    "@oclif/command": "^1.5.19",
+    "@oclif/config": "^1.13.3",
+    "@oclif/errors": "^1.2.2",
     "aws-sdk": "^2.556.0",
     "indent-string": "^4.0.0"
   },
@@ -84,5 +90,10 @@
     "ts-transform-paths": "^2.0.0",
     "ttypescript": "^1.5.7",
     "typescript": "^3.7.2"
+  },
+  "oclif": {
+    "commands": "./lib/commands",
+    "bin": "terraport",
+    "plugins": []
   }
 }
