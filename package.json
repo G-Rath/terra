@@ -93,6 +93,7 @@
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
     "ts-nameof": "^4.0.3",
+    "ts-node": "^8.4.1",
     "ts-transform-paths": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
     "ttypescript": "^1.5.7",
