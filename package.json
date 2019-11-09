@@ -68,6 +68,7 @@
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.13.3",
     "@oclif/errors": "^1.2.2",
+    "@oclif/plugin-autocomplete": "^0.1.4",
     "@oclif/plugin-help": "^2.2.1",
     "aws-sdk": "^2.556.0",
     "indent-string": "^4.0.0"
@@ -96,7 +97,8 @@
     "commands": "./lib/commands",
     "bin": "terra",
     "plugins": [
-      "@oclif/plugin-help"
+      "@oclif/plugin-help",
+      "@oclif/plugin-autocomplete"
     ]
   }
 }
