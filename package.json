@@ -31,8 +31,8 @@
     "build-manifest": "node -r tsconfig-paths/register node_modules/.bin/oclif-dev manifest",
     "check": "tsc --noEmit",
     "clean": "rm -rf lib",
+    "cli": "node -r tsconfig-paths/register bin/terraport",
     "lint": "eslint \"**.{t,j}s\"",
-    "local": "node -r tsconfig-paths/register bin/terraport",
     "prepack": "npm run build",
     "test": "jest --coverage"
   },
