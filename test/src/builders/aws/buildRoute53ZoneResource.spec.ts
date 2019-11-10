@@ -4,9 +4,9 @@ import { AwsResourceType } from '@src/utils';
 describe('buildRoute53ZoneResource', () => {
   it('builds an aws_route53_zone resource', () => {
     const { resource } = buildRoute53ZoneResource({
-      Id: '/hostedzone/ZGOHJFV44YG7Z',
-      Name: 'imnotcrazy.info',
-      CallerReference: 'nonce'
+      id: '/HostedZone/123456789',
+      name: 'imnotcrazy.info',
+      isPrivate: false
     });
 
     expect(resource).toBe(AwsResourceType.AWS_ROUTE53_ZONE);
@@ -14,9 +14,9 @@ describe('buildRoute53ZoneResource', () => {
 
   it('uses "Name" to build the resource name', () => {
     const { name } = buildRoute53ZoneResource({
-      Id: '/hostedzone/ZGOHJFV44YG7Z',
-      Name: 'imnotcrazy.info',
-      CallerReference: 'nonce'
+      id: '/HostedZone/123456789',
+      name: 'imnotcrazy.info',
+      isPrivate: false
     });
 
     expect(name).toBe('imnotcrazy_info');
@@ -24,9 +24,9 @@ describe('buildRoute53ZoneResource', () => {
 
   it('normalizes the "name" argument', () => {
     const { body } = buildRoute53ZoneResource({
-      Id: '/hostedzone/ZGOHJFV44YG7Z',
-      Name: 'imnotcrazy.info.',
-      CallerReference: 'nonce'
+      id: '/HostedZone/123456789',
+      name: 'imnotcrazy.info.',
+      isPrivate: false
     });
 
     expect(body).toContainTFArgumentWithExpression('name', '"imnotcrazy.info"');
@@ -34,9 +34,9 @@ describe('buildRoute53ZoneResource', () => {
 
   it('includes only the name in the body', () => {
     const { body } = buildRoute53ZoneResource({
-      Id: '/hostedzone/ZGOHJFV44YG7Z',
-      Name: 'imnotcrazy.info',
-      CallerReference: 'nonce'
+      id: '/HostedZone/123456789',
+      name: 'imnotcrazy.info',
+      isPrivate: false
     });
 
     expect(body).toContainTFArgumentWithExpression('name', '"imnotcrazy.info"');
@@ -48,10 +48,10 @@ describe('buildRoute53ZoneResource', () => {
         const comment = 'This is my zone!';
 
         const { body } = buildRoute53ZoneResource({
-          Id: '/hostedzone/ZGOHJFV44YG7Z',
-          Name: 'imnotcrazy.info.',
-          CallerReference: 'nonce',
-          Config: { Comment: comment }
+          id: '/HostedZone/123456789',
+          name: 'imnotcrazy.info.',
+          isPrivate: false,
+          comment
         });
 
         expect(body).toContainTFArgumentWithExpression(
@@ -64,10 +64,10 @@ describe('buildRoute53ZoneResource', () => {
     describe('when Comment is empty', () => {
       it('omits the "comment" argument', () => {
         const { body } = buildRoute53ZoneResource({
-          Id: '/hostedzone/ZGOHJFV44YG7Z',
-          Name: 'imnotcrazy.info.',
-          CallerReference: 'nonce',
-          Config: { Comment: '' }
+          id: '/HostedZone/123456789',
+          name: 'imnotcrazy.info.',
+          isPrivate: false,
+          comment: ''
         });
 
         expect(body).not.toContainTFArgument('comment');
