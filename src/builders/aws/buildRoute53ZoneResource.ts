@@ -5,7 +5,6 @@ import {
   makeTFStringArgument,
   normaliseRoute53Name
 } from '@src/utils';
-import { Route53 } from 'aws-sdk';
 
 interface TFRoute53VPC {
   vpc_id: string;
@@ -39,10 +38,17 @@ interface TFPublicRoute53ZoneResource {
   delegation_set_id?: string;
 }
 
+export interface Route53ZoneDetails {
+  id: string;
+  name: string;
+  comment?: string;
+  isPrivate: boolean;
+}
+
 /**
  * Builds a Route53 Terraform Resource.
  *
- * @param {Route53.HostedZone} hostedZone
+ * @param {Route53ZoneDetails} details
  *
  * @return {TFResourceBlock<keyof TFRoute53ZoneResource>}
  *
@@ -50,19 +56,15 @@ interface TFPublicRoute53ZoneResource {
  * @todo support private zones
  */
 export const buildRoute53ZoneResource = (
-  hostedZone: Route53.HostedZone
+  details: Route53ZoneDetails
 ): TFResourceBlock<keyof TFRoute53ZoneResource> => {
-  const normalisedZoneName = normaliseRoute53Name(hostedZone.Name);
+  const normalisedZoneName = normaliseRoute53Name(details.name);
   const body: TFBlockBody<keyof TFRoute53ZoneResource> = [
-    makeTFStringArgument('name', `"${normalisedZoneName}"`)
+    makeTFStringArgument('name', normalisedZoneName)
   ];
 
-  if (hostedZone.Config) {
-    if (hostedZone.Config.Comment) {
-      body.push(
-        makeTFStringArgument('comment', `"${hostedZone.Config.Comment}"`)
-      );
-    }
+  if (details.comment) {
+    body.push(makeTFStringArgument('comment', details.comment));
   }
 
   return {
