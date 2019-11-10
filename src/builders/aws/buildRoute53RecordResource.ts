@@ -76,14 +76,14 @@ const buildRecordResourceName = (
 };
 
 const buildAliasBlock = (
-  aliasTarget: Route53.AliasTarget
+  aliasTarget: AliasTargetDetails
 ): TFBlockLiteral<keyof TFRoute53RecordAlias> => ({
   type: TFNodeType.Block,
   name: 'alias',
   body: [
-    makeTFStringArgument('zone_id', aliasTarget.HostedZoneId),
-    makeTFStringArgument('name', aliasTarget.DNSName),
-    makeTFArgument('evaluate_target_health', aliasTarget.EvaluateTargetHealth)
+    makeTFStringArgument('zone_id', aliasTarget.hostedZoneId),
+    makeTFStringArgument('name', aliasTarget.dnsName),
+    makeTFArgument('evaluate_target_health', aliasTarget.evaluateTargetHealth)
   ]
 });
 
@@ -99,40 +99,57 @@ const buildAliasBlock = (
  *
  * Otherwise, an empty array is returned.
  *
- * @param {Route53.ResourceRecordSet} resourceRecordSet
+ * @param {Route53RecordDetails} details
  *
  * @return {Array<TFArgument<keyof TFRoute53RecordResource>> | [TFBlockLiteral<keyof TFRoute53RecordAlias>]}
  *
  * @todo support strict validation of either `AliasTarget` or `TTL` being defined
  */
 const buildRecordsArgumentsOrAliasBlock = (
-  resourceRecordSet: Route53.ResourceRecordSet
+  details: Route53RecordDetails
 ):
   | Array<TFArgument<keyof TFRoute53RecordResource>>
   | [TFBlockLiteral<keyof TFRoute53RecordAlias>] => {
-  if (resourceRecordSet.AliasTarget !== undefined) {
-    return [buildAliasBlock(resourceRecordSet.AliasTarget)];
-  }
-
-  if (resourceRecordSet.TTL === undefined) {
-    return []; // todo: strict validation
+  if ('hostedZoneId' in details.target) {
+    return [buildAliasBlock(details.target)];
   }
 
   return [
-    makeTFArgument('ttl', resourceRecordSet.TTL),
+    makeTFArgument('ttl', details.target.ttl),
     makeTFArgument(
       'records',
-      (resourceRecordSet.ResourceRecords || []).map(({ Value }) => `"${Value}"`)
+      details.target.records.map(v => `"${v}"`)
     )
   ];
 };
 
+export interface Route53RecordDetails {
+  name: string;
+  type: Route53.RRType;
+  target: Route53RecordTargetDetails;
+  zoneId: string;
+  zoneName: string;
+}
+
+export type Route53RecordTargetDetails =
+  | AliasTargetDetails
+  | RecordsTargetDetails;
+
+export interface AliasTargetDetails {
+  evaluateTargetHealth: boolean;
+  hostedZoneId: string;
+  dnsName: string;
+}
+
+export interface RecordsTargetDetails {
+  records: string[];
+  ttl: number;
+}
+
 /**
  * Builds a Route53 Terraform Resource.
  *
- * @param {Route53.HostedZone} resourceRecordSet
- * @param {string} zoneId
- * @param {string} zoneName
+ * @param {Route53RecordDetails} details
  *
  * @return {TFResourceBlock<keyof TFRoute53ZoneResource>}
  *
@@ -141,21 +158,16 @@ const buildRecordsArgumentsOrAliasBlock = (
  * @todo support private zones
  */
 export const buildRoute53RecordResource = (
-  resourceRecordSet: Route53.ResourceRecordSet,
-  zoneId: string,
-  zoneName: string
+  details: Route53RecordDetails
 ): TFResourceBlock<keyof TFRoute53RecordResource> => {
-  const normalZoneName = normaliseRoute53Name(zoneName);
-  const normalRecordName = normaliseRoute53Name(
-    resourceRecordSet.Name,
-    normalZoneName
-  );
+  const normalZoneName = normaliseRoute53Name(details.zoneName);
+  const normalRecordName = normaliseRoute53Name(details.name, normalZoneName);
 
   const body: TFBlockBody<keyof TFRoute53RecordResource> = [
     makeTFStringArgument('name', normalRecordName),
-    makeTFStringArgument('type', resourceRecordSet.Type),
-    ...buildRecordsArgumentsOrAliasBlock(resourceRecordSet),
-    makeTFStringArgument('zone_id', zoneId)
+    makeTFStringArgument('type', details.type),
+    ...buildRecordsArgumentsOrAliasBlock(details),
+    makeTFStringArgument('zone_id', details.zoneId)
   ];
 
   return {
@@ -164,7 +176,7 @@ export const buildRoute53RecordResource = (
     name: buildRecordResourceName(
       normalZoneName,
       normalRecordName,
-      resourceRecordSet.Type
+      details.type
     ),
     body
   };
