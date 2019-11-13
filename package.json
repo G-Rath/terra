@@ -60,6 +60,7 @@
     "restoreMocks": true,
     "setupFilesAfterEnv": [
       "./test/setupExpectEachTestHasAssertions.ts",
+      "./test/setupAwsSdkMock.ts",
       "./test/matchers/index.ts"
     ],
     "testEnvironment": "node",
