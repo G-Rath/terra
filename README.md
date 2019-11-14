@@ -42,3 +42,15 @@ targeted infrastructure in Terraform.
 
 They handle making the API calls required to get details, and mapping them to
 the expected structure.
+
+### Builders
+
+Builders use the collected configuration details to build AST nodes that
+represent how to structure the infrastructure in Terraform.
+
+They handle shaping the infrastructure details where required by performing
+actions such as:
+
+- wrapping native strings in double quotes
+- sanitising names so they're Terraform safe,
+- normalising values so they're consistent
