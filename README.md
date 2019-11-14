@@ -35,6 +35,25 @@ For convenience this has been added as a `script` in `package.json`:
 
 ## Layout
 
+### 'nados
+
+'nados (from Tornado) are a form of orchestration that is easier to spell.
+They're called 'nados because they "sweep up" whole slices of infrastructure.
+
+They handle orchestrating the collecting of details, and having those details
+built into Terraform AST that can then be printed & written to disk as a valid
+Terraform file.
+
+The actual logic of these steps is implemented in specific functions, detailed
+below. 'nados return a collection of complete Terraform top-level blocks.
+
+Since typically the infrastructure being ported into Terraform via TerraPort is
+either top- or middle- level, most 'nados support a `greedy` argument that when
+`true` has them look for related supporting infrastructure.
+
+For example, the 'nado for AWS Route53 Hosted Zones will also sweep in the
+records of that zone when `greedy` is `true`.
+
 ### Collectors
 
 Collectors collect all the configuration details required to represent the
