@@ -32,3 +32,13 @@ As such, `tsconfig-paths` must be register for `paths` to be properly resolved:
 For convenience this has been added as a `script` in `package.json`:
 
     npm run cli
+
+## Layout
+
+### Collectors
+
+Collectors collect all the configuration details required to represent the
+targeted infrastructure in Terraform.
+
+They handle making the API calls required to get details, and mapping them to
+the expected structure.
