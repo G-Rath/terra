@@ -54,3 +54,8 @@ actions such as:
 - wrapping native strings in double quotes
 - sanitising names so they're Terraform safe,
 - normalising values so they're consistent
+
+### Printers
+
+Printers convert Terraform AST nodes into valid Terraform code as raw multiline
+string literals.
