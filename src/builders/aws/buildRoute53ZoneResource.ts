@@ -16,7 +16,7 @@ interface TFRoute53ZoneAttributes {
   name_servers: string[];
 }
 
-type TFRoute53ZoneResource =
+export type TFRoute53ZoneResource =
   | TFPrivateRoute53ZoneResource
   | TFPublicRoute53ZoneResource;
 

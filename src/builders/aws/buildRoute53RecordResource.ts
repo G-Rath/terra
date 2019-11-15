@@ -33,7 +33,7 @@ interface TFRoute53RecordAttributes {
   fqdn: string;
 }
 
-type TFRoute53RecordResource =
+export type TFRoute53RecordResource =
   | TFRoute53RecordResourceWithRecords
   | TFRoute53RecordResourceWithAlias;
 
