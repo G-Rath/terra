@@ -84,6 +84,9 @@ export type ResourceType =
 
 export type TFTopLevelBlock = TFResourceBlock;
 
+export type TFRootBlock = TFTopLevelBlock;
+export type TFRoot = TFRootBlock[];
+
 export interface TFResourceBlock<TIdentifier extends string = string> {
   type: TFNodeType.Resource;
   /**
