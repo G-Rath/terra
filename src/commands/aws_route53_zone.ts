@@ -7,7 +7,7 @@ export default class AwsRoute53Zone extends Command {
   static description = 'Generates Terraform configuration for a Route53 Zone';
 
   static examples = [
-    `$ terra aws_route53_zone /HostedZone/123456789
+    `$ terra aws_route53_zone /hostedzone/123456789
 hello world from ./src/hello.ts!
 `
   ];
