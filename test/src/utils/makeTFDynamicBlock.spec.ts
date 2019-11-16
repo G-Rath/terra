@@ -6,7 +6,7 @@ describe('makeTFDynamicBlock', () => {
     expect(makeTFDynamicBlock('name', [])).toStrictEqual({
       type: TFNodeType.Dynamic,
       name: 'name',
-      content: true,
+      content: [],
       forEach: [],
       labels: []
     });
