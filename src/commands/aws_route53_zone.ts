@@ -21,7 +21,9 @@ hello world from ./src/hello.ts!
     })
   };
 
-  static args = [{ name: 'zoneId' }];
+  static args = [
+    { name: 'zoneId', required: true } //
+  ];
 
   async run() {
     const {
