@@ -67,8 +67,13 @@ export interface TFDynamicBlock<TIdentifier extends string = string> {
   iterator?: string;
 }
 
+export type TFBlockBodyElement<TIdentifier extends string = string> =
+  | TFArgument<TIdentifier>
+  | TFBlockLiteral
+  | TFDynamicBlock;
+
 export type TFBlockBody<TIdentifier extends string = string> = Array<
-  TFArgument<TIdentifier> | TFBlockLiteral | TFDynamicBlock
+  TFBlockBodyElement<TIdentifier>
 >;
 
 export enum RandomResourceType {
