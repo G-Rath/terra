@@ -39,6 +39,15 @@ For convenience this has been added as a `script` in `package.json`:
 
 ## Layout
 
+### Commands
+
+Commands are named functions that the CLI can perform.
+
+They handle parsing the user input, and performing actions based on that input.
+
+Typically, the Terraform porting commands defer to the appropriate 'nado, and
+then print the resulting AST to file.
+
 ### 'nados
 
 'nados (from Tornado) are a form of orchestration that is easier to spell.
