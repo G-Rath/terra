@@ -6,22 +6,22 @@ import {
   collectRoute53RecordDetails,
   collectRoute53ZoneDetails
 } from '@src/collectors';
-import { TFRoot } from '@src/types';
+import { TFFileAST } from '@src/types';
 
 export const nadoRoute53Zone = async (
   zoneId: string,
   greedy: boolean
-): Promise<TFRoot> => {
-  const root: TFRoot = [];
+): Promise<TFFileAST> => {
+  const ast: TFFileAST = [];
   const zoneDetails = await collectRoute53ZoneDetails(zoneId);
 
-  root.push(buildRoute53ZoneResource(zoneDetails));
+  ast.push(buildRoute53ZoneResource(zoneDetails));
 
   if (greedy) {
     const recordDetails = await collectRoute53RecordDetails(zoneDetails);
 
-    root.push(...recordDetails.map(buildRoute53RecordResource));
+    ast.push(...recordDetails.map(buildRoute53RecordResource));
   }
 
-  return root;
+  return ast;
 };
