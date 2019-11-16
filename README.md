@@ -19,6 +19,10 @@ To have `oclif` use the `src` files via `ts-node`, you must change the value of
 This is because the root `tsconfig.json` has it's `rootDir` set to `.`, in order
 to ensure native IDE support out of the box.
 
+Alternatively, you can create a symlink named `lib` to `src`:
+
+    ln -s src lib
+
 Meanwhile, `oclif` is hardcoded to look for a root level `tsconfig.json`, and
 provides no way to point it at `tsconfig.build.json`.
 
