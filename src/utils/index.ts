@@ -6,3 +6,4 @@ export * from './makeTFDynamicBlock';
 export * from './makeTFResourceBlock';
 export * from './makeTFStringArgument';
 export * from './normaliseRoute53Name';
+export * from './ensureStringEndsWith';
