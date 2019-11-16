@@ -19,6 +19,16 @@ describe('aws_route53_zone', () => {
     ])
   );
 
+  it('should require the zoneId', async () => {
+    await expect(AwsRoute53Zone.run([])).rejects.toThrow(
+      [
+        'Missing 1 required arg:', //
+        'zoneId',
+        'See more help with --help'
+      ].join('\n')
+    );
+  });
+
   it('should pass the zoneId to nadoRoute53Zone', async () => {
     await AwsRoute53Zone.run([zoneId]);
 
