@@ -84,8 +84,8 @@ export type ResourceType =
 
 export type TFTopLevelBlock = TFResourceBlock;
 
-export type TFRootBlock = TFTopLevelBlock;
-export type TFRoot = TFRootBlock[];
+/** The AST for a valid Terraform file. */
+export type TFFileAST = TFTopLevelBlock[];
 
 export interface TFResourceBlock<TIdentifier extends string = string> {
   type: TFNodeType.Resource;
