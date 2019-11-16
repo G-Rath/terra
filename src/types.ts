@@ -87,6 +87,14 @@ export type TFTopLevelBlock = TFResourceBlock;
 /** The AST for a valid Terraform file. */
 export type TFFileAST = TFTopLevelBlock[];
 
+/**
+ * A Terraform module, made up of ASTs of the files in the module.
+ * Note that a "module" is different from a "module block".
+ */
+interface TFModule {
+  files: { [K: string]: TFFileAST };
+}
+
 export interface TFResourceBlock<TIdentifier extends string = string> {
   type: TFNodeType.Resource;
   /**
