@@ -2,6 +2,7 @@ import { AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
   Resource = 'resource',
+  Module = 'module',
   Dynamic = 'dynamic',
   Argument = 'argument',
   Function = 'function',
@@ -87,7 +88,7 @@ export type ResourceType =
   | RandomResourceType
   | string;
 
-export type TFTopLevelBlock = TFResourceBlock;
+export type TFTopLevelBlock = TFResourceBlock | TFModuleBlock;
 
 /** The AST for a valid Terraform file. */
 export type TFFileAST = TFTopLevelBlock[];
@@ -114,4 +115,16 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
    * The body of this resource block.
    */
   body: TFBlockBody<TIdentifier>;
+}
+
+export interface TFModuleBlock<TIdentifier extends string = string> {
+  type: TFNodeType.Module;
+  /**
+   * The name of this module.
+   */
+  name: string;
+  /**
+   * The body of this module block.
+   */
+  body: TFBlockBody<TIdentifier | 'source'>;
 }
