@@ -1,4 +1,4 @@
-import { printBlockBody } from '@src/printers/printBlockBody';
+import { printBlockBody } from '@src/printers';
 import { TFResourceBlock } from '@src/types';
 
 export const printResourceBlock = (resourceBlock: TFResourceBlock): string => {
