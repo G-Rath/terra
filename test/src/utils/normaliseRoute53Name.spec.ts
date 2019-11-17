@@ -1,4 +1,4 @@
-import { normaliseRoute53Name } from '@src/utils/normaliseRoute53Name';
+import { normaliseRoute53Name } from '@src/utils';
 
 describe('normaliseRoute53Name', () => {
   describe('when the name is already normalised', () => {
