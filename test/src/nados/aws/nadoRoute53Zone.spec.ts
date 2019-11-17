@@ -7,8 +7,9 @@ import {
   collectRoute53RecordDetails,
   collectRoute53ZoneDetails
 } from '@src/collectors';
+import { makeTFResourceBlock } from '@src/makers';
 import { nadoRoute53Zone } from '@src/nados';
-import { AwsResourceType, makeTFResourceBlock } from '@src/utils';
+import { AwsResourceType } from '@src/utils';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/collectors/aws/collectRoute53ZoneDetails');

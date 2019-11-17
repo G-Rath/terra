@@ -1,9 +1,6 @@
 import { buildRoute53RecordResource } from '@src/builders/aws';
-import {
-  AwsResourceType,
-  makeTFArgument,
-  makeTFStringArgument
-} from '@src/utils';
+import { makeTFArgument, makeTFStringArgument } from '@src/makers';
+import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
   it('builds an aws_route53_record resource', () => {

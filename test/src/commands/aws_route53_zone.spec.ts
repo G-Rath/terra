@@ -1,6 +1,7 @@
 import AwsRoute53Zone from '@src/commands/aws_route53_zone';
+import { makeTFResourceBlock } from '@src/makers';
 import { nadoRoute53Zone } from '@src/nados';
-import { AwsResourceType, makeTFResourceBlock } from '@src/utils';
+import { AwsResourceType } from '@src/utils';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/nados/aws/nadoRoute53Zone');

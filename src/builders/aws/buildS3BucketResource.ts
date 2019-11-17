@@ -1,9 +1,6 @@
+import { makeTFStringArgument } from '@src/makers';
 import { TFBlockBody, TFNodeType, TFResourceBlock } from '@src/types';
-import {
-  asResourceName,
-  AwsResourceType,
-  makeTFStringArgument
-} from '@src/utils';
+import { asResourceName, AwsResourceType } from '@src/utils';
 
 type TFS3BucketResource =
   | TFS3BucketResourceWithName

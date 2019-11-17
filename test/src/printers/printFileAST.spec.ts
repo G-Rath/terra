@@ -1,6 +1,6 @@
+import { makeTFResourceBlock } from '@src/makers';
 import { printFileAST, printResourceBlock } from '@src/printers';
 import { TFNodeType } from '@src/types';
-import { makeTFResourceBlock } from '@src/utils';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/printers/printResourceBlock');
