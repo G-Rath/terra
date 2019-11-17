@@ -1,5 +1,6 @@
+import { makeTFResourceBlock } from '@src/makers';
 import { TFNodeType, TFResourceBlock } from '@src/types';
-import { AwsResourceType, makeTFResourceBlock } from '@src/utils';
+import { AwsResourceType } from '@src/utils';
 
 describe('makeTFResourceBlock', () => {
   it('makes a TFResourceBlock', () => {

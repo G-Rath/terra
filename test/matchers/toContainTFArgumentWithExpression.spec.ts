@@ -1,5 +1,5 @@
+import { makeTFArgument, makeTFStringArgument } from '@src/makers';
 import { TFBlockBody } from '@src/types';
-import { makeTFStringArgument, makeTFArgument } from '@src/utils';
 
 import './toContainTFArgumentWithExpression';
 

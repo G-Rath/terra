@@ -1,5 +1,5 @@
+import { makeTFBlockLiteral } from '@src/makers';
 import { TFNodeType } from '@src/types';
-import { makeTFBlockLiteral } from '@src/utils';
 
 describe('makeTFBlockLiteral', () => {
   it('makes a TFBlockLiteral', () => {

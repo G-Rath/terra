@@ -1,5 +1,5 @@
+import { makeTFBlockLiteral } from '@src/makers';
 import { TFBlockBody } from '@src/types';
-import { makeTFBlockLiteral } from '@src/utils';
 
 import './toContainTFBlockLiteral';
 

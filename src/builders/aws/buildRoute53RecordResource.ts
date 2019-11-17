@@ -1,3 +1,4 @@
+import { makeTFArgument, makeTFStringArgument } from '@src/makers';
 import {
   TFArgument,
   TFBlockBody,
@@ -8,8 +9,6 @@ import {
 import {
   asResourceName,
   AwsResourceType,
-  makeTFArgument,
-  makeTFStringArgument,
   normaliseRoute53Name
 } from '@src/utils';
 import { Route53 } from 'aws-sdk';

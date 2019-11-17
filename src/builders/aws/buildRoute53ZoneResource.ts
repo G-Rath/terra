@@ -1,8 +1,8 @@
+import { makeTFStringArgument } from '@src/makers';
 import { TFBlockBody, TFNodeType, TFResourceBlock } from '@src/types';
 import {
   asResourceName,
   AwsResourceType,
-  makeTFStringArgument,
   normaliseRoute53Name
 } from '@src/utils';
 

@@ -1,5 +1,5 @@
+import { makeTFStringArgument } from '@src/makers';
 import { TFNodeType } from '@src/types';
-import { makeTFStringArgument } from '@src/utils';
 
 describe('makeTFStringArgument', () => {
   it('makes a TFArgument', () => {

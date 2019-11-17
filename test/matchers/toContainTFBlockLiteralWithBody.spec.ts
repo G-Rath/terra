@@ -1,9 +1,9 @@
-import { TFBlockBody } from '@src/types';
 import {
   makeTFArgument,
   makeTFBlockLiteral,
   makeTFStringArgument
-} from '@src/utils';
+} from '@src/makers';
+import { TFBlockBody } from '@src/types';
 
 import './toContainTFBlockLiteralWithBody';
 

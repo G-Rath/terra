@@ -5,7 +5,7 @@ import {
   TFNodeType,
   TFResourceBlock
 } from '@src/types';
-import { AwsResourceType } from '@src/utils/AwsResourceType';
+import { AwsResourceType } from '@src/utils';
 
 interface ResourceIdentifierMap {
   [AwsResourceType.AWS_ROUTE53_RECORD]: keyof TFRoute53RecordResource;

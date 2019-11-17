@@ -1,4 +1,4 @@
-import { buildRoute53ZoneResource } from '@src/builders/aws';
+import { buildRoute53ZoneResource } from '@src/builders';
 import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53ZoneResource', () => {

@@ -1,5 +1,5 @@
+import { makeTFArgument } from '@src/makers';
 import { TFNodeType } from '@src/types';
-import { makeTFArgument } from '@src/utils';
 
 describe('makeTFArgument', () => {
   it('makes a TFArgument', () => {

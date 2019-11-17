@@ -1,5 +1,5 @@
+import { makeTFDynamicBlock } from '@src/makers';
 import { TFNodeType } from '@src/types';
-import { makeTFDynamicBlock } from '@src/utils';
 
 describe('makeTFDynamicBlock', () => {
   it('makes a TFDynamicBlock', () => {
