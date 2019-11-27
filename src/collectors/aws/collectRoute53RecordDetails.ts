@@ -22,7 +22,7 @@ const buildTargetDetailsFromResourceRecordSet = (
 
   return {
     ttl: recordSet.TTL,
-    records: (recordSet.ResourceRecords || []).map(({ Value }) => Value)
+    records: (recordSet.ResourceRecords ?? []).map(({ Value }) => Value)
   };
 };
 
