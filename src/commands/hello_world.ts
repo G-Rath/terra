@@ -21,7 +21,7 @@ hello world from ./src/hello.ts!
   async run() {
     const { flags } = this.parse(HelloWorld);
 
-    const name = flags.name || 'world';
+    const name = flags.name ?? 'world';
     this.log(`hello ${name} from ${__dirname}`);
   }
 }
