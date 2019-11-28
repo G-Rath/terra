@@ -29,6 +29,14 @@ describe('asResourceName', () => {
     });
   });
 
+  describe('when str contains \\052', () => {
+    it('replaces them with "_wild_"', () => {
+      expect(asResourceName('\\052_imnotcrazy_info')).toBe(
+        '_wild__imnotcrazy_info'
+      );
+    });
+  });
+
   describe('when str contains numbers', () => {
     describe('if they are leading', () => {
       it('prefixes with "_n_"', () => {
