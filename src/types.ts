@@ -10,13 +10,18 @@ export enum TFNodeType {
   Map = 'map'
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface TFBaseNode {
+  //
+}
+
 export type TFPrimitiveLiteral =
   | string //
   | number
   | boolean
   | null;
 
-export interface TFMapLiteral {
+export interface TFMapLiteral extends TFBaseNode {
   type: TFNodeType.Map;
   attributes: Array<[string, TFLiteralExpression]>;
 }
@@ -27,19 +32,21 @@ export type TFLiteralExpression =
   | TFLiteralExpression[] // todo: replace w/ Node
   | TFMapLiteral;
 
-interface TFFunctionCall {
+interface TFFunctionCall extends TFBaseNode {
   type: TFNodeType.Function;
   name: string;
   args: unknown[];
 }
 
-export interface TFArgument<TIdentifier extends string = string> {
+export interface TFArgument<TIdentifier extends string = string>
+  extends TFBaseNode {
   type: TFNodeType.Argument;
   identifier: TIdentifier;
   expression: TFLiteralExpression;
 }
 
-export interface TFBlockLiteral<TIdentifier extends string = string> {
+export interface TFBlockLiteral<TIdentifier extends string = string>
+  extends TFBaseNode {
   type: TFNodeType.Block;
 
   /**
@@ -52,7 +59,8 @@ export interface TFBlockLiteral<TIdentifier extends string = string> {
   body: TFBlockBody<TIdentifier>;
 }
 
-export interface TFDynamicBlock<TIdentifier extends string = string> {
+export interface TFDynamicBlock<TIdentifier extends string = string>
+  extends TFBaseNode {
   type: TFNodeType.Dynamic;
   /**
    * The label of the dynamic block, which specifies what kind of nested block to generate.
@@ -117,7 +125,8 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
   body: TFBlockBody<TIdentifier>;
 }
 
-export interface TFModuleBlock<TIdentifier extends string = string> {
+export interface TFModuleBlock<TIdentifier extends string = string>
+  extends TFBaseNode {
   type: TFNodeType.Module;
   /**
    * The name of this module.
