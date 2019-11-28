@@ -185,5 +185,24 @@ describe('buildRoute53RecordResource', () => {
 
       expect(body).not.toContainTFBlockLiteral('alias');
     });
+
+    describe('when the type is TXT', () => {
+      it('escapes the record quotes', () => {
+        const { body } = buildRoute53RecordResource({
+          name: 'imnotcrazy.info.',
+          type: 'TXT',
+          target: {
+            records: ['"v=spf1 -all"'],
+            ttl: 300
+          },
+          zoneId: '/hostedzone/ZGOHJFV44YG7Z',
+          zoneName: 'imnotcrazy.info'
+        });
+
+        expect(body).toContainTFArgumentWithExpression('records', [
+          '"\\"v=spf1 -all\\""'
+        ]);
+      });
+    });
   });
 });
