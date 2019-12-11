@@ -1,4 +1,4 @@
-import { printPrimitiveLiteral } from '@src/printers';
+import { printPrimitiveLiteral, printTFListExpression } from '@src/printers';
 import { TFLiteralExpression, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
@@ -20,6 +20,10 @@ export const printLiteralExpression = (
       ),
       ']'
     ].join('\n');
+  }
+
+  if (literal.type === TFNodeType.List) {
+    return printTFListExpression(literal);
   }
 
   if (literal.type === TFNodeType.Map) {

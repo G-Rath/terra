@@ -1,6 +1,7 @@
 import { AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
+  List = 'list',
   Resource = 'resource',
   Module = 'module',
   Dynamic = 'dynamic',
@@ -26,10 +27,30 @@ export interface TFMapLiteral extends TFBaseNode {
   attributes: Array<[string, TFLiteralExpression]>;
 }
 
+export interface SurroundingInnerText {
+  leadingInnerText: string;
+  trailingInnerText: string;
+}
+
+export interface SurroundingOuterText {
+  leadingOuterText: string;
+  trailingOuterText: string;
+}
+
+export type SurroundingText = SurroundingInnerText & SurroundingOuterText;
+
+export interface TFListExpression extends TFBaseNode {
+  type: TFNodeType.List;
+  values: TFLiteralExpression[];
+  hasTrailingComma: boolean;
+  surroundingText: SurroundingText;
+}
+
 export type TFLiteralExpression =
   | TFPrimitiveLiteral // todo: replace w/ Node
   | TFFunctionCall
   | TFLiteralExpression[] // todo: replace w/ Node
+  | TFListExpression
   | TFMapLiteral;
 
 interface TFFunctionCall extends TFBaseNode {
