@@ -1,3 +1,5 @@
+import { makeTFListExpression } from '@src/makers';
+import * as printers from '@src/printers';
 import { printLiteralExpression, printPrimitiveLiteral } from '@src/printers';
 import {
   TFLiteralExpression,
@@ -133,6 +135,21 @@ describe('printLiteralExpression', () => {
           }
         ])
       ).toMatchSnapshot();
+    });
+  });
+
+  describe('when expression is a List', () => {
+    it('uses printTFListExpression', () => {
+      const printTFListExpressionSpy = jest.spyOn(
+        printers,
+        'printTFListExpression'
+      );
+
+      const listExpression = makeTFListExpression([]);
+
+      printLiteralExpression(listExpression);
+
+      expect(printTFListExpressionSpy).toHaveBeenCalledWith(listExpression);
     });
   });
 

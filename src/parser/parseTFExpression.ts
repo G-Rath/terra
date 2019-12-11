@@ -1,4 +1,4 @@
-import { StringCursor } from '@src/parser';
+import { parseTFListExpression, StringCursor } from '@src/parser';
 import { TFLiteralExpression } from '@src/types';
 
 export const parseTFExpression = (
@@ -10,11 +10,7 @@ export const parseTFExpression = (
   cursor.rewind(1);
 
   if (cursor.char === '[') {
-    // array of elements
-    throw new Error('arrays are not yet supported');
-    // do {
-    //
-    // } while(cursor.char !== ']');
+    return parseTFListExpression(cursor);
   }
 
   if (cursor.char === '{') {
@@ -36,7 +32,7 @@ export const parseTFExpression = (
     return expression;
   }
 
-  const expression = cursor.collectUntil([' ', '\n', '(']);
+  const expression = cursor.collectUntil([' ', '\n', '(', ',']);
 
   if (expression.endsWith('(')) {
     // function expression

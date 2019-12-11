@@ -1,3 +1,4 @@
+import * as parser from '@src/parser';
 import { parseTFExpression, StringCursor } from '@src/parser';
 
 describe('parseTFExpression', () => {
@@ -14,20 +15,19 @@ describe('parseTFExpression', () => {
   });
 
   describe('expression text', () => {
-    describe('when the expression is an array', () => {
-      it('identifies the start of arrays', () => {
-        expect(() => parseTFExpression(new StringCursor('[1, 2, 3] '))).toThrow(
-          'arrays are not yet supported'
+    describe('when the expression is a list', () => {
+      it('uses parseTFListExpression', () => {
+        const parseTFListExpressionSpy = jest.spyOn(
+          parser,
+          'parseTFListExpression'
+        );
+
+        parseTFExpression(new StringCursor('["hello world"] '));
+
+        expect(parseTFListExpressionSpy).toHaveBeenCalledWith(
+          expect.any(StringCursor)
         );
       });
-
-      it.todo('parses empty arrays');
-
-      it.todo('parses single element arrays');
-
-      it.todo('parses multi-line arrays');
-
-      it.todo('parses single-line arrays');
     });
 
     describe('when the expression is a map', () => {
