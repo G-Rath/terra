@@ -1,5 +1,6 @@
 import { Command, flags } from '@oclif/command';
-import { nadoRoute53Zone } from '@src/nados/aws';
+import * as Parser from '@oclif/parser';
+import { nadoRoute53Zone } from '@src/nados';
 import { TFNodeType } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
@@ -21,7 +22,7 @@ hello world from ./src/hello.ts!
     })
   };
 
-  static args = [
+  static args: Parser.args.IArg[] = [
     { name: 'zoneId', required: true } //
   ];
 
@@ -31,6 +32,9 @@ hello world from ./src/hello.ts!
       flags: { greedy }
     } = this.parse(AwsRoute53Zone);
 
+    console.log(
+      `Preparing to port "${zoneId}", with${greedy ? '' : 'out'} records`
+    );
     const tfRoot = await nadoRoute53Zone(zoneId, greedy);
 
     const zoneResource = tfRoot.find(
