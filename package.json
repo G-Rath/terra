@@ -76,12 +76,14 @@
     "@oclif/plugin-autocomplete": "^0.1.4",
     "@oclif/plugin-help": "^2.2.1",
     "aws-sdk": "^2.568.0",
-    "indent-string": "^4.0.0"
+    "indent-string": "^4.0.0",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
     "@types/jest": "^24.0.23",
     "@types/ts-nameof": "^4.2.0",
+    "@types/uuid": "^3.4.6",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
     "eslint": "^6.7.2",

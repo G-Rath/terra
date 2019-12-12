@@ -1,3 +1,5 @@
+import { StringCursorRecorder } from '@src/parser';
+
 export class StringCursor {
   /**
    * The string that this cursor is navigating.
@@ -8,9 +10,29 @@ export class StringCursor {
    */
   private _position: number;
 
-  constructor(str: string) {
+  readonly recorder: StringCursorRecorder | null;
+
+  constructor(
+    str: string,
+    recorder: StringCursorRecorder | null = new StringCursorRecorder(str)
+  ) {
     this._string = str;
     this._position = 0;
+
+    this.recorder = recorder;
+
+    if (this.recorder) {
+      /* eslint-disable @typescript-eslint/unbound-method */
+      this.rewind = this.recorder.wrapMethod(this, this.rewind);
+      this.advance = this.recorder.wrapMethod(this, this.advance);
+      this.peek = this.recorder.wrapMethod(this, this.peek);
+      this.collectUntil = this.recorder.wrapMethod(this, this.collectUntil);
+      this.collectUntilWithComments = this.recorder.wrapMethod(
+        this,
+        this.collectUntilWithComments
+      );
+      /* eslint-enable @typescript-eslint/unbound-method */
+    }
   }
 
   /**
