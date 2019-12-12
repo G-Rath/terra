@@ -3,6 +3,7 @@
     "target": "es2019",
     "module": "commonjs",
     "moduleResolution": "node",
+    "lib": ["es2020"],
     "rootDir": "./",
     "baseUrl": "./",
     "outDir": "lib",
@@ -24,9 +25,9 @@
     "noEmitOnError": true,
     "pretty": true,
     "sourceMap": true,
-    "removeComments": true,
+    "removeComments": false,
     "esModuleInterop": true,
     "plugins": [ { "transform": "ts-transform-paths" } ]
   },
-  "exclude": [ "node_modules" ]
+  "exclude": [ "node_modules", "lib" ]
 }
