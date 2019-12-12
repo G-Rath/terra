@@ -64,6 +64,7 @@ export interface TFArgument<TIdentifier extends string = string>
   type: TFNodeType.Argument;
   identifier: TIdentifier;
   expression: TFLiteralExpression;
+  surroundingText: SurroundingInnerText;
 }
 
 export interface TFBlockLiteral<TIdentifier extends string = string>

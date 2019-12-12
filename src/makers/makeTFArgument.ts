@@ -2,9 +2,15 @@ import { TFArgument, TFLiteralExpression, TFNodeType } from '@src/types';
 
 export const makeTFArgument = <TIdentifier extends string = string>(
   identifier: TIdentifier,
-  expression: TFLiteralExpression
+  expression: TFLiteralExpression,
+  surroundingText?: Partial<TFArgument['surroundingText']>
 ): TFArgument<TIdentifier> => ({
   type: TFNodeType.Argument,
   identifier,
-  expression
+  expression,
+  surroundingText: {
+    leadingInnerText: '',
+    trailingInnerText: '',
+    ...surroundingText
+  }
 });

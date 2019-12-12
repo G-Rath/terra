@@ -1,12 +1,20 @@
 import { makeTFArgument } from '@src/makers';
-import { TFNodeType } from '@src/types';
+import { TFArgument, TFNodeType } from '@src/types';
 
 describe('makeTFArgument', () => {
   it('makes a TFArgument', () => {
-    expect(makeTFArgument('identifier', true)).toStrictEqual({
+    expect(
+      makeTFArgument('identifier', true, {
+        leadingInnerText: 'hello world'
+      })
+    ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
       identifier: 'identifier',
-      expression: true
+      expression: true,
+      surroundingText: {
+        leadingInnerText: 'hello world',
+        trailingInnerText: ''
+      }
     });
   });
 });

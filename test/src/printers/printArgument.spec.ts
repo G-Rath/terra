@@ -1,3 +1,4 @@
+import { makeTFArgument } from '@src/makers';
 import { printArgument, printLiteralExpression } from '@src/printers';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
@@ -12,13 +13,7 @@ describe('printArgument', () => {
   );
 
   it('prints the expression using printLiteralExpression', () => {
-    expect(
-      printArgument({
-        type: TFNodeType.Argument,
-        identifier: 'name',
-        expression: '"world"'
-      })
-    ).toMatchSnapshot();
+    expect(printArgument(makeTFArgument('name', '"world"'))).toMatchSnapshot();
   });
 
   it.todo('quotes the identifier when required');
@@ -32,10 +27,8 @@ describe('printArgument', () => {
 
     it('prints the opening brace on the first line', () => {
       expect(
-        printArgument({
-          type: TFNodeType.Argument,
-          identifier: 'name',
-          expression: {
+        printArgument(
+          makeTFArgument('name', {
             type: TFNodeType.Map,
             attributes: [
               [
@@ -47,8 +40,8 @@ describe('printArgument', () => {
                 ]
               ]
             ]
-          }
-        })
+          })
+        )
       ).toMatchSnapshot();
     });
   });
