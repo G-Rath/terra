@@ -1,3 +1,4 @@
+import { makeTFArgument } from '@src/makers';
 import { printBlockBody, printBlockLiteral } from '@src/printers';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
@@ -14,13 +15,7 @@ describe('printBlockLiteral', () => {
       printBlockLiteral({
         type: TFNodeType.Block,
         name: 'ingress',
-        body: [
-          {
-            type: TFNodeType.Argument,
-            identifier: 'from_port',
-            expression: 0
-          }
-        ]
+        body: [makeTFArgument('from_port', 0)]
       })
     ).toMatchSnapshot();
   });
