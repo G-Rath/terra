@@ -26,6 +26,8 @@ export const printLiteralExpression = (
     return printTFListExpression(literal);
   }
 
+  const type = literal.type;
+
   if (literal.type === TFNodeType.Map) {
     return [
       '{',
@@ -48,5 +50,5 @@ export const printLiteralExpression = (
     ].join('\n');
   }
 
-  throw new Error('structural error');
+  throw new Error(`structural error - cannot print type "${type}"`);
 };
