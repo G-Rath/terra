@@ -3,10 +3,16 @@
 .terraform/
 coverage/
 node_modules/
+recordings/
+scrap/
+dist/
 lib/
+lib
 
+.eslintcache
 pids
 *.pid
+*.swp
 *.seed
 *.pid.lock
 .env
