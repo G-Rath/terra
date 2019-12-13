@@ -63,10 +63,9 @@ export const buildS3BucketResource = (
     makeTFStringArgument('bucket', s3Bucket.BucketName)
   ];
 
-  return {
-    type: TFNodeType.Resource,
-    resource: AwsResourceType.AWS_S3_BUCKET,
-    name: asResourceName(s3Bucket.BucketName),
+  return makeTFResourceBlock(
+    asResourceName(s3Bucket.BucketName),
+    AwsResourceType.AWS_S3_BUCKET,
     body
-  };
+  );
 };

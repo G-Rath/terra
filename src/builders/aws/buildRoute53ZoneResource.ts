@@ -1,5 +1,5 @@
-import { makeTFStringArgument } from '@src/makers';
-import { TFBlockBody, TFNodeType, TFResourceBlock } from '@src/types';
+import { makeTFResourceBlock, makeTFStringArgument } from '@src/makers';
+import { TFBlockBody, TFResourceBlock } from '@src/types';
 import {
   asResourceName,
   AwsResourceType,
@@ -67,10 +67,9 @@ export const buildRoute53ZoneResource = (
     body.push(makeTFStringArgument('comment', details.comment));
   }
 
-  return {
-    type: TFNodeType.Resource,
-    resource: AwsResourceType.AWS_ROUTE53_ZONE,
-    name: asResourceName(normalisedZoneName),
+  return makeTFResourceBlock(
+    asResourceName(normalisedZoneName),
+    AwsResourceType.AWS_ROUTE53_ZONE,
     body
-  };
+  );
 };

@@ -5,12 +5,18 @@ import { AwsResourceType } from '@src/utils';
 describe('makeTFResourceBlock', () => {
   it('makes a TFResourceBlock', () => {
     expect(
-      makeTFResourceBlock('my_resource', AwsResourceType.AWS_ROUTE53_ZONE, [])
+      makeTFResourceBlock('my_resource', AwsResourceType.AWS_ROUTE53_ZONE, [], {
+        leadingOuterText: '/* hello world */'
+      })
     ).toStrictEqual<TFResourceBlock>({
       type: TFNodeType.Resource,
       resource: AwsResourceType.AWS_ROUTE53_ZONE,
       name: 'my_resource',
-      body: []
+      body: [],
+      surroundingText: {
+        leadingOuterText: '/* hello world */',
+        trailingOuterText: ''
+      }
     });
   });
 });

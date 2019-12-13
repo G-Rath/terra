@@ -1,28 +1,22 @@
-import { makeTFArgument } from '@src/makers';
+import { makeTFArgument, makeTFResourceBlock } from '@src/makers';
 import { printResourceBlock } from '@src/printers';
 import { TFNodeType, TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 describe('printResourceBlock', () => {
   it.each<TFResourceBlock>([
-    {
-      type: TFNodeType.Resource,
-      resource: AwsResourceType.AWS_ROUTE53_ZONE,
-      name: 'imnotcrazy_info',
-      body: [
-        makeTFArgument('name', '"imnotcrazy.info"'),
-        makeTFArgument('tags', {
-          type: TFNodeType.Function,
-          name: 'merge',
-          args: ['local.common_tags']
-        })
-      ]
-    },
-    {
-      type: TFNodeType.Resource,
-      resource: AwsResourceType.AWS_ROUTE53_RECORD,
-      name: 'imnotcrazy_info_ns',
-      body: [
+    makeTFResourceBlock('imnotcrazy_info', AwsResourceType.AWS_ROUTE53_ZONE, [
+      makeTFArgument('name', '"imnotcrazy.info"'),
+      makeTFArgument('tags', {
+        type: TFNodeType.Function,
+        name: 'merge',
+        args: ['local.common_tags']
+      })
+    ]),
+    makeTFResourceBlock(
+      'imnotcrazy_info_ns',
+      AwsResourceType.AWS_ROUTE53_RECORD,
+      [
         ...([
           ['allow_overwrite', true],
           ['name', '""'],
@@ -39,12 +33,11 @@ describe('printResourceBlock', () => {
           'aws_route53_zone.imnotcrazy_info.name_servers.3'
         ])
       ]
-    },
-    {
-      type: TFNodeType.Resource,
-      name: 'distribution',
-      resource: AwsResourceType.AWS_CLOUDFRONT_DISTRIBUTION,
-      body: [
+    ),
+    makeTFResourceBlock(
+      'distribution',
+      AwsResourceType.AWS_CLOUDFRONT_DISTRIBUTION,
+      [
         makeTFArgument('allowed_methods', ['"GET"', '"HEAD"']),
         makeTFArgument('cached_methods', ['"GET"', '"HEAD"']),
         ...([
@@ -78,7 +71,7 @@ describe('printResourceBlock', () => {
           ]
         }
       ]
-    }
+    )
   ])('prints as expected', resourceBlock => {
     expect(printResourceBlock(resourceBlock)).toMatchSnapshot();
   });
