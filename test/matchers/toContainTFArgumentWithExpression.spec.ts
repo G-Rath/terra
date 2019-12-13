@@ -1,5 +1,5 @@
 import { makeTFArgument, makeTFStringArgument } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import { TFBlockBodyBody } from '@src/types';
 
 import './toContainTFArgumentWithExpression';
 
@@ -13,7 +13,7 @@ describe('toContainTFArgumentWithExpression', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+          expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -29,7 +29,7 @@ describe('toContainTFArgumentWithExpression', () => {
           const body = [expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               300
             );
@@ -42,7 +42,7 @@ describe('toContainTFArgumentWithExpression', () => {
           const body = [expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               '300'
             );
@@ -55,7 +55,7 @@ describe('toContainTFArgumentWithExpression', () => {
           const body = [expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               expect.any(Number)
             );
@@ -69,7 +69,7 @@ describe('toContainTFArgumentWithExpression', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+          expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -83,7 +83,7 @@ describe('toContainTFArgumentWithExpression', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -96,7 +96,7 @@ describe('toContainTFArgumentWithExpression', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -106,10 +106,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
       describe('when the body has no arguments', () => {
         it('fails', () => {
-          const body: TFBlockBody = [];
+          const body: TFBlockBodyBody = [];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -127,7 +127,7 @@ describe('toContainTFArgumentWithExpression', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
+          expect<TFBlockBodyBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -140,7 +140,7 @@ describe('toContainTFArgumentWithExpression', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
+          expect<TFBlockBodyBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
             300
             // expect.anything()

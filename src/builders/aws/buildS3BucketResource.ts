@@ -1,5 +1,5 @@
 import { makeTFResourceBlock, makeTFStringArgument } from '@src/makers';
-import { TFBlockBody, TFResourceBlock } from '@src/types';
+import { TFBlockBodyBody, TFResourceBlock } from '@src/types';
 import { asResourceName, AwsResourceType } from '@src/utils';
 
 export type TFS3BucketResource =
@@ -59,7 +59,7 @@ export interface S3BucketSettings {
 export const buildS3BucketResource = (
   s3Bucket: S3BucketSettings
 ): TFResourceBlock<keyof TFS3BucketResource> => {
-  const body: TFBlockBody<keyof TFS3BucketResource> = [
+  const body: TFBlockBodyBody<keyof TFS3BucketResource> = [
     makeTFStringArgument('bucket', s3Bucket.BucketName)
   ];
 

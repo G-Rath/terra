@@ -1,6 +1,6 @@
 import {
   TFArgument,
-  TFBlockBody,
+  TFBlockBodyBody,
   TFLiteralExpression,
   TFNodeType
 } from '@src/types';
@@ -12,7 +12,7 @@ declare global {
   namespace jest {
     interface Matchers<R, T> {
       /**
-       * Tests that the expected {@link TFBlockBody} contains only one `TFArgument` with
+       * Tests that the expected {@link TFBlockBodyBody} contains only one `TFArgument` with
        * the given `identifier`, and that that `TFArgument` has the given`expression`.
        *
        * @param {TIdentifier} identifier
@@ -32,7 +32,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
   TIdentifier extends string = string
 >(
   this: jest.MatcherUtils,
-  body: TFBlockBody<TIdentifier>,
+  body: TFBlockBodyBody<TIdentifier>,
   identifier: TIdentifier | AsymmetricMatcher<unknown>,
   expression: TFLiteralExpression
 ): jest.CustomMatcherResult {

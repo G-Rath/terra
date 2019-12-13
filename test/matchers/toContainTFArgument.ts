@@ -1,4 +1,4 @@
-import { TFArgument, TFBlockBody, TFNodeType } from '@src/types';
+import { TFArgument, TFBlockBodyBody, TFNodeType } from '@src/types';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
@@ -7,7 +7,7 @@ declare global {
   namespace jest {
     interface Matchers<R, T> {
       /**
-       * Tests that the expected {@link TFBlockBody} contains only one `TFArgument` with
+       * Tests that the expected {@link TFBlockBodyBody} contains only one `TFArgument` with
        * the given `identifier`.
        *
        * @param {TIdentifier} identifier
@@ -25,7 +25,7 @@ const toContainTFArgument: jest.CustomMatcher = function<
   TIdentifier extends string = string
 >(
   this: jest.MatcherUtils,
-  body: TFBlockBody<TIdentifier>,
+  body: TFBlockBodyBody<TIdentifier>,
   identifier: TIdentifier | AsymmetricMatcher<unknown>
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;

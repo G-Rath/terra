@@ -1,5 +1,5 @@
 import { makeTFResourceBlock, makeTFStringArgument } from '@src/makers';
-import { TFBlockBody, TFResourceBlock } from '@src/types';
+import { TFBlockBodyBody, TFResourceBlock } from '@src/types';
 import {
   asResourceName,
   AwsResourceType,
@@ -59,7 +59,7 @@ export const buildRoute53ZoneResource = (
   details: Route53ZoneDetails
 ): TFResourceBlock<keyof TFRoute53ZoneResource> => {
   const normalisedZoneName = normaliseRoute53Name(details.name);
-  const body: TFBlockBody<keyof TFRoute53ZoneResource> = [
+  const body: TFBlockBodyBody<keyof TFRoute53ZoneResource> = [
     makeTFStringArgument('name', normalisedZoneName)
   ];
 

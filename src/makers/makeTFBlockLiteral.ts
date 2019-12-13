@@ -1,8 +1,8 @@
-import { TFBlockBody, TFBlockLiteral, TFNodeType } from '@src/types';
+import { TFBlockBodyBody, TFBlockLiteral, TFNodeType } from '@src/types';
 
 export const makeTFBlockLiteral = <TIdentifier extends string = string>(
   name: string,
-  body: TFBlockBody<TIdentifier>
+  body: TFBlockBodyBody<TIdentifier>
 ): TFBlockLiteral<TIdentifier> => ({
   type: TFNodeType.Block,
   name,

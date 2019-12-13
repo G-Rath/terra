@@ -1,8 +1,8 @@
 import { printArgument, printBlockLiteral } from '@src/printers';
-import { TFBlockBody, TFNodeType } from '@src/types';
+import { TFBlockBodyBody, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
-export const printBlockBody = (body: TFBlockBody): string => {
+export const printBlockBody = (body: TFBlockBodyBody): string => {
   if (body.length === 0) {
     return '{}';
   }
