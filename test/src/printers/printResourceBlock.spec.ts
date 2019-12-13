@@ -1,4 +1,8 @@
-import { makeTFArgument, makeTFResourceBlock } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFBlockLiteral,
+  makeTFResourceBlock
+} from '@src/makers';
 import { printResourceBlock } from '@src/printers';
 import { TFNodeType, TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
@@ -53,23 +57,15 @@ describe('printResourceBlock', () => {
           makeTFArgument(identifier, expression)
         ),
         makeTFArgument('trusted_signers', []),
-        {
-          type: TFNodeType.Block,
-          name: 'forwarded_values',
-          body: [
-            makeTFArgument('headers', []),
-            makeTFArgument('query_string', false),
-            makeTFArgument('query_string_cache_keys', []),
-            {
-              type: TFNodeType.Block,
-              name: 'cookies',
-              body: [
-                makeTFArgument('forward', '"none"'),
-                makeTFArgument('whitelisted_names', [])
-              ]
-            }
-          ]
-        }
+        makeTFBlockLiteral('forwarded_values', [
+          makeTFArgument('headers', []),
+          makeTFArgument('query_string', false),
+          makeTFArgument('query_string_cache_keys', []),
+          makeTFBlockLiteral('cookies', [
+            makeTFArgument('forward', '"none"'),
+            makeTFArgument('whitelisted_names', [])
+          ])
+        ])
       ]
     )
   ])('prints as expected', resourceBlock => {

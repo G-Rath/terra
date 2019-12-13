@@ -1,6 +1,5 @@
-import { makeTFArgument } from '@src/makers';
+import { makeTFArgument, makeTFBlockLiteral } from '@src/makers';
 import { printBlockBody, printBlockLiteral } from '@src/printers';
-import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/printers/printBlockBody');
@@ -12,11 +11,9 @@ describe('printBlockLiteral', () => {
 
   it('prints the expression using printBlockBody', () => {
     expect(
-      printBlockLiteral({
-        type: TFNodeType.Block,
-        name: 'ingress',
-        body: [makeTFArgument('from_port', 0)]
-      })
+      printBlockLiteral(
+        makeTFBlockLiteral('ingress', [makeTFArgument('from_port', 0)])
+      )
     ).toMatchSnapshot();
   });
 
@@ -29,11 +26,7 @@ describe('printBlockLiteral', () => {
 
     it('prints the opening brace on the first line', () => {
       expect(
-        printBlockLiteral({
-          type: TFNodeType.Block,
-          name: 'ingress',
-          body: []
-        })
+        printBlockLiteral(makeTFBlockLiteral('ingress', []))
       ).toMatchSnapshot();
     });
   });

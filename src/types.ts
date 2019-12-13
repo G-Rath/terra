@@ -1,6 +1,7 @@
 import { AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
+  Body = 'body',
   List = 'list',
   Resource = 'resource',
   Module = 'module',
@@ -78,7 +79,7 @@ export interface TFBlockLiteral<TIdentifier extends string = string>
   /**
    * The arguments that make up the resource.
    */
-  body: TFBlockBodyBody<TIdentifier>;
+  body: TFBlockBody<TIdentifier>;
 }
 
 export interface TFDynamicBlock<TIdentifier extends string = string>
@@ -88,7 +89,7 @@ export interface TFDynamicBlock<TIdentifier extends string = string>
    * The label of the dynamic block, which specifies what kind of nested block to generate.
    */
   name: string;
-  content: TFBlockBodyBody<TIdentifier>;
+  content: TFBlockBody<TIdentifier>;
   labels: string[];
   forEach: unknown;
   /**
@@ -103,9 +104,15 @@ export type TFBlockBodyElement<TIdentifier extends string = string> =
   | TFBlockLiteral
   | TFDynamicBlock;
 
-export type TFBlockBody<TIdentifier extends string = string> = Array<
+export type TFBlockBodyBody<TIdentifier extends string = string> = Array<
   TFBlockBodyElement<TIdentifier>
 >;
+
+export interface TFBlockBody<TIdentifier extends string = string> {
+  type: TFNodeType.Body;
+  body: TFBlockBodyBody<TIdentifier>;
+  surroundingText: SurroundingText;
+}
 
 export enum RandomResourceType {
   RandomString = 'random_string',
@@ -144,7 +151,7 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
   /**
    * The body of this resource block.
    */
-  body: TFBlockBodyBody<TIdentifier>;
+  body: TFBlockBody<TIdentifier>;
   surroundingText: SurroundingOuterText;
 }
 

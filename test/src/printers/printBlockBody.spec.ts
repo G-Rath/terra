@@ -1,4 +1,8 @@
-import { makeTFArgument } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFBlockLiteral,
+  makeTFDynamicBlock
+} from '@src/makers';
 import { printBlockBody } from '@src/printers';
 import { TFNodeType } from '@src/types';
 
@@ -22,18 +26,14 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            {
-              type: TFNodeType.Block,
-              name: 'ingress',
-              body: [
-                makeTFArgument('from_port', 0),
-                makeTFArgument('to_port', 0),
-                makeTFArgument('protocol', '"-1"'),
-                makeTFArgument('security_groups', [
-                  'aws_security_group.wordpress_server.id'
-                ])
-              ]
-            }
+            makeTFDynamicBlock('ingress', [
+              makeTFArgument('from_port', 0),
+              makeTFArgument('to_port', 0),
+              makeTFArgument('protocol', '"-1"'),
+              makeTFArgument('security_groups', [
+                'aws_security_group.wordpress_server.id'
+              ])
+            ])
           ])
         ).toMatchSnapshot();
       });
@@ -43,16 +43,10 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            {
-              type: TFNodeType.Dynamic,
-              forEach: 'aws_nat_gateway.nat_gws',
-              name: 'route',
-              labels: [],
-              content: [
-                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-                makeTFArgument('nat_gateway_id', 'route.value.id')
-              ]
-            }
+            makeTFDynamicBlock('route', [
+              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+              makeTFArgument('nat_gateway_id', 'route.value.id')
+            ])
           ])
         ).toMatchSnapshot();
       });
@@ -89,26 +83,18 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            {
-              type: TFNodeType.Block,
-              name: 'cookies',
-              body: [
-                makeTFArgument('forward', '"none"'),
-                makeTFArgument('whitelisted_names', [])
-              ]
-            },
-            {
-              type: TFNodeType.Block,
-              name: 'ingress',
-              body: [
-                makeTFArgument('from_port', 0),
-                makeTFArgument('to_port', 0),
-                makeTFArgument('protocol', '"-1"'),
-                makeTFArgument('security_groups', [
-                  'aws_security_group.wordpress_server.id'
-                ])
-              ]
-            }
+            makeTFBlockLiteral('cookies', [
+              makeTFArgument('forward', '"none"'),
+              makeTFArgument('whitelisted_names', [])
+            ]),
+            makeTFBlockLiteral('ingress', [
+              makeTFArgument('from_port', 0),
+              makeTFArgument('to_port', 0),
+              makeTFArgument('protocol', '"-1"'),
+              makeTFArgument('security_groups', [
+                'aws_security_group.wordpress_server.id'
+              ])
+            ])
           ])
         ).toMatchSnapshot();
       });
@@ -118,26 +104,14 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            {
-              type: TFNodeType.Dynamic,
-              forEach: 'aws_nat_gateway.nat_gws',
-              name: 'route',
-              labels: [],
-              content: [
-                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-                makeTFArgument('nat_gateway_id', 'route.value.id')
-              ]
-            },
-            {
-              type: TFNodeType.Dynamic,
-              forEach: 'aws_nat_gateway.nat_gws',
-              name: 'route',
-              labels: [],
-              content: [
-                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-                makeTFArgument('nat_gateway_id', 'route.value.id')
-              ]
-            }
+            makeTFDynamicBlock('route', [
+              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+              makeTFArgument('nat_gateway_id', 'route.value.id')
+            ]),
+            makeTFDynamicBlock('route', [
+              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+              makeTFArgument('nat_gateway_id', 'route.value.id')
+            ])
           ])
         ).toMatchSnapshot();
       });
@@ -162,23 +136,15 @@ describe('printBlockBody', () => {
               makeTFArgument(identifier, expression)
             ),
             makeTFArgument('trusted_signers', []),
-            {
-              type: TFNodeType.Block,
-              name: 'forwarded_values',
-              body: [
-                makeTFArgument('headers', []),
-                makeTFArgument('query_string', false),
-                makeTFArgument('query_string_cache_keys', []),
-                {
-                  type: TFNodeType.Block,
-                  name: 'cookies',
-                  body: [
-                    makeTFArgument('forward', '"none"'),
-                    makeTFArgument('whitelisted_names', [])
-                  ]
-                }
-              ]
-            }
+            makeTFBlockLiteral('forwarded_values', [
+              makeTFArgument('headers', []),
+              makeTFArgument('query_string', false),
+              makeTFArgument('query_string_cache_keys', []),
+              makeTFBlockLiteral('cookies', [
+                makeTFArgument('forward', '"none"'),
+                makeTFArgument('whitelisted_names', [])
+              ])
+            ])
           ])
         ).toMatchSnapshot();
       });

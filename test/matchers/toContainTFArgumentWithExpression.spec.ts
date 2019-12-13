@@ -1,5 +1,9 @@
-import { makeTFArgument, makeTFStringArgument } from '@src/makers';
-import { TFBlockBodyBody } from '@src/types';
+import {
+  makeTFArgument,
+  makeTFBlockBody,
+  makeTFStringArgument
+} from '@src/makers';
+import { TFBlockBody, TFBlockBodyBody } from '@src/types';
 
 import './toContainTFArgumentWithExpression';
 
@@ -10,10 +14,10 @@ describe('toContainTFArgumentWithExpression', () => {
   describe('positive', () => {
     describe('when body contains no arguments with the given identifier', () => {
       it('fails', () => {
-        const body = [standardArgument];
+        const body = makeTFBlockBody([standardArgument]);
 
         expect(() => {
-          expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+          expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -26,10 +30,10 @@ describe('toContainTFArgumentWithExpression', () => {
     describe('when body contains one argument with the given identifier', () => {
       describe('when the argument has the expected expression', () => {
         it('passes', () => {
-          const body = [expectedArgument];
+          const body = makeTFBlockBody([expectedArgument]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               300
             );
@@ -39,10 +43,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
       describe('when the argument has an unexpected expression', () => {
         it('fails', () => {
-          const body = [expectedArgument];
+          const body = makeTFBlockBody([expectedArgument]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               '300'
             );
@@ -52,10 +56,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
       describe('when using expect.any for the expression', () => {
         it('passes', () => {
-          const body = [expectedArgument];
+          const body = makeTFBlockBody([expectedArgument]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
               expect.any(Number)
             );
@@ -66,10 +70,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
     describe('when body contains multiple arguments with the given identifier', () => {
       it('fails', () => {
-        const body = [expectedArgument, expectedArgument];
+        const body = makeTFBlockBody([expectedArgument, expectedArgument]);
 
         expect(() => {
-          expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+          expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -80,10 +84,10 @@ describe('toContainTFArgumentWithExpression', () => {
     describe('when using expect.any for the identifier', () => {
       describe('when the body has only one argument', () => {
         it('passes', () => {
-          const body = [expectedArgument, expectedArgument];
+          const body = makeTFBlockBody([expectedArgument, expectedArgument]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -93,10 +97,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
       describe('when the body has more than one argument', () => {
         it('passes', () => {
-          const body = [expectedArgument, expectedArgument];
+          const body = makeTFBlockBody([expectedArgument, expectedArgument]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -106,10 +110,10 @@ describe('toContainTFArgumentWithExpression', () => {
 
       describe('when the body has no arguments', () => {
         it('fails', () => {
-          const body: TFBlockBodyBody = [];
+          const body = makeTFBlockBody([]);
 
           expect(() => {
-            expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+            expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
               300
             );
@@ -124,10 +128,10 @@ describe('toContainTFArgumentWithExpression', () => {
   describe('negative', () => {
     describe('when body contains zero arguments with the given identifier', () => {
       it('passes', () => {
-        const body = [standardArgument];
+        const body = makeTFBlockBody([standardArgument]);
 
         expect(() => {
-          expect<TFBlockBodyBody>(body).not.toContainTFArgumentWithExpression(
+          expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
             300
           );
@@ -137,16 +141,29 @@ describe('toContainTFArgumentWithExpression', () => {
 
     describe('when body contains any argument with the given identifier', () => {
       it('fails', () => {
-        const body = [expectedArgument, expectedArgument];
+        const body = makeTFBlockBody([expectedArgument, expectedArgument]);
 
         expect(() => {
-          expect<TFBlockBodyBody>(body).not.toContainTFArgumentWithExpression(
+          expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
             300
             // expect.anything()
           );
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
+    });
+  });
+
+  describe('when the expected is not a TFBlockBody', () => {
+    it('fails', () => {
+      const body: TFBlockBodyBody = [expectedArgument];
+
+      expect(() => {
+        expect<TFBlockBodyBody>(body).toContainTFArgumentWithExpression(
+          'ttl',
+          '300'
+        );
+      }).toThrow("Received isn't a TFBlockBody");
     });
   });
 });

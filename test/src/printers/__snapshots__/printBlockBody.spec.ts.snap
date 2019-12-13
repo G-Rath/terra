@@ -2,14 +2,7 @@
 
 exports[`printBlockBody when the body contains a single element when the element is a block prints as expected 1`] = `
 "{
-  ingress {
-    from_port = 0
-    to_port = 0
-    protocol = \\"-1\\"
-    security_groups = [
-      aws_security_group.wordpress_server.id
-    ]
-  }
+  # FIXME: dynamic is not yet supported
 }"
 `;
 
