@@ -13,6 +13,6 @@ export const printResourceBlock = (resourceBlock: TFResourceBlock): string => {
     type, //
     `"${resource}"`,
     `"${name}"`,
-    printBlockBody(body)
+    printBlockBody(body.body)
   ].join(' ');
 };

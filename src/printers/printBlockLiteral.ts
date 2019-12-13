@@ -9,4 +9,4 @@ import { TFBlockLiteral } from '@src/types';
  * @return {string}
  */
 export const printBlockLiteral = (blockLiteral: TFBlockLiteral): string =>
-  [blockLiteral.name, printBlockBody(blockLiteral.body)].join(' ');
+  [blockLiteral.name, printBlockBody(blockLiteral.body.body)].join(' ');

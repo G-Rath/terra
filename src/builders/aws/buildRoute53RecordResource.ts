@@ -1,5 +1,6 @@
 import {
   makeTFArgument,
+  makeTFBlockLiteral,
   makeTFResourceBlock,
   makeTFStringArgument
 } from '@src/makers';
@@ -80,15 +81,12 @@ const buildRecordResourceName = (
 
 const buildAliasBlock = (
   aliasTarget: AliasTargetDetails
-): TFBlockLiteral<keyof TFRoute53RecordAlias> => ({
-  type: TFNodeType.Block,
-  name: 'alias',
-  body: [
+): TFBlockLiteral<keyof TFRoute53RecordAlias> =>
+  makeTFBlockLiteral('alias', [
     makeTFStringArgument('zone_id', aliasTarget.hostedZoneId),
     makeTFStringArgument('name', aliasTarget.dnsName),
     makeTFArgument('evaluate_target_health', aliasTarget.evaluateTargetHealth)
-  ]
-});
+  ]);
 
 /**
  * Builds either the arguments related to `records`,

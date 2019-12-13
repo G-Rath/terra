@@ -1,4 +1,5 @@
-import { TFBlockBodyBody, TFBlockLiteral, TFNodeType } from '@src/types';
+import { TFBlockBody, TFBlockLiteral, TFNodeType } from '@src/types';
+import { failMatcherDueToNotTFBlockBody, isTFBlockBody } from '@test/matchers';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
@@ -7,7 +8,7 @@ declare global {
   namespace jest {
     interface Matchers<R, T> {
       /**
-       * Tests that the expected {@link TFBlockBodyBody} contains only one {@link TFBlockLiteral}
+       * Tests that the expected {@link TFBlockBody} contains only one {@link TFBlockLiteral}
        * with the given `name`
        *
        * @param {string} name
@@ -19,14 +20,18 @@ declare global {
 
 const toContainTFBlockLiteral: jest.CustomMatcher = function(
   this: jest.MatcherUtils,
-  bodi: TFBlockBodyBody,
+  bodi: TFBlockBody | unknown,
   name: string | AsymmetricMatcher<unknown>
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;
   const matcherName = toContainTFBlockLiteral.name;
   const matcherHint = utils.matcherHint(matcherName);
 
-  const blocks = bodi.filter(
+  if (!isTFBlockBody(bodi)) {
+    return failMatcherDueToNotTFBlockBody(this, matcherName, bodi);
+  }
+
+  const blocks = bodi.body.filter(
     (item): item is TFBlockLiteral => item.type === TFNodeType.Block
   );
 
