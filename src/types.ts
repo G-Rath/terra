@@ -78,7 +78,7 @@ export interface TFBlockLiteral<TIdentifier extends string = string>
   /**
    * The arguments that make up the resource.
    */
-  body: TFBlockBody<TIdentifier>;
+  body: TFBlockBodyBody<TIdentifier>;
 }
 
 export interface TFDynamicBlock<TIdentifier extends string = string>
@@ -88,7 +88,7 @@ export interface TFDynamicBlock<TIdentifier extends string = string>
    * The label of the dynamic block, which specifies what kind of nested block to generate.
    */
   name: string;
-  content: TFBlockBody<TIdentifier>;
+  content: TFBlockBodyBody<TIdentifier>;
   labels: string[];
   forEach: unknown;
   /**
@@ -144,7 +144,7 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
   /**
    * The body of this resource block.
    */
-  body: TFBlockBody<TIdentifier>;
+  body: TFBlockBodyBody<TIdentifier>;
   surroundingText: SurroundingOuterText;
 }
 
@@ -158,5 +158,5 @@ export interface TFModuleBlock<TIdentifier extends string = string>
   /**
    * The body of this module block.
    */
-  body: TFBlockBody<TIdentifier | 'source'>;
+  body: TFBlockBodyBody<TIdentifier | 'source'>;
 }

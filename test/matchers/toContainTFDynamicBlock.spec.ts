@@ -1,5 +1,5 @@
 import { makeTFDynamicBlock } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import { TFBlockBodyBody } from '@src/types';
 
 import './toContainTFDynamicBlock';
 
@@ -12,7 +12,7 @@ describe('toContainTFDynamicBlock', () => {
         const body = [ingressDynamicBlock];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFDynamicBlock('egress');
+          expect<TFBlockBodyBody>(body).toContainTFDynamicBlock('egress');
         }).toThrow('Body contains zero dynamic blocks with the expected name.');
       });
     });
@@ -22,7 +22,7 @@ describe('toContainTFDynamicBlock', () => {
         const body = [ingressDynamicBlock];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFDynamicBlock('ingress');
+          expect<TFBlockBodyBody>(body).toContainTFDynamicBlock('ingress');
         }).not.toThrow();
       });
     });
@@ -32,7 +32,7 @@ describe('toContainTFDynamicBlock', () => {
         const body = [ingressDynamicBlock, ingressDynamicBlock];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFDynamicBlock('ingress');
+          expect<TFBlockBodyBody>(body).toContainTFDynamicBlock('ingress');
         }).toThrow('Body contains two dynamic blocks with the expected name.');
       });
     });
@@ -43,7 +43,7 @@ describe('toContainTFDynamicBlock', () => {
           const body = [ingressDynamicBlock, ingressDynamicBlock];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFDynamicBlock(
+            expect<TFBlockBodyBody>(body).toContainTFDynamicBlock(
               expect.any(String)
             );
           }).not.toThrow();
@@ -55,7 +55,7 @@ describe('toContainTFDynamicBlock', () => {
           const body = [ingressDynamicBlock, ingressDynamicBlock];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFDynamicBlock(
+            expect<TFBlockBodyBody>(body).toContainTFDynamicBlock(
               expect.any(String)
             );
           }).not.toThrow();
@@ -64,10 +64,10 @@ describe('toContainTFDynamicBlock', () => {
 
       describe('when the body has no dynamic blocks', () => {
         it('fails', () => {
-          const body: TFBlockBody = [];
+          const body: TFBlockBodyBody = [];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFDynamicBlock(
+            expect<TFBlockBodyBody>(body).toContainTFDynamicBlock(
               expect.any(String)
             );
           }).toThrow(
@@ -84,7 +84,7 @@ describe('toContainTFDynamicBlock', () => {
         const body = [ingressDynamicBlock];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFDynamicBlock('egress');
+          expect<TFBlockBodyBody>(body).not.toContainTFDynamicBlock('egress');
         }).not.toThrow();
       });
     });
@@ -94,7 +94,7 @@ describe('toContainTFDynamicBlock', () => {
         const body = [ingressDynamicBlock, ingressDynamicBlock];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFDynamicBlock('ingress');
+          expect<TFBlockBodyBody>(body).not.toContainTFDynamicBlock('ingress');
         }).toThrow('Body contains two dynamic blocks with the expected name.');
       });
     });

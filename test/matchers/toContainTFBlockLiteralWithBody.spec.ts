@@ -3,7 +3,7 @@ import {
   makeTFBlockLiteral,
   makeTFStringArgument
 } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import { TFBlockBodyBody } from '@src/types';
 
 import './toContainTFBlockLiteralWithBody';
 
@@ -17,7 +17,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
           const body = [ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
               'egress',
               expect.any(Array)
             );
@@ -32,7 +32,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
           const body = [ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
               'ingress',
               expect.any(Array)
             );
@@ -45,7 +45,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
           const body = [ingressBlockLiteral, ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
               'ingress',
               expect.any(Array)
             );
@@ -61,7 +61,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
             const body = [ingressBlockLiteral];
 
             expect(() => {
-              expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+              expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
                 expect.any(String),
                 expect.any(Array)
               );
@@ -74,7 +74,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
             const body = [ingressBlockLiteral, ingressBlockLiteral];
 
             expect(() => {
-              expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+              expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
                 expect.any(String),
                 expect.any(Array)
               );
@@ -84,10 +84,10 @@ describe('toContainTFBlockLiteralWithBody', () => {
 
         describe('when the body has no block literals', () => {
           it('fails', () => {
-            const body: TFBlockBody = [];
+            const body: TFBlockBodyBody = [];
 
             expect(() => {
-              expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+              expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
                 expect.any(String),
                 expect.any(Array)
               );
@@ -105,7 +105,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
           const body = [ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).not.toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).not.toContainTFBlockLiteralWithBody(
               'egress',
               expect.any(Array)
             );
@@ -118,7 +118,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
           const body = [ingressBlockLiteral, ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).not.toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).not.toContainTFBlockLiteralWithBody(
               'ingress',
               expect.any(Array)
             );
@@ -142,7 +142,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
       describe('and in the right order', () => {
         it('passes', () => {
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
               'alias',
               blockBody
             );
@@ -153,7 +153,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
       describe('but in the wrong order', () => {
         it('fails', () => {
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
               'alias',
               [...blockBody].reverse()
             );
@@ -173,7 +173,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
 
       it('fails', () => {
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFBlockLiteralWithBody(
+          expect<TFBlockBodyBody>(body).toContainTFBlockLiteralWithBody(
             'alias',
             [...blockBody].slice(1)
           );

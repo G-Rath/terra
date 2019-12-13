@@ -5,7 +5,7 @@ import {
 } from '@src/makers';
 import {
   TFArgument,
-  TFBlockBody,
+  TFBlockBodyBody,
   TFBlockLiteral,
   TFNodeType,
   TFResourceBlock
@@ -166,7 +166,7 @@ export const buildRoute53RecordResource = (
   const normalZoneName = normaliseRoute53Name(details.zoneName);
   const normalRecordName = normaliseRoute53Name(details.name, normalZoneName);
 
-  const body: TFBlockBody<keyof TFRoute53RecordResource> = [
+  const body: TFBlockBodyBody<keyof TFRoute53RecordResource> = [
     makeTFStringArgument('name', normalRecordName),
     makeTFStringArgument('type', details.type),
     ...buildRecordsArgumentsOrAliasBlock(details),

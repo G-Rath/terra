@@ -5,7 +5,7 @@ import {
 } from '@src/builders';
 import {
   ResourceType,
-  TFBlockBody,
+  TFBlockBodyBody,
   TFNodeType,
   TFResourceBlock
 } from '@src/types';
@@ -21,7 +21,7 @@ interface ResourceIdentifierMap {
 export const makeTFResourceBlock = <TResource extends ResourceType>(
   name: string,
   resource: TResource,
-  body: TFBlockBody<ResourceIdentifierMap[TResource]>,
+  body: TFBlockBodyBody<ResourceIdentifierMap[TResource]>,
   surroundingText?: Partial<TFResourceBlock['surroundingText']>
 ): TFResourceBlock<ResourceIdentifierMap[TResource]> => ({
   type: TFNodeType.Resource,

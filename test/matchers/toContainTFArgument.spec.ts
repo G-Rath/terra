@@ -1,5 +1,5 @@
 import { makeTFArgument, makeTFStringArgument } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import { TFBlockBodyBody } from '@src/types';
 
 import './toContainTFArgument';
 
@@ -13,7 +13,7 @@ describe('toContainTFArgument', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgument('ttl');
+          expect<TFBlockBodyBody>(body).toContainTFArgument('ttl');
         }).toThrow(
           'Body contains zero arguments with the expected identifier.'
         );
@@ -25,7 +25,7 @@ describe('toContainTFArgument', () => {
         const body = [expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgument('ttl');
+          expect<TFBlockBodyBody>(body).toContainTFArgument('ttl');
         }).not.toThrow();
       });
     });
@@ -35,7 +35,7 @@ describe('toContainTFArgument', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFArgument('ttl');
+          expect<TFBlockBodyBody>(body).toContainTFArgument('ttl');
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
     });
@@ -46,7 +46,9 @@ describe('toContainTFArgument', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
+            expect<TFBlockBodyBody>(body).toContainTFArgument(
+              expect.any(String)
+            );
           }).not.toThrow();
         });
       });
@@ -56,17 +58,21 @@ describe('toContainTFArgument', () => {
           const body = [expectedArgument, expectedArgument];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
+            expect<TFBlockBodyBody>(body).toContainTFArgument(
+              expect.any(String)
+            );
           }).not.toThrow();
         });
       });
 
       describe('when the body has no arguments', () => {
         it('fails', () => {
-          const body: TFBlockBody = [];
+          const body: TFBlockBodyBody = [];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFArgument(expect.any(String));
+            expect<TFBlockBodyBody>(body).toContainTFArgument(
+              expect.any(String)
+            );
           }).toThrow(
             'Body contains zero arguments with the expected identifier.'
           );
@@ -81,7 +87,7 @@ describe('toContainTFArgument', () => {
         const body = [standardArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgument('ttl');
+          expect<TFBlockBodyBody>(body).not.toContainTFArgument('ttl');
         }).not.toThrow();
       });
     });
@@ -91,7 +97,7 @@ describe('toContainTFArgument', () => {
         const body = [expectedArgument, expectedArgument];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFArgument('ttl');
+          expect<TFBlockBodyBody>(body).not.toContainTFArgument('ttl');
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
     });

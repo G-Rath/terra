@@ -1,5 +1,5 @@
 import { makeTFBlockLiteral } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import { TFBlockBodyBody } from '@src/types';
 
 import './toContainTFBlockLiteral';
 
@@ -12,7 +12,7 @@ describe('toContainTFBlockLiteral', () => {
         const body = [ingressBlockLiteral];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFBlockLiteral('egress');
+          expect<TFBlockBodyBody>(body).toContainTFBlockLiteral('egress');
         }).toThrow('Body contains zero block literals with the expected name.');
       });
     });
@@ -22,7 +22,7 @@ describe('toContainTFBlockLiteral', () => {
         const body = [ingressBlockLiteral];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFBlockLiteral('ingress');
+          expect<TFBlockBodyBody>(body).toContainTFBlockLiteral('ingress');
         }).not.toThrow();
       });
     });
@@ -32,7 +32,7 @@ describe('toContainTFBlockLiteral', () => {
         const body = [ingressBlockLiteral, ingressBlockLiteral];
 
         expect(() => {
-          expect<TFBlockBody>(body).toContainTFBlockLiteral('ingress');
+          expect<TFBlockBodyBody>(body).toContainTFBlockLiteral('ingress');
         }).toThrow('Body contains two block literals with the expected name.');
       });
     });
@@ -43,7 +43,7 @@ describe('toContainTFBlockLiteral', () => {
           const body = [ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteral(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteral(
               expect.any(String)
             );
           }).not.toThrow();
@@ -55,7 +55,7 @@ describe('toContainTFBlockLiteral', () => {
           const body = [ingressBlockLiteral, ingressBlockLiteral];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteral(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteral(
               expect.any(String)
             );
           }).not.toThrow();
@@ -64,10 +64,10 @@ describe('toContainTFBlockLiteral', () => {
 
       describe('when the body has no block literals', () => {
         it('fails', () => {
-          const body: TFBlockBody = [];
+          const body: TFBlockBodyBody = [];
 
           expect(() => {
-            expect<TFBlockBody>(body).toContainTFBlockLiteral(
+            expect<TFBlockBodyBody>(body).toContainTFBlockLiteral(
               expect.any(String)
             );
           }).toThrow(
@@ -84,7 +84,7 @@ describe('toContainTFBlockLiteral', () => {
         const body = [ingressBlockLiteral];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFBlockLiteral('egress');
+          expect<TFBlockBodyBody>(body).not.toContainTFBlockLiteral('egress');
         }).not.toThrow();
       });
     });
@@ -94,7 +94,7 @@ describe('toContainTFBlockLiteral', () => {
         const body = [ingressBlockLiteral, ingressBlockLiteral];
 
         expect(() => {
-          expect<TFBlockBody>(body).not.toContainTFBlockLiteral('ingress');
+          expect<TFBlockBodyBody>(body).not.toContainTFBlockLiteral('ingress');
         }).toThrow('Body contains two block literals with the expected name.');
       });
     });

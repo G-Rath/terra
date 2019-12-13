@@ -1,8 +1,8 @@
-import { TFBlockBody, TFDynamicBlock, TFNodeType } from '@src/types';
+import { TFBlockBodyBody, TFDynamicBlock, TFNodeType } from '@src/types';
 
 export const makeTFDynamicBlock = <TIdentifier extends string = string>(
   name: string,
-  content: TFBlockBody<TIdentifier>
+  content: TFBlockBodyBody<TIdentifier>
 ): TFDynamicBlock<TIdentifier> => ({
   type: TFNodeType.Dynamic,
   name,

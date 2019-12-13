@@ -1,4 +1,4 @@
-import { TFBlockBody, TFDynamicBlock, TFNodeType } from '@src/types';
+import { TFBlockBodyBody, TFDynamicBlock, TFNodeType } from '@src/types';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
@@ -7,7 +7,7 @@ declare global {
   namespace jest {
     interface Matchers<R, T> {
       /**
-       * Tests that the expected {@link TFBlockBody} contains only one {@link TFDynamicBlock}
+       * Tests that the expected {@link TFBlockBodyBody} contains only one {@link TFDynamicBlock}
        * with the given `name`
        *
        * @param {string} name
@@ -19,7 +19,7 @@ declare global {
 
 const toContainTFDynamicBlock: jest.CustomMatcher = function(
   this: jest.MatcherUtils,
-  body: TFBlockBody,
+  body: TFBlockBodyBody,
   name: string | AsymmetricMatcher<unknown>
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;
