@@ -21,10 +21,16 @@ interface ResourceIdentifierMap {
 export const makeTFResourceBlock = <TResource extends ResourceType>(
   name: string,
   resource: TResource,
-  body: TFBlockBody<ResourceIdentifierMap[TResource]>
+  body: TFBlockBody<ResourceIdentifierMap[TResource]>,
+  surroundingText?: Partial<TFResourceBlock['surroundingText']>
 ): TFResourceBlock<ResourceIdentifierMap[TResource]> => ({
   type: TFNodeType.Resource,
   name,
   resource,
-  body
+  body,
+  surroundingText: {
+    leadingOuterText: '',
+    trailingOuterText: '',
+    ...surroundingText
+  }
 });

@@ -1,4 +1,8 @@
-import { makeTFArgument, makeTFStringArgument } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFResourceBlock,
+  makeTFStringArgument
+} from '@src/makers';
 import {
   TFArgument,
   TFBlockBody,
@@ -169,14 +173,9 @@ export const buildRoute53RecordResource = (
     makeTFStringArgument('zone_id', details.zoneId)
   ];
 
-  return {
-    type: TFNodeType.Resource,
-    resource: AwsResourceType.AWS_ROUTE53_RECORD,
-    name: buildRecordResourceName(
-      normalZoneName,
-      normalRecordName,
-      details.type
-    ),
+  return makeTFResourceBlock(
+    buildRecordResourceName(normalZoneName, normalRecordName, details.type),
+    AwsResourceType.AWS_ROUTE53_RECORD,
     body
-  };
+  );
 };

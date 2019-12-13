@@ -145,6 +145,7 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
    * The body of this resource block.
    */
   body: TFBlockBody<TIdentifier>;
+  surroundingText: SurroundingOuterText;
 }
 
 export interface TFModuleBlock<TIdentifier extends string = string>
