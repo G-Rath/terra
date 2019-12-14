@@ -11,9 +11,9 @@ const nadoRoute53ZoneMock = mocked(nadoRoute53Zone);
 describe('aws_route53_zone', () => {
   const zoneId = '/HostedZone/123456789';
 
-  let stdoutSpy = jest.spyOn(process.stdout, 'write');
+  let consoleLogSpy = jest.spyOn(console, 'log');
 
-  beforeEach(() => (stdoutSpy = jest.spyOn(process.stdout, 'write')));
+  beforeEach(() => (consoleLogSpy = jest.spyOn(console, 'log')));
   beforeEach(() =>
     nadoRoute53ZoneMock.mockResolvedValue([
       makeTFResourceBlock('my_zone_com', AwsResourceType.AWS_ROUTE53_ZONE, [])
@@ -65,9 +65,8 @@ describe('aws_route53_zone', () => {
     it('prints the file name', async () => {
       await AwsRoute53Zone.run([zoneId]);
 
-      expect(stdoutSpy).toHaveBeenCalledWith(
-        expect.stringContaining('route_my_zone_com'),
-        expect.anything()
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('route_my_zone_com')
       );
     });
   });
