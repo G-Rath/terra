@@ -1,36 +1,44 @@
+import { makeTFLabel } from '@src/makers';
 import { parseTFLabel, StringCursor } from '@src/parser';
+import { TFLabel } from '@src/types';
 
 describe('parseTFLabel', () => {
-  describe('leading text', () => {
-    it('collects basic leading text correctly', () => {
-      expect(parseTFLabel(new StringCursor('  hello '))).toBe('hello');
+  describe('leading outer text', () => {
+    it('collects basic leading text', () => {
+      const { leadingOuterText } = parseTFLabel(
+        new StringCursor(' hello ')
+      ).surroundingText;
+
+      expect(leadingOuterText).toBe(' ');
     });
 
-    it('handles complex leading text correctly', () => {
-      expect(
-        parseTFLabel(new StringCursor('/* hello */ /* world */sunshine '))
-      ).toBe('sunshine');
-    });
+    it('collects leading comments', () => {
+      const { leadingOuterText } = parseTFLabel(
+        new StringCursor(' /* hello */ world ')
+      ).surroundingText;
 
-    it('does not treat comments in leading text as the start of the label', () => {
-      expect(parseTFLabel(new StringCursor('/* hello *//*again*/world '))).toBe(
-        'world'
-      );
+      expect(leadingOuterText).toBe(' /* hello */ ');
     });
   });
 
   describe('label text', () => {
     describe('when label is unquoted', () => {
       it('terminates on space', () => {
-        expect(parseTFLabel(new StringCursor('hello '))).toBe('hello');
+        const label = parseTFLabel(new StringCursor('hello '));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
       });
 
       it('terminates on newline', () => {
-        expect(parseTFLabel(new StringCursor('hello\n'))).toBe('hello');
+        const label = parseTFLabel(new StringCursor('hello\n'));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
       });
 
       it('terminates on opening multi-line comment', () => {
-        expect(parseTFLabel(new StringCursor('hello/*'))).toBe('hello');
+        const label = parseTFLabel(new StringCursor('hello/*'));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
       });
 
       it('throws when ending with a quote', () => {
@@ -60,13 +68,15 @@ describe('parseTFLabel', () => {
 
     describe('when label is quoted', () => {
       it('terminates on closing quote', () => {
-        expect(parseTFLabel(new StringCursor('"hello"'))).toBe('"hello"');
+        const label = parseTFLabel(new StringCursor('"hello"'));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('"hello"'));
       });
 
       it('does not terminate on spaces', () => {
-        expect(parseTFLabel(new StringCursor('"hello world"'))).toBe(
-          '"hello world"'
-        );
+        const label = parseTFLabel(new StringCursor('"hello world"'));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('"hello world"'));
       });
 
       describe('when terminating', () => {

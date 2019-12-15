@@ -1,3 +1,4 @@
+export * from './makeTFLabel';
 export * from './makeTFArgument';
 export * from './makeTFBlockBody';
 export * from './makeTFBlockLiteral';
