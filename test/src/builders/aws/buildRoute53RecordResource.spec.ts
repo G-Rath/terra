@@ -1,5 +1,9 @@
 import { buildRoute53RecordResource } from '@src/builders/aws';
-import { makeTFArgument, makeTFStringArgument } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFSimpleLiteral,
+  makeTFStringArgument
+} from '@src/makers';
 import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
@@ -118,7 +122,7 @@ describe('buildRoute53RecordResource', () => {
       expect(body).toContainTFBlockLiteralWithBody('alias', [
         makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),
         makeTFStringArgument('name', 'd1qgcauaj18ot9.cloudfront.net.'),
-        makeTFArgument('evaluate_target_health', false)
+        makeTFArgument('evaluate_target_health', 'false')
       ]);
     });
 
@@ -151,7 +155,7 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).toContainTFArgumentWithExpression('ttl', 300);
+      expect(body).toContainTFArgumentWithExpression('ttl', '300');
     });
 
     it('includes the records argument', () => {
@@ -166,9 +170,10 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).toContainTFArgumentWithExpression('records', [
-        '"192.168.1.42"'
-      ]);
+      expect(body).toContainTFArgumentWithExpression(
+        'records',
+        ['"192.168.1.42"'].map(v => makeTFSimpleLiteral(v))
+      );
     });
 
     it('omits the alias block', () => {
@@ -199,9 +204,10 @@ describe('buildRoute53RecordResource', () => {
           zoneName: 'imnotcrazy.info'
         });
 
-        expect(body).toContainTFArgumentWithExpression('records', [
-          '"\\"v=spf1 -all\\""'
-        ]);
+        expect(body).toContainTFArgumentWithExpression(
+          'records',
+          ['"\\"v=spf1 -all\\""'].map(v => makeTFSimpleLiteral(v))
+        );
       });
     });
   });

@@ -145,7 +145,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
       const blockBody = [
         makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),
         makeTFStringArgument('name', 'd1qgcauaj18ot9.cloudfront.net.'),
-        makeTFArgument('evaluate_target_health', false)
+        makeTFArgument('evaluate_target_health', 'false')
       ];
 
       const body = makeTFBlockBody([makeTFBlockLiteral('alias', blockBody)]);
@@ -177,7 +177,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
       const blockBody = [
         makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),
         makeTFStringArgument('name', 'd1qgcauaj18ot9.cloudfront.net.'),
-        makeTFArgument('evaluate_target_health', false)
+        makeTFArgument('evaluate_target_health', 'false')
       ];
 
       const body = makeTFBlockBody([makeTFBlockLiteral('alias', blockBody)]);
@@ -197,7 +197,7 @@ describe('toContainTFBlockLiteralWithBody', () => {
     it('fails', () => {
       expect(() => {
         expect(
-          makeTFArgument('evaluate_target_health', false)
+          makeTFArgument('evaluate_target_health', 'false')
         ).toContainTFBlockLiteralWithBody('alias', []);
       }).toThrow("Received isn't a TFBlockBody");
     });

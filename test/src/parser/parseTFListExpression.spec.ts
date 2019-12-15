@@ -1,4 +1,4 @@
-import { makeTFListExpression } from '@src/makers';
+import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
 import * as parser from '@src/parser';
 import { parseTFListExpression, StringCursor } from '@src/parser';
 import { TFListExpression } from '@src/types';
@@ -36,7 +36,14 @@ describe('parseTFListExpression', () => {
       expect(
         parseTFListExpression(new StringCursor('["hello", "world"] '))
       ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(['"hello"', '"world"']),
+        ...makeTFListExpression(
+          ['"hello"', '"world"'].map(v =>
+            makeTFSimpleLiteral(v, {
+              leadingOuterText: expect.any(String),
+              trailingOuterText: expect.any(String)
+            })
+          )
+        ),
         surroundingText: expect.any(Object)
       });
     });
@@ -47,7 +54,14 @@ describe('parseTFListExpression', () => {
           new StringCursor(['[', '"hello world"', ']'].join('\n'))
         )
       ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(['"hello world"']),
+        ...makeTFListExpression(
+          ['"hello world"'].map(v =>
+            makeTFSimpleLiteral(v, {
+              leadingOuterText: expect.any(String),
+              trailingOuterText: expect.any(String)
+            })
+          )
+        ),
         surroundingText: expect.any(Object)
       });
     });
@@ -58,7 +72,14 @@ describe('parseTFListExpression', () => {
           new StringCursor(['[', '"hello",', '"world"', '] '].join('\n'))
         )
       ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(['"hello"', '"world"']),
+        ...makeTFListExpression(
+          ['"hello"', '"world"'].map(v =>
+            makeTFSimpleLiteral(v, {
+              leadingOuterText: expect.any(String),
+              trailingOuterText: expect.any(String)
+            })
+          )
+        ),
         surroundingText: expect.any(Object)
       });
     });
@@ -79,7 +100,15 @@ describe('parseTFListExpression', () => {
           new StringCursor(['[', '"hello",', '"world",', '] '].join('\n'))
         )
       ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(['"hello"', '"world"'], true),
+        ...makeTFListExpression(
+          ['"hello"', '"world"'].map(v =>
+            makeTFSimpleLiteral(v, {
+              leadingOuterText: expect.any(String),
+              trailingOuterText: expect.any(String)
+            })
+          ),
+          true
+        ),
         surroundingText: expect.any(Object)
       });
     });

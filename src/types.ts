@@ -8,6 +8,7 @@ export enum TFNodeType {
   Dynamic = 'dynamic',
   Argument = 'argument',
   Function = 'function',
+  Simple = 'simple',
   Block = 'block',
   Label = 'label',
   Map = 'map'
@@ -18,11 +19,16 @@ interface TFBaseNode {
   //
 }
 
-export type TFPrimitiveLiteral =
-  | string //
-  | number
-  | boolean
-  | null;
+export interface TFSimpleLiteral extends TFBaseNode {
+  type: TFNodeType.Simple;
+  value: string;
+  // value:
+  //   | string //
+  //   | number
+  //   | boolean
+  //   | null;
+  surroundingText: SurroundingOuterText;
+}
 
 export interface TFMapLiteral extends TFBaseNode {
   type: TFNodeType.Map;
@@ -55,7 +61,7 @@ export interface TFListExpression extends TFBaseNode {
 }
 
 export type TFLiteralExpression =
-  | TFPrimitiveLiteral // todo: replace w/ Node
+  | TFSimpleLiteral
   | TFFunctionCall
   | TFLiteralExpression[] // todo: replace w/ Node
   | TFListExpression

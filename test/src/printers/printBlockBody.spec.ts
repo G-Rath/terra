@@ -1,7 +1,8 @@
 import {
   makeTFArgument,
   makeTFBlockLiteral,
-  makeTFDynamicBlock
+  makeTFDynamicBlock,
+  makeTFSimpleLiteral
 } from '@src/makers';
 import { printBlockBody } from '@src/printers';
 import { TFNodeType } from '@src/types';
@@ -9,16 +10,19 @@ import { TFNodeType } from '@src/types';
 describe('printBlockBody', () => {
   describe('when the body contains no elements', () => {
     it('prints empty braces on one line', () => {
-      expect(printBlockBody([])).toMatchSnapshot();
+      expect(printBlockBody([])).toMatchInlineSnapshot(`"{}"`);
     });
   });
 
   describe('when the body contains a single element', () => {
     describe('when the element is an argument', () => {
       it('prints as expected', () => {
-        expect(
-          printBlockBody([makeTFArgument('hello', '"world"')])
-        ).toMatchSnapshot();
+        expect(printBlockBody([makeTFArgument('hello', '"world"')]))
+          .toMatchInlineSnapshot(`
+          "{
+            hello = \\"world\\"
+          }"
+        `);
       });
     });
 
@@ -27,15 +31,22 @@ describe('printBlockBody', () => {
         expect(
           printBlockBody([
             makeTFDynamicBlock('ingress', [
-              makeTFArgument('from_port', 0),
-              makeTFArgument('to_port', 0),
+              makeTFArgument('from_port', '0'),
+              makeTFArgument('to_port', '0'),
               makeTFArgument('protocol', '"-1"'),
-              makeTFArgument('security_groups', [
-                'aws_security_group.wordpress_server.id'
-              ])
+              makeTFArgument(
+                'security_groups',
+                ['aws_security_group.wordpress_server.id'].map(v =>
+                  makeTFSimpleLiteral(v)
+                )
+              )
             ])
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            # FIXME: dynamic is not yet supported
+          }"
+        `);
       });
     });
 
@@ -48,7 +59,11 @@ describe('printBlockBody', () => {
               makeTFArgument('nat_gateway_id', 'route.value.id')
             ])
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            # FIXME: dynamic is not yet supported
+          }"
+        `);
       });
     });
   });
@@ -58,7 +73,7 @@ describe('printBlockBody', () => {
         expect(
           printBlockBody([
             makeTFArgument('hello', '"world"'),
-            makeTFArgument('enabled', false),
+            makeTFArgument('enabled', 'false'),
             makeTFArgument('common_tags', {
               type: TFNodeType.Map,
               attributes: [
@@ -67,15 +82,26 @@ describe('printBlockBody', () => {
                   {
                     type: TFNodeType.Map,
                     attributes: [
-                      ['Name', '"MyName"'],
-                      ['TTL', 300]
+                      ['Name', makeTFSimpleLiteral('"MyName"')],
+                      ['TTL', makeTFSimpleLiteral('300')]
                     ]
                   }
                 ]
               ]
             })
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            hello = \\"world\\"
+            enabled = false
+            common_tags = {
+              MyMap = {
+                Name = \\"MyName\\"
+                TTL = 300
+              }
+            }
+          }"
+        `);
       });
     });
 
@@ -88,15 +114,35 @@ describe('printBlockBody', () => {
               makeTFArgument('whitelisted_names', [])
             ]),
             makeTFBlockLiteral('ingress', [
-              makeTFArgument('from_port', 0),
-              makeTFArgument('to_port', 0),
+              makeTFArgument('from_port', '0'),
+              makeTFArgument('to_port', '0'),
               makeTFArgument('protocol', '"-1"'),
-              makeTFArgument('security_groups', [
-                'aws_security_group.wordpress_server.id'
-              ])
+              makeTFArgument(
+                'security_groups',
+                ['aws_security_group.wordpress_server.id'].map(v =>
+                  makeTFSimpleLiteral(v)
+                )
+              )
             ])
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            cookies {
+              forward = \\"none\\"
+              whitelisted_names = [
+
+              ]
+            }
+            ingress {
+              from_port = 0
+              to_port = 0
+              protocol = \\"-1\\"
+              security_groups = [
+                aws_security_group.wordpress_server.id
+              ]
+            }
+          }"
+        `);
       });
     });
 
@@ -113,7 +159,12 @@ describe('printBlockBody', () => {
               makeTFArgument('nat_gateway_id', 'route.value.id')
             ])
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            # FIXME: dynamic is not yet supported
+            # FIXME: dynamic is not yet supported
+          }"
+        `);
       });
     });
 
@@ -121,15 +172,21 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFArgument('allowed_methods', ['GET', 'HEAD']),
-            makeTFArgument('cached_methods', ['GET', 'HEAD']),
+            makeTFArgument(
+              'allowed_methods',
+              ['GET', 'HEAD'].map(v => makeTFSimpleLiteral(v))
+            ),
+            makeTFArgument(
+              'cached_methods',
+              ['GET', 'HEAD'].map(v => makeTFSimpleLiteral(v))
+            ),
             ...([
-              ['compress', true],
-              ['default_ttl', 31536000],
-              ['max_ttl', 31536000],
-              ['min_ttl', 0],
+              ['compress', 'true'],
+              ['default_ttl', '31536000'],
+              ['max_ttl', '31536000'],
+              ['min_ttl', '0'],
               ['path_pattern', '"/static/*"'],
-              ['smooth_streaming', false],
+              ['smooth_streaming', 'false'],
               ['target_origin_id', '"S3-app.mine/test"'],
               ['viewer_protocol_policy', 'https-only']
             ] as const).map(([identifier, expression]) =>
@@ -138,7 +195,7 @@ describe('printBlockBody', () => {
             makeTFArgument('trusted_signers', []),
             makeTFBlockLiteral('forwarded_values', [
               makeTFArgument('headers', []),
-              makeTFArgument('query_string', false),
+              makeTFArgument('query_string', 'false'),
               makeTFArgument('query_string_cache_keys', []),
               makeTFBlockLiteral('cookies', [
                 makeTFArgument('forward', '"none"'),
@@ -146,7 +203,44 @@ describe('printBlockBody', () => {
               ])
             ])
           ])
-        ).toMatchSnapshot();
+        ).toMatchInlineSnapshot(`
+          "{
+            allowed_methods = [
+              GET,
+              HEAD
+            ]
+            cached_methods = [
+              GET,
+              HEAD
+            ]
+            compress = true
+            default_ttl = 31536000
+            max_ttl = 31536000
+            min_ttl = 0
+            path_pattern = \\"/static/*\\"
+            smooth_streaming = false
+            target_origin_id = \\"S3-app.mine/test\\"
+            viewer_protocol_policy = https-only
+            trusted_signers = [
+
+            ]
+            forwarded_values {
+              headers = [
+
+              ]
+              query_string = false
+              query_string_cache_keys = [
+
+              ]
+              cookies {
+                forward = \\"none\\"
+                whitelisted_names = [
+
+                ]
+              }
+            }
+          }"
+        `);
       });
     });
   });

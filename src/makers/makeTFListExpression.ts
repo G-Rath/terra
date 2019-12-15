@@ -1,7 +1,8 @@
+import { makeTFSimpleLiteral } from '@src/makers';
 import { TFListExpression, TFLiteralExpression, TFNodeType } from '@src/types';
 
 export const makeTFListExpression = (
-  values: TFLiteralExpression[],
+  values: Array<TFLiteralExpression | string>,
   hasTrailingComma = false,
   surroundingText?: Partial<TFListExpression['surroundingText']>
 ): TFListExpression => ({
@@ -14,5 +15,5 @@ export const makeTFListExpression = (
     trailingOuterText: '',
     ...surroundingText
   },
-  values
+  values: values.map(v => (typeof v === 'string' ? makeTFSimpleLiteral(v) : v))
 });

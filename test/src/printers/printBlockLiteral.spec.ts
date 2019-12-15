@@ -12,9 +12,9 @@ describe('printBlockLiteral', () => {
   it('prints the expression using printBlockBody', () => {
     expect(
       printBlockLiteral(
-        makeTFBlockLiteral('ingress', [makeTFArgument('from_port', 0)])
+        makeTFBlockLiteral('ingress', [makeTFArgument('from_port', '0')])
       )
-    ).toMatchSnapshot();
+    ).toMatchInlineSnapshot(`"ingress printBlockBody"`);
   });
 
   describe('when printing braces', () => {
@@ -25,9 +25,12 @@ describe('printBlockLiteral', () => {
     );
 
     it('prints the opening brace on the first line', () => {
-      expect(
-        printBlockLiteral(makeTFBlockLiteral('ingress', []))
-      ).toMatchSnapshot();
+      expect(printBlockLiteral(makeTFBlockLiteral('ingress', [])))
+        .toMatchInlineSnapshot(`
+        "ingress {
+          printBlockBody
+        }"
+      `);
     });
   });
 });

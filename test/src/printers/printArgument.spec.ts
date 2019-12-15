@@ -1,4 +1,4 @@
-import { makeTFArgument } from '@src/makers';
+import { makeTFArgument, makeTFSimpleLiteral } from '@src/makers';
 import { printArgument, printLiteralExpression } from '@src/printers';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
@@ -13,7 +13,9 @@ describe('printArgument', () => {
   );
 
   it('prints the expression using printLiteralExpression', () => {
-    expect(printArgument(makeTFArgument('name', '"world"'))).toMatchSnapshot();
+    expect(
+      printArgument(makeTFArgument('name', '"world"'))
+    ).toMatchInlineSnapshot(`"name = printLiteralExpression"`);
   });
 
   it.todo('quotes the identifier when required');
@@ -37,12 +39,16 @@ describe('printArgument', () => {
                   'aws_subnet.public_a.id',
                   'aws_subnet.public_b.id',
                   'aws_subnet.public_c.id'
-                ]
+                ].map(v => makeTFSimpleLiteral(v))
               ]
             ]
           })
         )
-      ).toMatchSnapshot();
+      ).toMatchInlineSnapshot(`
+        "name = {
+          printLiteralExpression
+        }"
+      `);
     });
   });
 });

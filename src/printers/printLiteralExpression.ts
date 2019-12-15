@@ -1,14 +1,11 @@
-import { printPrimitiveLiteral, printTFListExpression } from '@src/printers';
+import { printTFSimpleLiteral } from '@src/printer';
+import { printTFListExpression } from '@src/printers';
 import { TFLiteralExpression, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
 export const printLiteralExpression = (
   literal: TFLiteralExpression
 ): string => {
-  if (literal === null || typeof literal !== 'object') {
-    return printPrimitiveLiteral(literal);
-  }
-
   if (Array.isArray(literal)) {
     return [
       '[',
@@ -20,6 +17,10 @@ export const printLiteralExpression = (
       ),
       ']'
     ].join('\n');
+  }
+
+  if (literal.type === TFNodeType.Simple) {
+    return printTFSimpleLiteral(literal);
   }
 
   if (literal.type === TFNodeType.List) {

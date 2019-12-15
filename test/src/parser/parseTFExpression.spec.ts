@@ -1,15 +1,21 @@
+import { makeTFSimpleLiteral } from '@src/makers';
 import * as parser from '@src/parser';
 import { parseTFExpression, StringCursor } from '@src/parser';
+import { TFSimpleLiteral } from '@src/types';
 
 describe('parseTFExpression', () => {
   describe('leading text', () => {
     it('collects basic leading text correctly', () => {
-      expect(parseTFExpression(new StringCursor(' hello '))).toBe('hello');
+      expect(parseTFExpression(new StringCursor(' hello '))).toStrictEqual<
+        TFSimpleLiteral
+      >(makeTFSimpleLiteral('hello', { leadingOuterText: ' ' }));
     });
 
     it('does not treat comments in leading text as the start of the label', () => {
-      expect(parseTFExpression(new StringCursor('/* hello */world '))).toBe(
-        'world'
+      expect(
+        parseTFExpression(new StringCursor('/* hello */world '))
+      ).toStrictEqual<TFSimpleLiteral>(
+        makeTFSimpleLiteral('world', { leadingOuterText: '/* hello */' })
       );
     });
   });
@@ -48,47 +54,57 @@ describe('parseTFExpression', () => {
 
     describe('when the expression is a string literal', () => {
       it('parses empty string literals', () => {
-        expect(parseTFExpression(new StringCursor('""'))).toBe('""');
+        expect(parseTFExpression(new StringCursor('""'))).toStrictEqual<
+          TFSimpleLiteral
+        >(makeTFSimpleLiteral('""'));
       });
 
       it('parses basic string literals', () => {
-        expect(parseTFExpression(new StringCursor('"hello world"'))).toBe(
-          '"hello world"'
-        );
+        expect(
+          parseTFExpression(new StringCursor('"hello world"'))
+        ).toStrictEqual<TFSimpleLiteral>(makeTFSimpleLiteral('"hello world"'));
       });
 
       it('parses escaped string literals', () => {
-        expect(parseTFExpression(new StringCursor('"hello \\"world\\""'))).toBe(
-          '"hello \\"world\\""'
+        expect(
+          parseTFExpression(new StringCursor('"hello \\"world\\""'))
+        ).toStrictEqual<TFSimpleLiteral>(
+          makeTFSimpleLiteral('"hello \\"world\\""')
         );
       });
 
       it('parses single escaped string literals', () => {
-        expect(parseTFExpression(new StringCursor('"\\""'))).toBe('"\\""');
+        expect(parseTFExpression(new StringCursor('"\\""'))).toStrictEqual<
+          TFSimpleLiteral
+        >(makeTFSimpleLiteral('"\\""'));
       });
 
       it('parses deeply escaped string literals', () => {
         expect(
           parseTFExpression(new StringCursor('"hello \\\\\\"world\\\\\\""'))
-        ).toBe('"hello \\\\\\"world\\\\\\""');
+        ).toStrictEqual<TFSimpleLiteral>(
+          makeTFSimpleLiteral('"hello \\\\\\"world\\\\\\""')
+        );
       });
     });
 
     describe('when the expression is a numerical literal', () => {
       it('parses single digit literals', () => {
-        expect(parseTFExpression(new StringCursor('1 '))).toBe('1');
+        expect(parseTFExpression(new StringCursor('1 '))).toStrictEqual<
+          TFSimpleLiteral
+        >(makeTFSimpleLiteral('1'));
       });
 
       it('parses multi digit literals', () => {
-        expect(parseTFExpression(new StringCursor('123456789 '))).toBe(
-          '123456789'
-        );
+        expect(parseTFExpression(new StringCursor('123456789 '))).toStrictEqual<
+          TFSimpleLiteral
+        >(makeTFSimpleLiteral('123456789'));
       });
 
       it('parses floating numerical literals', () => {
-        expect(parseTFExpression(new StringCursor('1.23456789 '))).toBe(
-          '1.23456789'
-        );
+        expect(
+          parseTFExpression(new StringCursor('1.23456789 '))
+        ).toStrictEqual<TFSimpleLiteral>(makeTFSimpleLiteral('1.23456789'));
       });
     });
 
@@ -96,7 +112,9 @@ describe('parseTFExpression', () => {
       it('parses unquoted expressions', () => {
         expect(
           parseTFExpression(new StringCursor('aws_route53_zone.my_zone.id '))
-        ).toBe('aws_route53_zone.my_zone.id');
+        ).toStrictEqual<TFSimpleLiteral>(
+          makeTFSimpleLiteral('aws_route53_zone.my_zone.id')
+        );
       });
     });
 

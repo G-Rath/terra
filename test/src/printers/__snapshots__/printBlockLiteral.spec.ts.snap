@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`printBlockLiteral prints the expression using printBlockBody 1`] = `"ingress printBlockBody"`;
-
-exports[`printBlockLiteral when printing braces prints the opening brace on the first line 1`] = `
-"ingress {
-  printBlockBody
-}"
-`;
