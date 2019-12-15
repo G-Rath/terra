@@ -1,8 +1,8 @@
 import {
   makeTFArgument,
   makeTFBlockLiteral,
+  makeTFListExpression,
   makeTFResourceBlock,
-  makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
 import {
@@ -123,9 +123,9 @@ const buildRecordsArgumentsOrAliasBlock = (
     makeTFArgument('ttl', `${details.target.ttl}`),
     makeTFArgument(
       'records',
-      details.target.records
-        .map(v => `"${v.replace(/"/g, '\\"')}"`)
-        .map(v => makeTFSimpleLiteral(v))
+      makeTFListExpression(
+        details.target.records.map(v => `"${v.replace(/"/g, '\\"')}"`)
+      )
     )
   ];
 };

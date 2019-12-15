@@ -1,4 +1,4 @@
-import { makeTFArgument, makeTFSimpleLiteral } from '@src/makers';
+import { makeTFArgument, makeTFListExpression } from '@src/makers';
 import { printArgument, printLiteralExpression } from '@src/printers';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
@@ -35,11 +35,11 @@ describe('printArgument', () => {
             attributes: [
               [
                 'MyArray',
-                [
+                makeTFListExpression([
                   'aws_subnet.public_a.id',
                   'aws_subnet.public_b.id',
                   'aws_subnet.public_c.id'
-                ].map(v => makeTFSimpleLiteral(v))
+                ])
               ]
             ]
           })

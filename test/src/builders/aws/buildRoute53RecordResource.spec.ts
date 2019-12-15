@@ -1,6 +1,7 @@
 import { buildRoute53RecordResource } from '@src/builders/aws';
 import {
   makeTFArgument,
+  makeTFListExpression,
   makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
@@ -170,10 +171,9 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).toContainTFArgumentWithExpression(
-        'records',
-        ['"192.168.1.42"'].map(v => makeTFSimpleLiteral(v))
-      );
+      expect(body).toContainTFArgumentWithExpression('records', [
+        '"192.168.1.42"'
+      ]);
     });
 
     it('omits the alias block', () => {
@@ -204,10 +204,9 @@ describe('buildRoute53RecordResource', () => {
           zoneName: 'imnotcrazy.info'
         });
 
-        expect(body).toContainTFArgumentWithExpression(
-          'records',
-          ['"\\"v=spf1 -all\\""'].map(v => makeTFSimpleLiteral(v))
-        );
+        expect(body).toContainTFArgumentWithExpression('records', [
+          '"\\"v=spf1 -all\\""'
+        ]);
       });
     });
   });

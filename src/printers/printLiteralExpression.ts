@@ -6,19 +6,6 @@ import indentString from 'indent-string';
 export const printLiteralExpression = (
   literal: TFLiteralExpression
 ): string => {
-  if (Array.isArray(literal)) {
-    return [
-      '[',
-      indentString(
-        literal
-          .map(subexpression => `${printLiteralExpression(subexpression)}`)
-          .join(',\n'),
-        2
-      ),
-      ']'
-    ].join('\n');
-  }
-
   if (literal.type === TFNodeType.Simple) {
     return printTFSimpleLiteral(literal);
   }

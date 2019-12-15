@@ -1,8 +1,7 @@
 import {
   makeTFArgument,
   makeTFBlockLiteral,
-  makeTFResourceBlock,
-  makeTFSimpleLiteral
+  makeTFResourceBlock
 } from '@src/makers';
 import { printResourceBlock } from '@src/printers';
 import { TFNodeType, TFResourceBlock } from '@src/types';
@@ -31,29 +30,20 @@ describe('printResourceBlock', () => {
         ] as const).map(([identifier, expression]) =>
           makeTFArgument(identifier, expression)
         ),
-        makeTFArgument(
-          'records',
-          [
-            'aws_route53_zone.imnotcrazy_info.name_servers.0',
-            'aws_route53_zone.imnotcrazy_info.name_servers.1',
-            'aws_route53_zone.imnotcrazy_info.name_servers.2',
-            'aws_route53_zone.imnotcrazy_info.name_servers.3'
-          ].map(v => makeTFSimpleLiteral(v))
-        )
+        makeTFArgument('records', [
+          'aws_route53_zone.imnotcrazy_info.name_servers.0',
+          'aws_route53_zone.imnotcrazy_info.name_servers.1',
+          'aws_route53_zone.imnotcrazy_info.name_servers.2',
+          'aws_route53_zone.imnotcrazy_info.name_servers.3'
+        ])
       ]
     ),
     makeTFResourceBlock(
       'distribution',
       AwsResourceType.AWS_CLOUDFRONT_DISTRIBUTION,
       [
-        makeTFArgument(
-          'allowed_methods',
-          ['"GET"', '"HEAD"'].map(v => makeTFSimpleLiteral(v))
-        ),
-        makeTFArgument(
-          'cached_methods',
-          ['"GET"', '"HEAD"'].map(v => makeTFSimpleLiteral(v))
-        ),
+        makeTFArgument('allowed_methods', ['"GET"', '"HEAD"']),
+        makeTFArgument('cached_methods', ['"GET"', '"HEAD"']),
         ...([
           ['compress', 'true'],
           ['default_ttl', '31536000'],

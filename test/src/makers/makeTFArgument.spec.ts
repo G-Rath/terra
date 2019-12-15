@@ -1,4 +1,8 @@
-import { makeTFArgument, makeTFSimpleLiteral } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFListExpression,
+  makeTFSimpleLiteral
+} from '@src/makers';
 import { TFArgument, TFNodeType } from '@src/types';
 
 describe('makeTFArgument', () => {
@@ -28,6 +32,23 @@ describe('makeTFArgument', () => {
         type: TFNodeType.Argument,
         identifier: 'identifier',
         expression: makeTFSimpleLiteral('"hello world"'),
+        surroundingText: {
+          leadingInnerText: 'hello world',
+          trailingInnerText: ''
+        }
+      });
+    });
+  });
+  describe('when expression is an array', () => {
+    it('makes it into a TFListExpression node', () => {
+      expect(
+        makeTFArgument('identifier', ['"hello world"'], {
+          leadingInnerText: 'hello world'
+        })
+      ).toStrictEqual<TFArgument>({
+        type: TFNodeType.Argument,
+        identifier: 'identifier',
+        expression: makeTFListExpression(['"hello world"']),
         surroundingText: {
           leadingInnerText: 'hello world',
           trailingInnerText: ''
