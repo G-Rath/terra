@@ -1,6 +1,7 @@
 import {
   makeTFArgument,
   makeTFBlockBody,
+  makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
 import { TFBlockBody, TFBlockBodyBody } from '@src/types';
@@ -164,6 +165,19 @@ describe('toContainTFArgumentWithExpression', () => {
           '300'
         );
       }).toThrow("Received isn't a TFBlockBody");
+    });
+  });
+
+  describe('when the expression is a TFSimpleLiteral node', () => {
+    it('can fail due to surrounding text', () => {
+      const body = makeTFBlockBody([expectedArgument]);
+
+      expect(() => {
+        expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+          'ttl',
+          makeTFSimpleLiteral('300', { trailingOuterText: 'hello world' })
+        );
+      }).toThrow('Argument has unexpected expression.');
     });
   });
 });

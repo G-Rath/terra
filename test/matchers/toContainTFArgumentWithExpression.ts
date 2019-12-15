@@ -1,4 +1,4 @@
-import { makeTFSimpleLiteral } from '@src/makers';
+import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
 import {
   TFArgument,
   TFBlockBody,
@@ -24,7 +24,7 @@ declare global {
        */
       toContainTFArgumentWithExpression<TIdentifier extends string = string>(
         identifier: TIdentifier,
-        expression: TFLiteralExpression | string
+        expression: TFLiteralExpression | string | string[]
       ): R;
     }
   }
@@ -34,13 +34,21 @@ const isAsymmetricMatcher = (v: unknown): v is AsymmetricMatcher<unknown> =>
   typeof v === 'object' && v !== null && '$$typeof' in v;
 
 const buildExpectedExpression = (
-  expression: TFLiteralExpression | string | AsymmetricMatcher<unknown>
+  expression:
+    | TFLiteralExpression
+    | string
+    | string[]
+    | AsymmetricMatcher<unknown>
 ): TFLiteralExpression => {
   if (typeof expression === 'string' || isAsymmetricMatcher(expression)) {
     return makeTFSimpleLiteral(expression as string, {
       leadingOuterText: expect.any(String),
       trailingOuterText: expect.any(String)
     });
+  }
+
+  if (Array.isArray(expression)) {
+    return makeTFListExpression(expression);
   }
 
   return expression;

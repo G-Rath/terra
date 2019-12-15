@@ -63,7 +63,6 @@ export interface TFListExpression extends TFBaseNode {
 export type TFLiteralExpression =
   | TFSimpleLiteral
   | TFFunctionCall
-  | TFLiteralExpression[] // todo: replace w/ Node
   | TFListExpression
   | TFMapLiteral;
 

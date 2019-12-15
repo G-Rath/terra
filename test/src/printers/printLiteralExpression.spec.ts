@@ -26,178 +26,6 @@ describe('printLiteralExpression', () => {
     });
   });
 
-  describe('when literal is an array', () => {
-    it('prints a single simple element correctly', () => {
-      expect(
-        printLiteralExpression([
-          makeTFSimpleLiteral('aws_route53_zone.my_zone.name')
-        ])
-      ).toMatchInlineSnapshot(`
-        "[
-          aws_route53_zone.my_zone.name
-        ]"
-      `);
-    });
-
-    it('prints multiple simple elements correctly', () => {
-      expect(
-        printLiteralExpression(
-          [
-            'aws_route53_zone.my_zone.name_servers.0',
-            'aws_route53_zone.my_zone.name_servers.1',
-            'aws_route53_zone.my_zone.name_servers.2',
-            'aws_route53_zone.my_zone.name_servers.3'
-          ].map(v => makeTFSimpleLiteral(v))
-        )
-      ).toMatchInlineSnapshot(`
-        "[
-          aws_route53_zone.my_zone.name_servers.0,
-          aws_route53_zone.my_zone.name_servers.1,
-          aws_route53_zone.my_zone.name_servers.2,
-          aws_route53_zone.my_zone.name_servers.3
-        ]"
-      `);
-    });
-
-    it('prints nested arrays correctly', () => {
-      expect(
-        printLiteralExpression([
-          [
-            'aws_subnet.private_a.id',
-            'aws_subnet.private_b.id',
-            'aws_subnet.private_c.id'
-          ].map(v => makeTFSimpleLiteral(v)),
-          [
-            'aws_subnet.public_a.id',
-            'aws_subnet.public_b.id',
-            'aws_subnet.public_c.id'
-          ].map(v => makeTFSimpleLiteral(v))
-        ])
-      ).toMatchInlineSnapshot(`
-        "[
-          [
-            aws_subnet.private_a.id,
-            aws_subnet.private_b.id,
-            aws_subnet.private_c.id
-          ],
-          [
-            aws_subnet.public_a.id,
-            aws_subnet.public_b.id,
-            aws_subnet.public_c.id
-          ]
-        ]"
-      `);
-    });
-
-    it('prints map elements correctly', () => {
-      expect(
-        printLiteralExpression([
-          {
-            type: TFNodeType.Map,
-            attributes: [
-              ['Name', makeTFSimpleLiteral('"MyName"')],
-              ['TTL', makeTFSimpleLiteral('300')]
-            ]
-          }
-        ])
-      ).toMatchInlineSnapshot(`
-        "[
-          {
-            Name = \\"MyName\\"
-            TTL = 300
-          }
-        ]"
-      `);
-    });
-
-    it('prints function elements correctly', () => {
-      // todo: functions not yet supported properly
-      expect(
-        printLiteralExpression([
-          [
-            'aws_subnet.private_a.id',
-            'aws_subnet.private_b.id',
-            'aws_subnet.private_c.id'
-          ].map(v => makeTFSimpleLiteral(v)),
-          {
-            type: TFNodeType.Function,
-            name: 'map',
-            args: []
-          }
-        ])
-      ).toMatchInlineSnapshot(`
-        "[
-          [
-            aws_subnet.private_a.id,
-            aws_subnet.private_b.id,
-            aws_subnet.private_c.id
-          ],
-          map(
-            # FIXME - FUNCTIONS NOT YET SUPPORTED
-          )
-        ]"
-      `);
-    });
-
-    it('prints mixed elements correctly', () => {
-      expect(
-        printLiteralExpression([
-          [
-            'aws_subnet.private_a.id',
-            'aws_subnet.private_b.id',
-            'aws_subnet.private_c.id'
-          ].map(v => makeTFSimpleLiteral(v)),
-          makeTFSimpleLiteral('true'),
-          makeTFSimpleLiteral('300'),
-          {
-            type: TFNodeType.Map,
-            attributes: [
-              [
-                'MyMap',
-                {
-                  type: TFNodeType.Map,
-                  attributes: [
-                    ['Enabled', makeTFSimpleLiteral('false')],
-                    ['TTL', makeTFSimpleLiteral('300')],
-                    [
-                      'MyArray',
-                      [
-                        'aws_subnet.public_a.id',
-                        'aws_subnet.public_b.id',
-                        'aws_subnet.public_c.id'
-                      ].map(v => makeTFSimpleLiteral(v))
-                    ]
-                  ]
-                }
-              ]
-            ]
-          }
-        ])
-      ).toMatchInlineSnapshot(`
-        "[
-          [
-            aws_subnet.private_a.id,
-            aws_subnet.private_b.id,
-            aws_subnet.private_c.id
-          ],
-          true,
-          300,
-          {
-            MyMap = {
-              Enabled = false
-              TTL = 300
-              MyArray = [
-                aws_subnet.public_a.id,
-                aws_subnet.public_b.id,
-                aws_subnet.public_c.id
-              ]
-            }
-          }
-        ]"
-      `);
-    });
-  });
-
   describe('when expression is a List', () => {
     it('uses printTFListExpression', () => {
       const printTFListExpressionSpy = jest.spyOn(
@@ -238,11 +66,11 @@ describe('printLiteralExpression', () => {
           attributes: [
             [
               'MyArray',
-              [
+              makeTFListExpression([
                 'aws_subnet.public_a.id',
                 'aws_subnet.public_b.id',
                 'aws_subnet.public_c.id'
-              ].map(v => makeTFSimpleLiteral(v))
+              ])
             ]
           ]
         })
@@ -358,11 +186,11 @@ describe('printLiteralExpression', () => {
                   ['TTL', makeTFSimpleLiteral('300')],
                   [
                     'MyArray',
-                    [
+                    makeTFListExpression([
                       'aws_subnet.public_a.id',
                       'aws_subnet.public_b.id',
                       'aws_subnet.public_c.id'
-                    ].map(v => makeTFSimpleLiteral(v))
+                    ])
                   ]
                 ]
               }

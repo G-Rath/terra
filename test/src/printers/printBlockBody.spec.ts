@@ -34,12 +34,9 @@ describe('printBlockBody', () => {
               makeTFArgument('from_port', '0'),
               makeTFArgument('to_port', '0'),
               makeTFArgument('protocol', '"-1"'),
-              makeTFArgument(
-                'security_groups',
-                ['aws_security_group.wordpress_server.id'].map(v =>
-                  makeTFSimpleLiteral(v)
-                )
-              )
+              makeTFArgument('security_groups', [
+                'aws_security_group.wordpress_server.id'
+              ])
             ])
           ])
         ).toMatchInlineSnapshot(`
@@ -117,12 +114,9 @@ describe('printBlockBody', () => {
               makeTFArgument('from_port', '0'),
               makeTFArgument('to_port', '0'),
               makeTFArgument('protocol', '"-1"'),
-              makeTFArgument(
-                'security_groups',
-                ['aws_security_group.wordpress_server.id'].map(v =>
-                  makeTFSimpleLiteral(v)
-                )
-              )
+              makeTFArgument('security_groups', [
+                'aws_security_group.wordpress_server.id'
+              ])
             ])
           ])
         ).toMatchInlineSnapshot(`
@@ -172,14 +166,8 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFArgument(
-              'allowed_methods',
-              ['GET', 'HEAD'].map(v => makeTFSimpleLiteral(v))
-            ),
-            makeTFArgument(
-              'cached_methods',
-              ['GET', 'HEAD'].map(v => makeTFSimpleLiteral(v))
-            ),
+            makeTFArgument('allowed_methods', ['GET', 'HEAD']),
+            makeTFArgument('cached_methods', ['GET', 'HEAD']),
             ...([
               ['compress', 'true'],
               ['default_ttl', '31536000'],
