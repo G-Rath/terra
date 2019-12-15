@@ -9,7 +9,7 @@ import './toContainTFArgumentWithExpression';
 
 describe('toContainTFArgumentWithExpression', () => {
   const standardArgument = makeTFStringArgument('name', 'example.com');
-  const expectedArgument = makeTFArgument('ttl', 300);
+  const expectedArgument = makeTFArgument('ttl', '300');
 
   describe('positive', () => {
     describe('when body contains no arguments with the given identifier', () => {
@@ -19,7 +19,7 @@ describe('toContainTFArgumentWithExpression', () => {
         expect(() => {
           expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
             'ttl',
-            300
+            '300'
           );
         }).toThrow(
           'Body contains zero arguments with the expected identifier.'
@@ -35,7 +35,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
-              300
+              '300'
             );
           }).not.toThrow();
         });
@@ -48,7 +48,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
-              '300'
+              '"300"'
             );
           }).toThrow('Argument has unexpected expression.');
         });
@@ -61,7 +61,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
-              expect.any(Number)
+              expect.stringMatching(/[\d]/)
             );
           }).not.toThrow();
         });
@@ -75,7 +75,7 @@ describe('toContainTFArgumentWithExpression', () => {
         expect(() => {
           expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
             'ttl',
-            300
+            '300'
           );
         }).toThrow('Body contains two arguments with the expected identifier.');
       });
@@ -89,7 +89,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
-              300
+              '300'
             );
           }).not.toThrow();
         });
@@ -102,7 +102,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
-              300
+              '300'
             );
           }).not.toThrow();
         });
@@ -115,7 +115,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               expect.any(String),
-              300
+              '300'
             );
           }).toThrow(
             'Body contains zero arguments with the expected identifier.'
@@ -133,7 +133,7 @@ describe('toContainTFArgumentWithExpression', () => {
         expect(() => {
           expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
-            300
+            '300'
           );
         }).not.toThrow();
       });
@@ -146,7 +146,7 @@ describe('toContainTFArgumentWithExpression', () => {
         expect(() => {
           expect<TFBlockBody>(body).not.toContainTFArgumentWithExpression(
             'ttl',
-            300
+            '300'
             // expect.anything()
           );
         }).toThrow('Body contains two arguments with the expected identifier.');

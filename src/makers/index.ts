@@ -4,5 +4,6 @@ export * from './makeTFBlockBody';
 export * from './makeTFBlockLiteral';
 export * from './makeTFDynamicBlock';
 export * from './makeTFResourceBlock';
+export * from './makeTFSimpleLiteral';
 export * from './makeTFStringArgument';
 export * from './makeTFListExpression';

@@ -1,3 +1,4 @@
+import { makeTFSimpleLiteral } from '@src/makers';
 import {
   TFArgument,
   TFBlockBody,
@@ -23,11 +24,27 @@ declare global {
        */
       toContainTFArgumentWithExpression<TIdentifier extends string = string>(
         identifier: TIdentifier,
-        expression: TFLiteralExpression
+        expression: TFLiteralExpression | string
       ): R;
     }
   }
 }
+
+const isAsymmetricMatcher = (v: unknown): v is AsymmetricMatcher<unknown> =>
+  typeof v === 'object' && v !== null && '$$typeof' in v;
+
+const buildExpectedExpression = (
+  expression: TFLiteralExpression | string | AsymmetricMatcher<unknown>
+): TFLiteralExpression => {
+  if (typeof expression === 'string' || isAsymmetricMatcher(expression)) {
+    return makeTFSimpleLiteral(expression as string, {
+      leadingOuterText: expect.any(String),
+      trailingOuterText: expect.any(String)
+    });
+  }
+
+  return expression;
+};
 
 const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
   TIdentifier extends string = string
@@ -35,7 +52,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
   this: jest.MatcherUtils,
   body: TFBlockBody<TIdentifier> | unknown,
   identifier: TIdentifier | AsymmetricMatcher<unknown>,
-  expression: TFLiteralExpression
+  expression: TFLiteralExpression | string | AsymmetricMatcher<unknown>
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;
   const matcherName = toContainTFArgumentWithExpression.name;
@@ -82,7 +99,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
     };
   }
 
-  const expressionExpected = expression;
+  const expressionExpected = buildExpectedExpression(expression);
   const [{ expression: expressionReceived }] = argsMatchingIdentifier;
 
   return {
@@ -97,7 +114,9 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
         '',
         'Argument has unexpected expression.',
         '',
-        `${printLabel(labelExpected)}${utils.printExpected(expression)}`,
+        `${printLabel(labelExpected)}${utils.printExpected(
+          expressionExpected
+        )}`,
         `${printLabel(labelReceived)}${utils.printReceived(expressionReceived)}`
       ].join('\n');
     }

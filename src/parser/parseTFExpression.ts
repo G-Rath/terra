@@ -1,3 +1,4 @@
+import { makeTFSimpleLiteral } from '@src/makers';
 import { parseTFListExpression, StringCursor } from '@src/parser';
 import { TFLiteralExpression } from '@src/types';
 
@@ -5,15 +6,20 @@ export const parseTFExpression = (
   cursor: StringCursor
 ): TFLiteralExpression => {
   // the text leading up to the expression; the last char is the start of the expression
-  cursor.collectUntilWithComments(/[[{\d"\w]/).slice(0, -1);
+  const leadingOuterText = cursor
+    .collectUntilWithComments(/[[{\d"\w]/)
+    .slice(0, -1);
 
   cursor.rewind(1);
 
   if (cursor.char === '[') {
+    cursor.rewind(leadingOuterText.length);
+
     return parseTFListExpression(cursor);
   }
 
   if (cursor.char === '{') {
+    cursor.rewind(leadingOuterText.length);
     // map of elements
     throw new Error('maps are not yet supported');
     // parseTFBlockBody();
@@ -21,7 +27,10 @@ export const parseTFExpression = (
   }
 
   if (cursor.char === '"') {
-    return cursor.collectUntil(/"[^"\\]*(?:\\.[^"\\]*)*"/);
+    return makeTFSimpleLiteral(
+      cursor.collectUntil(/"[^"\\]*(?:\\.[^"\\]*)*"/),
+      { leadingOuterText }
+    );
   }
 
   if (/\d/.test(cursor.char)) {
@@ -29,7 +38,7 @@ export const parseTFExpression = (
 
     cursor.rewind(1);
 
-    return expression;
+    return makeTFSimpleLiteral(expression, { leadingOuterText });
   }
 
   const expression = cursor.collectUntil([' ', '\n', '(', ',']);
@@ -42,5 +51,5 @@ export const parseTFExpression = (
 
   cursor.rewind(1);
 
-  return expression.slice(0, -1);
+  return makeTFSimpleLiteral(expression.slice(0, -1), { leadingOuterText });
 };

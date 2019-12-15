@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`printArgument prints the expression using printLiteralExpression 1`] = `"name = printLiteralExpression"`;
-
-exports[`printArgument when the expression has braces prints the opening brace on the first line 1`] = `
-"name = {
-  printLiteralExpression
-}"
-`;

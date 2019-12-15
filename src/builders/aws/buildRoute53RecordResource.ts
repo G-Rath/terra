@@ -2,6 +2,7 @@ import {
   makeTFArgument,
   makeTFBlockLiteral,
   makeTFResourceBlock,
+  makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
 import {
@@ -85,7 +86,10 @@ const buildAliasBlock = (
   makeTFBlockLiteral('alias', [
     makeTFStringArgument('zone_id', aliasTarget.hostedZoneId),
     makeTFStringArgument('name', aliasTarget.dnsName),
-    makeTFArgument('evaluate_target_health', aliasTarget.evaluateTargetHealth)
+    makeTFArgument(
+      'evaluate_target_health',
+      `${aliasTarget.evaluateTargetHealth}`
+    )
   ]);
 
 /**
@@ -116,10 +120,12 @@ const buildRecordsArgumentsOrAliasBlock = (
   }
 
   return [
-    makeTFArgument('ttl', details.target.ttl),
+    makeTFArgument('ttl', `${details.target.ttl}`),
     makeTFArgument(
       'records',
-      details.target.records.map(v => `"${v.replace(/"/g, '\\"')}"`)
+      details.target.records
+        .map(v => `"${v.replace(/"/g, '\\"')}"`)
+        .map(v => makeTFSimpleLiteral(v))
     )
   ];
 };

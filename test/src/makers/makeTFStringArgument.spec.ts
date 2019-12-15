@@ -1,4 +1,4 @@
-import { makeTFStringArgument } from '@src/makers';
+import { makeTFSimpleLiteral, makeTFStringArgument } from '@src/makers';
 import { TFArgument, TFNodeType } from '@src/types';
 
 describe('makeTFStringArgument', () => {
@@ -10,7 +10,7 @@ describe('makeTFStringArgument', () => {
     ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
       identifier: 'identifier',
-      expression: expect.stringContaining('expression'),
+      expression: makeTFSimpleLiteral(expect.stringContaining('expression')),
       surroundingText: {
         leadingInnerText: 'hello sunshine',
         trailingInnerText: ''
@@ -26,7 +26,7 @@ describe('makeTFStringArgument', () => {
     ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
       identifier: 'identifier',
-      expression: expect.stringMatching(/^".+"$/),
+      expression: makeTFSimpleLiteral(expect.stringMatching(/^".+"$/)),
       surroundingText: {
         leadingInnerText: 'hello sunshine',
         trailingInnerText: ''

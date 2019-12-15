@@ -1,24 +1,21 @@
-import { makeTFListExpression } from '@src/makers';
+import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
 import { printTFListExpression } from '@src/printers';
 import { TFNodeType } from '@src/types';
 
 describe('printTFListExpression', () => {
-  it('prints a single primitive value correctly', () => {
+  it('prints a single simple value correctly', () => {
     expect(
       printTFListExpression(
-        makeTFListExpression(
-          ['aws_route53_zone.my_zone.name'], //
-          false
-        )
+        makeTFListExpression(['aws_route53_zone.my_zone.name'], false)
       )
     ).toMatchInlineSnapshot(`
-        "[
-          aws_route53_zone.my_zone.name
-        ]"
-      `);
+      "[
+        aws_route53_zone.my_zone.name
+      ]"
+    `);
   });
 
-  it('prints multiple primitive values correctly', () => {
+  it('prints multiple simple values correctly', () => {
     expect(
       printTFListExpression(
         makeTFListExpression(
@@ -32,13 +29,13 @@ describe('printTFListExpression', () => {
         )
       )
     ).toMatchInlineSnapshot(`
-        "[
-          aws_route53_zone.my_zone.name_servers.0,
-          aws_route53_zone.my_zone.name_servers.1,
-          aws_route53_zone.my_zone.name_servers.2,
-          aws_route53_zone.my_zone.name_servers.3
-        ]"
-      `);
+      "[
+        aws_route53_zone.my_zone.name_servers.0,
+        aws_route53_zone.my_zone.name_servers.1,
+        aws_route53_zone.my_zone.name_servers.2,
+        aws_route53_zone.my_zone.name_servers.3
+      ]"
+    `);
   });
 
   it('prints nested lists correctly', () => {
@@ -90,8 +87,8 @@ describe('printTFListExpression', () => {
             {
               type: TFNodeType.Map,
               attributes: [
-                ['Name', '"MyName"'],
-                ['TTL', 300]
+                ['Name', makeTFSimpleLiteral('"MyName"')],
+                ['TTL', makeTFSimpleLiteral('300')]
               ]
             }
           ],
@@ -99,13 +96,13 @@ describe('printTFListExpression', () => {
         )
       )
     ).toMatchInlineSnapshot(`
-        "[
-          {
-            Name = \\"MyName\\"
-            TTL = 300
-          }
-        ]"
-      `);
+      "[
+        {
+          Name = \\"MyName\\"
+          TTL = 300
+        }
+      ]"
+    `);
   });
 
   it('prints function values correctly', () => {
@@ -155,8 +152,8 @@ describe('printTFListExpression', () => {
               'aws_subnet.private_b.id',
               'aws_subnet.private_c.id'
             ]),
-            true,
-            300,
+            makeTFSimpleLiteral('true'),
+            makeTFSimpleLiteral('300'),
             {
               type: TFNodeType.Map,
               attributes: [
@@ -165,8 +162,8 @@ describe('printTFListExpression', () => {
                   {
                     type: TFNodeType.Map,
                     attributes: [
-                      ['Enabled', false],
-                      ['TTL', 300],
+                      ['Enabled', makeTFSimpleLiteral('false')],
+                      ['TTL', makeTFSimpleLiteral('300')],
                       [
                         'MyList',
                         makeTFListExpression(

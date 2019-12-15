@@ -9,7 +9,7 @@ import './toContainTFArgument';
 
 describe('toContainTFArgument', () => {
   const standardArgument = makeTFStringArgument('name', 'example.com');
-  const expectedArgument = makeTFArgument('ttl', 300);
+  const expectedArgument = makeTFArgument('ttl', '300');
 
   describe('positive', () => {
     describe('when body contains no arguments with the given identifier', () => {
