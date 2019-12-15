@@ -1,9 +1,12 @@
+import { makeTFLabel } from '@src/makers';
 import { StringCursor } from '@src/parser';
+import { TFLabel } from '@src/types';
 import { assertQuotedStringIsClosed } from '@src/utils';
 
-export const parseTFLabel = (cursor: StringCursor): string => {
-  // the text leading up to the label; the last char is the start of the label
-  cursor.collectUntilWithComments(/["\w]/).slice(0, -1);
+export const parseTFLabel = (cursor: StringCursor): TFLabel => {
+  const leadingOuterText = cursor
+    .collectUntilWithComments(/["\w]/)
+    .slice(0, -1);
 
   cursor.rewind(1);
 
@@ -30,5 +33,7 @@ export const parseTFLabel = (cursor: StringCursor): string => {
 
   assertQuotedStringIsClosed(label);
 
-  return label;
+  return makeTFLabel(label, {
+    leadingOuterText
+  });
 };

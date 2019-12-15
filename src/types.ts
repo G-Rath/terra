@@ -9,6 +9,7 @@ export enum TFNodeType {
   Argument = 'argument',
   Function = 'function',
   Block = 'block',
+  Label = 'label',
   Map = 'map'
 }
 
@@ -39,6 +40,12 @@ export interface SurroundingOuterText {
 }
 
 export type SurroundingText = SurroundingInnerText & SurroundingOuterText;
+
+export interface TFLabel {
+  type: TFNodeType.Label;
+  value: string;
+  surroundingText: SurroundingOuterText;
+}
 
 export interface TFListExpression extends TFBaseNode {
   type: TFNodeType.List;
