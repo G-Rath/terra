@@ -1,6 +1,5 @@
 import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
 import * as printer from '@src/printer';
-import * as printers from '@src/printers';
 import { printLiteralExpression } from '@src/printers';
 import { TFNodeType } from '@src/types';
 
@@ -29,7 +28,7 @@ describe('printLiteralExpression', () => {
   describe('when expression is a List', () => {
     it('uses printTFListExpression', () => {
       const printTFListExpressionSpy = jest.spyOn(
-        printers,
+        printer,
         'printTFListExpression'
       );
 

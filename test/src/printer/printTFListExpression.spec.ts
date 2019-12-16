@@ -1,5 +1,5 @@
 import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
-import { printTFListExpression } from '@src/printers';
+import { printTFListExpression } from '@src/printer';
 import { TFNodeType } from '@src/types';
 
 describe('printTFListExpression', () => {
