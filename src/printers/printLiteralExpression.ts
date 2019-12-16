@@ -1,5 +1,4 @@
-import { printTFSimpleLiteral } from '@src/printer';
-import { printTFListExpression } from '@src/printers';
+import { printTFListExpression, printTFSimpleLiteral } from '@src/printer';
 import { TFLiteralExpression, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
