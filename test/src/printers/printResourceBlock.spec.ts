@@ -9,7 +9,7 @@ import { AwsResourceType } from '@src/utils';
 
 describe('printResourceBlock', () => {
   it.each<TFResourceBlock>([
-    makeTFResourceBlock('imnotcrazy_info', AwsResourceType.AWS_ROUTE53_ZONE, [
+    makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'imnotcrazy_info', [
       makeTFArgument('name', '"imnotcrazy.info"'),
       makeTFArgument('tags', {
         type: TFNodeType.Function,
@@ -18,8 +18,8 @@ describe('printResourceBlock', () => {
       })
     ]),
     makeTFResourceBlock(
-      'imnotcrazy_info_ns',
       AwsResourceType.AWS_ROUTE53_RECORD,
+      'imnotcrazy_info_ns',
       [
         ...([
           ['allow_overwrite', 'true'],
@@ -39,8 +39,8 @@ describe('printResourceBlock', () => {
       ]
     ),
     makeTFResourceBlock(
-      'distribution',
       AwsResourceType.AWS_CLOUDFRONT_DISTRIBUTION,
+      'distribution',
       [
         makeTFArgument('allowed_methods', ['"GET"', '"HEAD"']),
         makeTFArgument('cached_methods', ['"GET"', '"HEAD"']),

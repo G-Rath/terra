@@ -35,11 +35,7 @@ describe('nadoRoute53Zone', () => {
   beforeEach(() => {
     collectRoute53ZoneDetailsMock.mockResolvedValue(zoneDetails);
     buildRoute53ZoneResourceMock.mockReturnValue(
-      makeTFResourceBlock(
-        'my_zone_com', //
-        AwsResourceType.AWS_ROUTE53_ZONE,
-        []
-      )
+      makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
     );
   });
 
@@ -47,7 +43,7 @@ describe('nadoRoute53Zone', () => {
     const [block] = await nadoRoute53Zone('/HostedZone/123456789', false);
 
     expect(block).toStrictEqual(
-      makeTFResourceBlock('my_zone_com', AwsResourceType.AWS_ROUTE53_ZONE, [])
+      makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
     );
   });
 
@@ -55,7 +51,7 @@ describe('nadoRoute53Zone', () => {
     const [block] = await nadoRoute53Zone('/HostedZone/123456789', false);
 
     expect(block).toStrictEqual(
-      makeTFResourceBlock('my_zone_com', AwsResourceType.AWS_ROUTE53_ZONE, [])
+      makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
     );
   });
 
@@ -81,8 +77,8 @@ describe('nadoRoute53Zone', () => {
       ]);
       buildRoute53RecordResourceMock.mockReturnValue(
         makeTFResourceBlock(
-          'my_record_com',
           AwsResourceType.AWS_ROUTE53_RECORD,
+          'my_record_com',
           []
         )
       );
@@ -92,7 +88,7 @@ describe('nadoRoute53Zone', () => {
       const [block] = await nadoRoute53Zone('/HostedZone/123456789', false);
 
       expect(block).toStrictEqual(
-        makeTFResourceBlock('my_zone_com', AwsResourceType.AWS_ROUTE53_ZONE, [])
+        makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
       );
     });
 
@@ -101,8 +97,8 @@ describe('nadoRoute53Zone', () => {
 
       expect(block).toStrictEqual(
         makeTFResourceBlock(
-          'my_record_com',
           AwsResourceType.AWS_ROUTE53_RECORD,
+          'my_record_com',
           []
         )
       );

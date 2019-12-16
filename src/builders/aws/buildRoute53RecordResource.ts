@@ -178,8 +178,8 @@ export const buildRoute53RecordResource = (
   ];
 
   return makeTFResourceBlock(
-    buildRecordResourceName(normalZoneName, normalRecordName, details.type),
     AwsResourceType.AWS_ROUTE53_RECORD,
+    buildRecordResourceName(normalZoneName, normalRecordName, details.type),
     body
   );
 };

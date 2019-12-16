@@ -64,8 +64,8 @@ export const buildS3BucketResource = (
   ];
 
   return makeTFResourceBlock(
-    asResourceName(s3Bucket.BucketName),
     AwsResourceType.AWS_S3_BUCKET,
+    asResourceName(s3Bucket.BucketName),
     body
   );
 };

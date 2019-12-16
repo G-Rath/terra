@@ -68,8 +68,8 @@ export const buildRoute53ZoneResource = (
   }
 
   return makeTFResourceBlock(
-    asResourceName(normalisedZoneName),
     AwsResourceType.AWS_ROUTE53_ZONE,
+    asResourceName(normalisedZoneName),
     body
   );
 };

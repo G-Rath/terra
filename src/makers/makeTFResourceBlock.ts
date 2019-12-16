@@ -21,8 +21,8 @@ interface ResourceIdentifierMap {
 }
 
 export const makeTFResourceBlock = <TResource extends ResourceType>(
-  name: string,
   resource: TResource,
+  name: string,
   body:
     | TFBlockBody<ResourceIdentifierMap[TResource]>
     | TFBlockBodyBody<ResourceIdentifierMap[TResource]>,
