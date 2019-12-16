@@ -1,8 +1,8 @@
-import { printTFListExpression, printTFSimpleLiteral } from '@src/printer';
+import { printTFSimpleLiteral, printTFListExpression } from '@src/printer';
 import { TFLiteralExpression, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
-export const printLiteralExpression = (
+export const printTFLiteralExpression = (
   literal: TFLiteralExpression
 ): string => {
   if (literal.type === TFNodeType.Simple) {
@@ -20,7 +20,7 @@ export const printLiteralExpression = (
       '{',
       ...literal.attributes
         .map(([identifier, expression]) =>
-          [identifier, '=', printLiteralExpression(expression)].join(' ')
+          [identifier, '=', printTFLiteralExpression(expression)].join(' ')
         )
         .map(str => indentString(str, 2)),
       '}'

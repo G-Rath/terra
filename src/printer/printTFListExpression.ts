@@ -1,11 +1,11 @@
-import { printLiteralExpression } from '@src/printers';
+import { printTFLiteralExpression } from '@src/printer';
 import { TFListExpression } from '@src/types';
 import indentString from 'indent-string';
 
 export const printTFListExpression = (expression: TFListExpression): string => {
   let content = indentString(
     expression.values
-      .map(subexpression => `${printLiteralExpression(subexpression)}`)
+      .map(subexpression => `${printTFLiteralExpression(subexpression)}`)
       .join(',\n'),
     2
   );
