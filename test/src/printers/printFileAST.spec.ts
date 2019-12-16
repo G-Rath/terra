@@ -10,7 +10,7 @@ const printResourceBlockMock = mocked(printResourceBlock);
 describe('printFileAST', () => {
   describe('when the AST contains a resource block', () => {
     it('uses printResourceBlock', () => {
-      const resource = makeTFResourceBlock('my-resource', 'my-type', []);
+      const resource = makeTFResourceBlock('my-type', 'my-resource', []);
 
       printFileAST([resource]);
 

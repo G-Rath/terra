@@ -16,7 +16,7 @@ describe('aws_route53_zone', () => {
   beforeEach(() => (consoleLogSpy = jest.spyOn(console, 'log')));
   beforeEach(() =>
     nadoRoute53ZoneMock.mockResolvedValue([
-      makeTFResourceBlock('my_zone_com', AwsResourceType.AWS_ROUTE53_ZONE, [])
+      makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
     ])
   );
 

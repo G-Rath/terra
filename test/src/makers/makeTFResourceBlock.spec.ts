@@ -6,8 +6,8 @@ describe('makeTFResourceBlock', () => {
   it('makes a TFResourceBlock', () => {
     expect(
       makeTFResourceBlock(
-        'my_resource',
         AwsResourceType.AWS_ROUTE53_ZONE,
+        'my_resource',
         makeTFBlockBody([]),
         { leadingOuterText: '/* hello world */' }
       )
@@ -27,8 +27,8 @@ describe('makeTFResourceBlock', () => {
     it('makes it into a TFBlockBody node', () => {
       expect(
         makeTFResourceBlock(
-          'my_resource',
           AwsResourceType.AWS_ROUTE53_ZONE,
+          'my_resource',
           [],
           { leadingOuterText: '/* hello sunshine */' }
         )
