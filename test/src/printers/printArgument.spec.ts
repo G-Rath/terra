@@ -1,29 +1,30 @@
 import { makeTFArgument, makeTFListExpression } from '@src/makers';
-import { printArgument, printLiteralExpression } from '@src/printers';
+import { printTFLiteralExpression } from '@src/printer';
+import { printArgument } from '@src/printers';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
 
-jest.mock('@src/printers/printLiteralExpression');
+jest.mock('@src/printer/printTFLiteralExpression');
 
 describe('printArgument', () => {
   beforeEach(() =>
-    mocked(printLiteralExpression).mockReturnValue(
-      nameof(printLiteralExpression)
+    mocked(printTFLiteralExpression).mockReturnValue(
+      nameof(printTFLiteralExpression)
     )
   );
 
-  it('prints the expression using printLiteralExpression', () => {
+  it('prints the expression using printTFLiteralExpression', () => {
     expect(
       printArgument(makeTFArgument('name', '"world"'))
-    ).toMatchInlineSnapshot(`"name = printLiteralExpression"`);
+    ).toMatchInlineSnapshot(`"name = printTFLiteralExpression"`);
   });
 
   it.todo('quotes the identifier when required');
 
   describe('when the expression has braces', () => {
     beforeEach(() =>
-      mocked(printLiteralExpression).mockReturnValue(
-        ['{', `  ${nameof(printLiteralExpression)}`, '}'].join('\n')
+      mocked(printTFLiteralExpression).mockReturnValue(
+        ['{', `  ${nameof(printTFLiteralExpression)}`, '}'].join('\n')
       )
     );
 
@@ -46,7 +47,7 @@ describe('printArgument', () => {
         )
       ).toMatchInlineSnapshot(`
         "name = {
-          printLiteralExpression
+          printTFLiteralExpression
         }"
       `);
     });

@@ -1,13 +1,13 @@
 import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
 import * as printer from '@src/printer';
-import { printLiteralExpression } from '@src/printers';
+import { printTFLiteralExpression } from '@src/printer';
 import { TFNodeType } from '@src/types';
 
-describe('printLiteralExpression', () => {
+describe('printTFLiteralExpression', () => {
   describe('when literal is Simple', () => {
     it('prints as expected', () => {
       expect(
-        printLiteralExpression(makeTFSimpleLiteral('1'))
+        printTFLiteralExpression(makeTFSimpleLiteral('1'))
       ).toMatchInlineSnapshot(`"1"`);
     });
 
@@ -19,7 +19,7 @@ describe('printLiteralExpression', () => {
 
       const simpleLiteral = makeTFSimpleLiteral('1');
 
-      printLiteralExpression(simpleLiteral);
+      printTFLiteralExpression(simpleLiteral);
 
       expect(printTFSimpleLiteralSpy).toHaveBeenCalledWith(simpleLiteral);
     });
@@ -34,7 +34,7 @@ describe('printLiteralExpression', () => {
 
       const listExpression = makeTFListExpression([]);
 
-      printLiteralExpression(listExpression);
+      printTFLiteralExpression(listExpression);
 
       expect(printTFListExpressionSpy).toHaveBeenCalledWith(listExpression);
     });
@@ -43,7 +43,7 @@ describe('printLiteralExpression', () => {
   describe('when literal is a Map', () => {
     it('prints simple attributes correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             ['Name', makeTFSimpleLiteral('"MyName"')], //
@@ -60,7 +60,7 @@ describe('printLiteralExpression', () => {
 
     it('prints array attributes correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             [
@@ -86,7 +86,7 @@ describe('printLiteralExpression', () => {
 
     it('prints function attributes correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             [
@@ -119,7 +119,7 @@ describe('printLiteralExpression', () => {
 
     it('prints shallow maps correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             [
@@ -146,7 +146,7 @@ describe('printLiteralExpression', () => {
 
     it('prints nested maps correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             [
@@ -173,7 +173,7 @@ describe('printLiteralExpression', () => {
 
     it('prints a mixed map correctly', () => {
       expect(
-        printLiteralExpression({
+        printTFLiteralExpression({
           type: TFNodeType.Map,
           attributes: [
             [
