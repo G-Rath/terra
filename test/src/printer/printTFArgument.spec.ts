@@ -1,12 +1,11 @@
 import { makeTFArgument, makeTFListExpression } from '@src/makers';
-import { printTFLiteralExpression } from '@src/printer';
-import { printArgument } from '@src/printers';
+import { printTFArgument, printTFLiteralExpression } from '@src/printer';
 import { TFNodeType } from '@src/types';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/printer/printTFLiteralExpression');
 
-describe('printArgument', () => {
+describe('printTFArgument', () => {
   beforeEach(() =>
     mocked(printTFLiteralExpression).mockReturnValue(
       nameof(printTFLiteralExpression)
@@ -15,7 +14,7 @@ describe('printArgument', () => {
 
   it('prints the expression using printTFLiteralExpression', () => {
     expect(
-      printArgument(makeTFArgument('name', '"world"'))
+      printTFArgument(makeTFArgument('name', '"world"'))
     ).toMatchInlineSnapshot(`"name = printTFLiteralExpression"`);
   });
 
@@ -30,7 +29,7 @@ describe('printArgument', () => {
 
     it('prints the opening brace on the first line', () => {
       expect(
-        printArgument(
+        printTFArgument(
           makeTFArgument('name', {
             type: TFNodeType.Map,
             attributes: [

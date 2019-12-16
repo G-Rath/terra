@@ -1,4 +1,5 @@
-import { printArgument, printBlockLiteral } from '@src/printers';
+import { printTFArgument } from '@src/printer';
+import { printBlockLiteral } from '@src/printers';
 import { TFBlockBodyBody, TFNodeType } from '@src/types';
 import indentString from 'indent-string';
 
@@ -12,7 +13,7 @@ export const printBlockBody = (body: TFBlockBodyBody): string => {
     ...body
       .map(node => {
         if (node.type === TFNodeType.Argument) {
-          return printArgument(node);
+          return printTFArgument(node);
         }
 
         if (node.type === TFNodeType.Block) {
