@@ -1,15 +1,14 @@
 import {
   makeTFArgument,
-  makeTFBlockLiteral,
+  makeTFBlock,
   makeTFListExpression,
   makeTFResourceBlock,
   makeTFStringArgument
 } from '@src/makers';
 import {
   TFArgument,
+  TFBlock,
   TFBlockBodyBody,
-  TFBlockLiteral,
-  TFNodeType,
   TFResourceBlock
 } from '@src/types';
 import {
@@ -82,15 +81,19 @@ const buildRecordResourceName = (
 
 const buildAliasBlock = (
   aliasTarget: AliasTargetDetails
-): TFBlockLiteral<keyof TFRoute53RecordAlias> =>
-  makeTFBlockLiteral('alias', [
-    makeTFStringArgument('zone_id', aliasTarget.hostedZoneId),
-    makeTFStringArgument('name', aliasTarget.dnsName),
-    makeTFArgument(
-      'evaluate_target_health',
-      `${aliasTarget.evaluateTargetHealth}`
-    )
-  ]);
+): TFBlock<keyof TFRoute53RecordAlias> =>
+  makeTFBlock(
+    'alias',
+    [],
+    [
+      makeTFStringArgument('zone_id', aliasTarget.hostedZoneId),
+      makeTFStringArgument('name', aliasTarget.dnsName),
+      makeTFArgument(
+        'evaluate_target_health',
+        `${aliasTarget.evaluateTargetHealth}`
+      )
+    ]
+  );
 
 /**
  * Builds either the arguments related to `records`,
@@ -106,7 +109,7 @@ const buildAliasBlock = (
  *
  * @param {Route53RecordDetails} details
  *
- * @return {Array<TFArgument<keyof TFRoute53RecordResource>> | [TFBlockLiteral<keyof TFRoute53RecordAlias>]}
+ * @return {Array<TFArgument<keyof TFRoute53RecordResource>> | [TFBlock<keyof TFRoute53RecordAlias>]}
  *
  * @todo support strict validation of either `AliasTarget` or `TTL` being defined
  */
@@ -114,7 +117,7 @@ const buildRecordsArgumentsOrAliasBlock = (
   details: Route53RecordDetails
 ):
   | Array<TFArgument<keyof TFRoute53RecordResource>>
-  | [TFBlockLiteral<keyof TFRoute53RecordAlias>] => {
+  | [TFBlock<keyof TFRoute53RecordAlias>] => {
   if ('hostedZoneId' in details.target) {
     return [buildAliasBlock(details.target)];
   }

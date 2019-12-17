@@ -46,7 +46,7 @@ exports[`printResourceBlock prints as expected 3`] = `
   trusted_signers = [
 
   ]
-  forwarded_values {
+  forwarded_values{
     headers = [
 
     ]
@@ -54,7 +54,7 @@ exports[`printResourceBlock prints as expected 3`] = `
     query_string_cache_keys = [
 
     ]
-    cookies {
+    cookies{
       forward = \\"none\\"
       whitelisted_names = [
 

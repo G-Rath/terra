@@ -80,20 +80,6 @@ export interface TFArgument<TIdentifier extends string = string>
   surroundingText: SurroundingInnerText;
 }
 
-export interface TFBlockLiteral<TIdentifier extends string = string>
-  extends TFBaseNode {
-  type: TFNodeType.Block;
-
-  /**
-   * The name of the block literal
-   */
-  name: string;
-  /**
-   * The arguments that make up the resource.
-   */
-  body: TFBlockBody<TIdentifier>;
-}
-
 export interface TFDynamicBlock<TIdentifier extends string = string>
   extends TFBaseNode {
   type: TFNodeType.Dynamic;
@@ -113,7 +99,7 @@ export interface TFDynamicBlock<TIdentifier extends string = string>
 
 export type TFBlockBodyElement<TIdentifier extends string = string> =
   | TFArgument<TIdentifier>
-  | TFBlockLiteral
+  | TFBlock
   | TFDynamicBlock;
 
 export type TFBlockBodyBody<TIdentifier extends string = string> = Array<
@@ -163,6 +149,15 @@ export interface TFResourceBlock<TIdentifier extends string = string> {
   /**
    * The body of this resource block.
    */
+  body: TFBlockBody<TIdentifier>;
+  surroundingText: SurroundingOuterText;
+}
+
+export interface TFBlock<TIdentifier extends string = string>
+  extends TFBaseNode {
+  type: TFNodeType.Block;
+  blockType: string;
+  labels: TFLabel[];
   body: TFBlockBody<TIdentifier>;
   surroundingText: SurroundingOuterText;
 }

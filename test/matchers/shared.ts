@@ -20,6 +20,10 @@ const explainWhyArgIsNotTFBlockBody = (
     return typeof body;
   }
 
+  if (Array.isArray(body)) {
+    return 'An array';
+  }
+
   if (body === null || !hasProperty(body, 'type')) {
     return body;
   }
@@ -43,7 +47,7 @@ export const failMatcherDueToNotTFBlockBody = (
 
     const matcherHint = utils.matcherHint(matcherName);
 
-    const labelExpected = 'Expected TFBlockBody';
+    const labelExpected = 'Expected';
     const labelReceived = 'Received';
     const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
     const reason = explainWhyArgIsNotTFBlockBody(received);
