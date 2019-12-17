@@ -1,6 +1,6 @@
 import {
   makeTFArgument,
-  makeTFBlockLiteral,
+  makeTFBlock,
   makeTFDynamicBlock,
   makeTFSimpleLiteral
 } from '@src/makers';
@@ -106,28 +106,36 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFBlockLiteral('cookies', [
-              makeTFArgument('forward', '"none"'),
-              makeTFArgument('whitelisted_names', [])
-            ]),
-            makeTFBlockLiteral('ingress', [
-              makeTFArgument('from_port', '0'),
-              makeTFArgument('to_port', '0'),
-              makeTFArgument('protocol', '"-1"'),
-              makeTFArgument('security_groups', [
-                'aws_security_group.wordpress_server.id'
-              ])
-            ])
+            makeTFBlock(
+              'cookies',
+              [],
+              [
+                makeTFArgument('forward', '"none"'),
+                makeTFArgument('whitelisted_names', [])
+              ]
+            ),
+            makeTFBlock(
+              'ingress',
+              [],
+              [
+                makeTFArgument('from_port', '0'),
+                makeTFArgument('to_port', '0'),
+                makeTFArgument('protocol', '"-1"'),
+                makeTFArgument('security_groups', [
+                  'aws_security_group.wordpress_server.id'
+                ])
+              ]
+            )
           ])
         ).toMatchInlineSnapshot(`
           "{
-            cookies {
+            cookies{
               forward = \\"none\\"
               whitelisted_names = [
 
               ]
             }
-            ingress {
+            ingress{
               from_port = 0
               to_port = 0
               protocol = \\"-1\\"
@@ -181,15 +189,23 @@ describe('printBlockBody', () => {
               makeTFArgument(identifier, expression)
             ),
             makeTFArgument('trusted_signers', []),
-            makeTFBlockLiteral('forwarded_values', [
-              makeTFArgument('headers', []),
-              makeTFArgument('query_string', 'false'),
-              makeTFArgument('query_string_cache_keys', []),
-              makeTFBlockLiteral('cookies', [
-                makeTFArgument('forward', '"none"'),
-                makeTFArgument('whitelisted_names', [])
-              ])
-            ])
+            makeTFBlock(
+              'forwarded_values',
+              [],
+              [
+                makeTFArgument('headers', []),
+                makeTFArgument('query_string', 'false'),
+                makeTFArgument('query_string_cache_keys', []),
+                makeTFBlock(
+                  'cookies',
+                  [],
+                  [
+                    makeTFArgument('forward', '"none"'),
+                    makeTFArgument('whitelisted_names', [])
+                  ]
+                )
+              ]
+            )
           ])
         ).toMatchInlineSnapshot(`
           "{
@@ -212,7 +228,7 @@ describe('printBlockBody', () => {
             trusted_signers = [
 
             ]
-            forwarded_values {
+            forwarded_values{
               headers = [
 
               ]
@@ -220,7 +236,7 @@ describe('printBlockBody', () => {
               query_string_cache_keys = [
 
               ]
-              cookies {
+              cookies{
                 forward = \\"none\\"
                 whitelisted_names = [
 

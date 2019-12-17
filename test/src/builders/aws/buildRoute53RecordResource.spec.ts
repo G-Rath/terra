@@ -1,10 +1,5 @@
 import { buildRoute53RecordResource } from '@src/builders/aws';
-import {
-  makeTFArgument,
-  makeTFListExpression,
-  makeTFSimpleLiteral,
-  makeTFStringArgument
-} from '@src/makers';
+import { makeTFArgument, makeTFStringArgument } from '@src/makers';
 import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
@@ -120,7 +115,7 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).toContainTFBlockLiteralWithBody('alias', [
+      expect(body).toContainTFBlockWithBody('alias', [
         makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),
         makeTFStringArgument('name', 'd1qgcauaj18ot9.cloudfront.net.'),
         makeTFArgument('evaluate_target_health', 'false')
@@ -139,7 +134,7 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).not.toContainTFBlockLiteral('alias');
+      expect(body).not.toContainTFBlock('alias');
     });
   });
 
@@ -188,7 +183,7 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(body).not.toContainTFBlockLiteral('alias');
+      expect(body).not.toContainTFBlock('alias');
     });
 
     describe('when the type is TXT', () => {

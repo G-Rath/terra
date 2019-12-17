@@ -1,9 +1,4 @@
-import {
-  TFBlockBody,
-  TFBlockBodyBody,
-  TFBlockLiteral,
-  TFNodeType
-} from '@src/types';
+import { TFBlock, TFBlockBody, TFBlockBodyBody, TFNodeType } from '@src/types';
 import { failMatcherDueToNotTFBlockBody, isTFBlockBody } from '@test/matchers';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
@@ -13,25 +8,25 @@ declare global {
   namespace jest {
     interface Matchers<R, T> {
       /**
-       * Tests that the expected {@link TFBlockBody} contains only one {@link TFBlockLiteral}
-       * with the given `name`, and with the given `body`.
+       * Tests that the expected {@link TFBlockBody} contains only one {@link TFBlock}
+       * with the given `blockType`, and with the given `body`.
        *
-       * @param {string} name
+       * @param {string} blockType
        * @param {TFBlockBodyBody} body
        */
-      toContainTFBlockLiteralWithBody(name: string, body: TFBlockBodyBody): R;
+      toContainTFBlockWithBody(blockType: string, body: TFBlockBodyBody): R;
     }
   }
 }
 
-const toContainTFBlockLiteralWithBody: jest.CustomMatcher = function(
+const toContainTFBlockWithBody: jest.CustomMatcher = function(
   this: jest.MatcherUtils,
   bodi: TFBlockBody | unknown,
-  name: string | AsymmetricMatcher<unknown>,
+  blockType: string | AsymmetricMatcher<unknown>,
   body: TFBlockBodyBody
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;
-  const matcherName = toContainTFBlockLiteralWithBody.name;
+  const matcherName = toContainTFBlockWithBody.name;
   const matcherHint = utils.matcherHint(matcherName);
 
   if (!isTFBlockBody(bodi)) {
@@ -39,24 +34,24 @@ const toContainTFBlockLiteralWithBody: jest.CustomMatcher = function(
   }
 
   const blocks = bodi.body.filter(
-    (item): item is TFBlockLiteral => item.type === TFNodeType.Block
+    (item): item is TFBlock => item.type === TFNodeType.Block
   );
 
   const blocksMatchingName = blocks.filter(block =>
-    this.equals(block.name, name)
+    this.equals(block.blockType, blockType)
   );
 
   if (blocksMatchingName.length !== 1) {
     // if type is not string, it'll be an expect.<something>, so allow multiple
     const pass =
-      isNot || typeof name !== 'string'
+      isNot || typeof blockType !== 'string'
         ? blocksMatchingName.length > 0
         : blocksMatchingName.length === 1;
 
     return {
       pass,
       message: () => {
-        const labelExpected = 'Expected name';
+        const labelExpected = 'Expected blockType';
         const labelReceived = 'Received body';
         const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
 
@@ -64,11 +59,11 @@ const toContainTFBlockLiteralWithBody: jest.CustomMatcher = function(
           matcherHint,
           '',
           `Body contains ${utils.pluralize(
-            'block literal',
+            'block',
             blocksMatchingName.length
           )} with the expected name.`,
           '',
-          `${printLabel(labelExpected)}${utils.printExpected(name)}`,
+          `${printLabel(labelExpected)}${utils.printExpected(blockType)}`,
           `${printLabel(labelReceived)}${utils.printReceived(bodi)}`
         ].join('\n');
       }
@@ -86,11 +81,11 @@ const toContainTFBlockLiteralWithBody: jest.CustomMatcher = function(
       [
         matcherHint,
         '',
-        'Block literal body does not match as expected.',
+        'Block body does not match as expected.',
         '',
         this.utils.diff(bodyExpected, bodyReceived)
       ].join('\n')
   };
 };
 
-expect.extend({ toContainTFBlockLiteralWithBody });
+expect.extend({ toContainTFBlockWithBody });
