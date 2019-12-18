@@ -32,11 +32,12 @@ const toContainTFDynamicBlock: jest.CustomMatcher = function(
   }
 
   const dynamics = body.body.filter(
-    (item): item is TFDynamicBlock => item.type === TFNodeType.Dynamic
+    (item): item is TFDynamicBlock =>
+      item.type === TFNodeType.Block && item.blockType === 'dynamic'
   );
 
   const dynamicsMatchingName = dynamics.filter(dynamic =>
-    this.equals(dynamic.name, name)
+    this.equals(dynamic.labels[0].value, name)
   );
 
   const pass =
