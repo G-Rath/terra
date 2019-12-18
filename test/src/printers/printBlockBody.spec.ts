@@ -2,6 +2,7 @@ import {
   makeTFArgument,
   makeTFBlock,
   makeTFDynamicBlock,
+  makeTFLabel,
   makeTFSimpleLiteral
 } from '@src/makers';
 import { printBlockBody } from '@src/printers';
@@ -30,18 +31,28 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFDynamicBlock('ingress', [
-              makeTFArgument('from_port', '0'),
-              makeTFArgument('to_port', '0'),
-              makeTFArgument('protocol', '"-1"'),
-              makeTFArgument('security_groups', [
-                'aws_security_group.wordpress_server.id'
-              ])
-            ])
+            makeTFDynamicBlock(
+              makeTFLabel('ingress', { leadingOuterText: ' ' }),
+              [
+                makeTFArgument('from_port', '0'),
+                makeTFArgument('to_port', '0'),
+                makeTFArgument('protocol', '"-1"'),
+                makeTFArgument('security_groups', [
+                  'aws_security_group.wordpress_server.id'
+                ])
+              ]
+            )
           ])
         ).toMatchInlineSnapshot(`
           "{
-            # FIXME: dynamic is not yet supported
+            dynamic ingress{
+              from_port = 0
+              to_port = 0
+              protocol = \\"-1\\"
+              security_groups = [
+                aws_security_group.wordpress_server.id
+              ]
+            }
           }"
         `);
       });
@@ -51,14 +62,20 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFDynamicBlock('route', [
-              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-              makeTFArgument('nat_gateway_id', 'route.value.id')
-            ])
+            makeTFDynamicBlock(
+              makeTFLabel('route', { leadingOuterText: ' ' }),
+              [
+                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+                makeTFArgument('nat_gateway_id', 'route.value.id')
+              ]
+            )
           ])
         ).toMatchInlineSnapshot(`
           "{
-            # FIXME: dynamic is not yet supported
+            dynamic route{
+              cidr_block = \\"0.0.0.0/0\\"
+              nat_gateway_id = route.value.id
+            }
           }"
         `);
       });
@@ -152,19 +169,31 @@ describe('printBlockBody', () => {
       it('prints as expected', () => {
         expect(
           printBlockBody([
-            makeTFDynamicBlock('route', [
-              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-              makeTFArgument('nat_gateway_id', 'route.value.id')
-            ]),
-            makeTFDynamicBlock('route', [
-              makeTFArgument('cidr_block', '"0.0.0.0/0"'),
-              makeTFArgument('nat_gateway_id', 'route.value.id')
-            ])
+            makeTFDynamicBlock(
+              makeTFLabel('route', { leadingOuterText: ' ' }),
+              [
+                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+                makeTFArgument('nat_gateway_id', 'route.value.id')
+              ]
+            ),
+            makeTFDynamicBlock(
+              makeTFLabel('route', { leadingOuterText: ' ' }),
+              [
+                makeTFArgument('cidr_block', '"0.0.0.0/0"'),
+                makeTFArgument('nat_gateway_id', 'route.value.id')
+              ]
+            )
           ])
         ).toMatchInlineSnapshot(`
           "{
-            # FIXME: dynamic is not yet supported
-            # FIXME: dynamic is not yet supported
+            dynamic route{
+              cidr_block = \\"0.0.0.0/0\\"
+              nat_gateway_id = route.value.id
+            }
+            dynamic route{
+              cidr_block = \\"0.0.0.0/0\\"
+              nat_gateway_id = route.value.id
+            }
           }"
         `);
       });

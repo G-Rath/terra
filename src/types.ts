@@ -5,7 +5,6 @@ export enum TFNodeType {
   List = 'list',
   Resource = 'resource',
   Module = 'module',
-  Dynamic = 'dynamic',
   Argument = 'argument',
   Function = 'function',
   Simple = 'simple',
@@ -80,23 +79,6 @@ export interface TFArgument<TIdentifier extends string = string>
   surroundingText: SurroundingInnerText;
 }
 
-export interface TFDynamicBlock<TIdentifier extends string = string>
-  extends TFBaseNode {
-  type: TFNodeType.Dynamic;
-  /**
-   * The label of the dynamic block, which specifies what kind of nested block to generate.
-   */
-  name: string;
-  content: TFBlockBody<TIdentifier>;
-  labels: string[];
-  forEach: unknown;
-  /**
-   * Sets the name of a temporary variable that represents the current element of the complex value.
-   * If omitted, the name of the variable defaults to the label of the dynamic block.
-   */
-  iterator?: string;
-}
-
 export type TFBlockBodyElement<TIdentifier extends string = string> =
   | TFArgument<TIdentifier>
   | TFBlock
@@ -160,6 +142,12 @@ export interface TFBlock<TIdentifier extends string = string>
   labels: TFLabel[];
   body: TFBlockBody<TIdentifier>;
   surroundingText: SurroundingOuterText;
+}
+
+export interface TFDynamicBlock<TIdentifier extends string = string>
+  extends TFBlock<TIdentifier | 'content' | 'for_each' | 'iterator'> {
+  blockType: 'dynamic';
+  labels: [TFLabel];
 }
 
 export interface TFModuleBlock<TIdentifier extends string = string>
