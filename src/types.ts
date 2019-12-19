@@ -46,9 +46,9 @@ export interface SurroundingOuterText {
 
 export type SurroundingText = SurroundingInnerText & SurroundingOuterText;
 
-export interface TFLabel {
+export interface TFLabel<TValue extends string = string> {
   type: TFNodeType.Label;
-  value: string;
+  value: TValue;
   surroundingText: SurroundingOuterText;
 }
 
