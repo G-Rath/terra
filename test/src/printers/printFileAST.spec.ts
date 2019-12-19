@@ -1,20 +1,17 @@
 import { makeTFResourceBlock } from '@src/makers';
-import { printFileAST, printResourceBlock } from '@src/printers';
+import * as printer from '@src/printer';
+import { printFileAST } from '@src/printers';
 import { TFNodeType } from '@src/types';
-import { mocked } from 'ts-jest/utils';
-
-jest.mock('@src/printers/printResourceBlock');
-
-const printResourceBlockMock = mocked(printResourceBlock);
 
 describe('printFileAST', () => {
-  describe('when the AST contains a resource block', () => {
-    it('uses printResourceBlock', () => {
+  describe('when the AST contains a block', () => {
+    it('uses printTFBlock', () => {
+      const printTFBlockSpy = jest.spyOn(printer, 'printTFBlock');
       const resource = makeTFResourceBlock('my-type', 'my-resource', []);
 
       printFileAST([resource]);
 
-      expect(printResourceBlockMock).toHaveBeenCalledWith(resource);
+      expect(printTFBlockSpy).toHaveBeenCalledWith(resource);
     });
   });
 

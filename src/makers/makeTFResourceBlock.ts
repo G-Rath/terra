@@ -3,7 +3,7 @@ import {
   TFRoute53ZoneResource,
   TFS3BucketResource
 } from '@src/builders';
-import { makeTFBlockBody } from '@src/makers/makeTFBlockBody';
+import { makeTFBlockBody, makeTFLabel } from '@src/makers';
 import {
   ResourceType,
   TFBlockBody,
@@ -28,9 +28,9 @@ export const makeTFResourceBlock = <TResource extends ResourceType>(
     | TFBlockBodyBody<ResourceIdentifierMap[TResource]>,
   surroundingText?: Partial<TFResourceBlock['surroundingText']>
 ): TFResourceBlock<ResourceIdentifierMap[TResource]> => ({
-  type: TFNodeType.Resource,
-  name,
-  resource,
+  type: TFNodeType.Block,
+  blockType: 'resource',
+  labels: [makeTFLabel(resource), makeTFLabel(name)],
   body: Array.isArray(body) ? makeTFBlockBody(body) : body,
   surroundingText: {
     leadingOuterText: '',

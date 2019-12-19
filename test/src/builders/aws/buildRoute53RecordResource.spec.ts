@@ -4,7 +4,9 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
   it('builds an aws_route53_record resource', () => {
-    const { resource } = buildRoute53RecordResource({
+    const {
+      labels: [{ value: resource }]
+    } = buildRoute53RecordResource({
       name: 'imnotcrazy.info.',
       type: 'NS',
       target: {
@@ -21,7 +23,9 @@ describe('buildRoute53RecordResource', () => {
   describe('the resource name', () => {
     describe('when the "name" argument is an empty string', () => {
       it('omits it from the name', () => {
-        const { name } = buildRoute53RecordResource({
+        const {
+          labels: [, { value: name }]
+        } = buildRoute53RecordResource({
           name: 'imnotcrazy.info.',
           type: 'NS',
           target: {
@@ -37,7 +41,9 @@ describe('buildRoute53RecordResource', () => {
     });
 
     it('names the resource as expected', () => {
-      const { name } = buildRoute53RecordResource({
+      const {
+        labels: [, { value: name }]
+      } = buildRoute53RecordResource({
         name: 'www.imnotcrazy.info.',
         type: 'A',
         target: {
