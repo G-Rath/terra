@@ -3,7 +3,6 @@ import { AwsResourceType } from '@src/utils';
 export enum TFNodeType {
   Body = 'body',
   List = 'list',
-  Module = 'module',
   Argument = 'argument',
   Function = 'function',
   Simple = 'simple',
@@ -139,14 +138,7 @@ export interface TFDynamicBlock<TIdentifier extends string = string>
 }
 
 export interface TFModuleBlock<TIdentifier extends string = string>
-  extends TFBaseNode {
-  type: TFNodeType.Module;
-  /**
-   * The name of this module.
-   */
-  name: string;
-  /**
-   * The body of this module block.
-   */
-  body: TFBlockBodyBody<TIdentifier | 'source'>;
+  extends TFBlock<TIdentifier | 'source'> {
+  blockType: 'module';
+  labels: [TFLabel];
 }
