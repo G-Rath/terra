@@ -3,7 +3,9 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildS3BucketResource', () => {
   it('builds an aws_s3_bucket resource', () => {
-    const { resource } = buildS3BucketResource({
+    const {
+      labels: [{ value: resource }]
+    } = buildS3BucketResource({
       BucketName: 'mybucket'
     });
 
@@ -11,7 +13,9 @@ describe('buildS3BucketResource', () => {
   });
 
   it('uses "BucketName" to build the resource name', () => {
-    const { name } = buildS3BucketResource({
+    const {
+      labels: [, { value: name }]
+    } = buildS3BucketResource({
       BucketName: 'mybucket'
     });
 

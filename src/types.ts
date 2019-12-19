@@ -3,7 +3,6 @@ import { AwsResourceType } from '@src/utils';
 export enum TFNodeType {
   Body = 'body',
   List = 'list',
-  Resource = 'resource',
   Module = 'module',
   Argument = 'argument',
   Function = 'function',
@@ -118,21 +117,10 @@ interface TFModule {
   files: { [K: string]: TFFileAST };
 }
 
-export interface TFResourceBlock<TIdentifier extends string = string> {
-  type: TFNodeType.Resource;
-  /**
-   * The type of this resource.
-   */
-  resource: ResourceType;
-  /**
-   * The name of this resource.
-   */
-  name: string;
-  /**
-   * The body of this resource block.
-   */
-  body: TFBlockBody<TIdentifier>;
-  surroundingText: SurroundingOuterText;
+export interface TFResourceBlock<TIdentifier extends string = string>
+  extends TFBlock<TIdentifier> {
+  blockType: 'resource';
+  labels: [TFLabel<ResourceType>, TFLabel];
 }
 
 export interface TFBlock<TIdentifier extends string = string>

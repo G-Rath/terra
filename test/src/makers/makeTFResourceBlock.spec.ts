@@ -1,4 +1,4 @@
-import { makeTFBlockBody, makeTFResourceBlock } from '@src/makers';
+import { makeTFBlockBody, makeTFLabel, makeTFResourceBlock } from '@src/makers';
 import { TFNodeType, TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
@@ -12,9 +12,12 @@ describe('makeTFResourceBlock', () => {
         { leadingOuterText: '/* hello world */' }
       )
     ).toStrictEqual<TFResourceBlock>({
-      type: TFNodeType.Resource,
-      resource: AwsResourceType.AWS_ROUTE53_ZONE,
-      name: 'my_resource',
+      type: TFNodeType.Block,
+      blockType: 'resource',
+      labels: [
+        makeTFLabel(AwsResourceType.AWS_ROUTE53_ZONE),
+        makeTFLabel('my_resource')
+      ],
       body: makeTFBlockBody([]),
       surroundingText: {
         leadingOuterText: '/* hello world */',
@@ -33,9 +36,12 @@ describe('makeTFResourceBlock', () => {
           { leadingOuterText: '/* hello sunshine */' }
         )
       ).toStrictEqual<TFResourceBlock>({
-        type: TFNodeType.Resource,
-        resource: AwsResourceType.AWS_ROUTE53_ZONE,
-        name: 'my_resource',
+        type: TFNodeType.Block,
+        blockType: 'resource',
+        labels: [
+          makeTFLabel(AwsResourceType.AWS_ROUTE53_ZONE),
+          makeTFLabel('my_resource')
+        ],
         body: makeTFBlockBody([]),
         surroundingText: {
           leadingOuterText: '/* hello sunshine */',

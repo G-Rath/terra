@@ -3,7 +3,9 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53ZoneResource', () => {
   it('builds an aws_route53_zone resource', () => {
-    const { resource } = buildRoute53ZoneResource({
+    const {
+      labels: [{ value: resource }]
+    } = buildRoute53ZoneResource({
       id: '/HostedZone/123456789',
       name: 'imnotcrazy.info',
       isPrivate: false
@@ -13,7 +15,9 @@ describe('buildRoute53ZoneResource', () => {
   });
 
   it('uses "Name" to build the resource name', () => {
-    const { name } = buildRoute53ZoneResource({
+    const {
+      labels: [, { value: name }]
+    } = buildRoute53ZoneResource({
       id: '/HostedZone/123456789',
       name: 'imnotcrazy.info',
       isPrivate: false
