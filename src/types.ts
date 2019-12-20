@@ -142,3 +142,8 @@ export interface TFModuleBlock<TIdentifier extends string = string>
   blockType: 'module';
   labels: [TFLabel];
 }
+
+export interface TFFileContents {
+  blocks: TFBlock[];
+  surroundingText: SurroundingOuterText;
+}
