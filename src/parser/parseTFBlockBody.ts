@@ -1,5 +1,5 @@
 import { makeTFBlockBody } from '@src/makers';
-import { parseTFArgument, StringCursor } from '@src/parser';
+import { parseTFArgument, parseTFBlock, StringCursor } from '@src/parser';
 import { TFBlockBody, TFBlockBodyBody } from '@src/types';
 
 export const parseTFBlockBody = (cursor: StringCursor): TFBlockBody => {
@@ -27,6 +27,12 @@ export const parseTFBlockBody = (cursor: StringCursor): TFBlockBody => {
 
     if (text.endsWith('=')) {
       body.push(parseTFArgument(cursor));
+
+      continue;
+    }
+
+    if (text.endsWith('{')) {
+      body.push(parseTFBlock(cursor));
 
       continue;
     }
