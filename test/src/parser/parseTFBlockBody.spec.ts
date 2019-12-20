@@ -32,7 +32,22 @@ describe('parseTFBlockBody', () => {
     expect(body).toContainTFArgument('name');
   });
 
-  it.todo('parses blocks');
+  it('parses blocks', () => {
+    const body = parseTFBlockBody(
+      new StringCursor(
+        `
+/* hello world */ {
+  ingress {
+    name = "hello world"
+  }
+}
+      `.trim()
+      )
+    );
+
+    expect(body.body).toHaveLength(1);
+    expect(body).toContainTFBlock('ingress');
+  });
 
   describe('trailingInnerText', () => {
     it('collects trailing inner comments', () => {
