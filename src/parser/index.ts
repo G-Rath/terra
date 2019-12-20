@@ -4,6 +4,8 @@ export * from './parseTFExpression';
 export * from './parseTFArgument';
 export * from './parseTFBlockBody';
 export * from './parseTFBlock';
+export * from './parseTFFile';
+export * from './parseTFFileContents';
 export * from './parseTFIdentifier';
 export * from './parseTFLabel';
 export * from './parseTFListExpression';
