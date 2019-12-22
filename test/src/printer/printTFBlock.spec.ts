@@ -1,4 +1,9 @@
-import { makeTFArgument, makeTFBlock, makeTFLabel } from '@src/makers';
+import {
+  makeTFArgument,
+  makeTFBlock,
+  makeTFBlockBody,
+  makeTFLabel
+} from '@src/makers';
 import { printTFBlock } from '@src/printer';
 
 describe('printTFBlock', () => {
@@ -21,18 +26,20 @@ describe('printTFBlock', () => {
             makeTFLabel('aws_route53_zone', { leadingOuterText: ' ' }),
             makeTFLabel('my_route', { leadingOuterText: ' ' })
           ],
-          [
-            makeTFArgument('name', '"example.com"'),
-            makeTFArgument('comment', '"This is my Zone!"')
-          ],
-          { leadingOuterText: '\n' }
+          makeTFBlockBody(
+            [
+              makeTFArgument('name', '"example.com"'),
+              makeTFArgument('comment', '"This is my Zone!"')
+            ],
+            {
+              leadingOuterText: ' ',
+              trailingInnerText: '\n'
+            }
+          )
         )
       )
     ).toMatchInlineSnapshot(`
-      "
-      resource aws_route53_zone my_route{
-        name = \\"example.com\\"
-        comment = \\"This is my Zone!\\"
+      "resource aws_route53_zone my_route {name = \\"example.com\\"comment = \\"This is my Zone!\\"
       }"
     `);
   });

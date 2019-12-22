@@ -1,5 +1,4 @@
-import { printTFLabel } from '@src/printer';
-import { printBlockBody } from '@src/printers';
+import { printTFLabel, printTFBlockBody } from '@src/printer';
 import { TFBlock } from '@src/types';
 
 export const printTFBlock = (block: TFBlock): string =>
@@ -7,6 +6,6 @@ export const printTFBlock = (block: TFBlock): string =>
     block.surroundingText.leadingOuterText,
     block.blockType,
     ...block.labels.map(printTFLabel),
-    printBlockBody(block.body.body),
+    printTFBlockBody(block.body),
     block.surroundingText.trailingOuterText
   ].join('');
