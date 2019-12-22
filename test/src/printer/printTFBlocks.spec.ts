@@ -20,10 +20,7 @@ describe('printTFBlocks', () => {
       ])
     ).toMatchInlineSnapshot(`
       "
-      resource aws_route53_zone my_route{
-        name = \\"myroute.com\\"
-        comment = \\"This is my Zone!\\"
-      }"
+      resource aws_route53_zone my_route{name = \\"myroute.com\\"comment = \\"This is my Zone!\\"}"
     `);
   });
 });

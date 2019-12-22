@@ -1,6 +1,7 @@
 export * from './printTFArgument';
 export * from './printTFLabel';
 export * from './printTFBlock';
+export * from './printTFBlockBody';
 export * from './printTFBlocks';
 export * from './printTFFileContents';
 export * from './printTFSimpleLiteral';
