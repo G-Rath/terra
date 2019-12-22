@@ -103,24 +103,7 @@ export type ResourceType =
   | RandomResourceType
   | string;
 
-export type TFTopLevelBlock = TFResourceBlock | TFModuleBlock;
-
-/** The AST for a valid Terraform file. */
-export type TFFileAST = TFTopLevelBlock[];
-
-/**
- * A Terraform module, made up of ASTs of the files in the module.
- * Note that a "module" is different from a "module block".
- */
-interface TFModule {
-  files: { [K: string]: TFFileAST };
-}
-
-export interface TFResourceBlock<TIdentifier extends string = string>
-  extends TFBlock<TIdentifier> {
-  blockType: 'resource';
-  labels: [TFLabel<ResourceType>, TFLabel];
-}
+export type TFBlocks = TFBlock[];
 
 export interface TFBlock<TIdentifier extends string = string>
   extends TFBaseNode {
@@ -131,10 +114,10 @@ export interface TFBlock<TIdentifier extends string = string>
   surroundingText: SurroundingOuterText;
 }
 
-export interface TFDynamicBlock<TIdentifier extends string = string>
-  extends TFBlock<TIdentifier | 'content' | 'for_each' | 'iterator'> {
-  blockType: 'dynamic';
-  labels: [TFLabel];
+export interface TFResourceBlock<TIdentifier extends string = string>
+  extends TFBlock<TIdentifier> {
+  blockType: 'resource';
+  labels: [TFLabel<ResourceType>, TFLabel];
 }
 
 export interface TFModuleBlock<TIdentifier extends string = string>
@@ -143,7 +126,21 @@ export interface TFModuleBlock<TIdentifier extends string = string>
   labels: [TFLabel];
 }
 
+export interface TFDynamicBlock<TIdentifier extends string = string>
+  extends TFBlock<TIdentifier | 'content' | 'for_each' | 'iterator'> {
+  blockType: 'dynamic';
+  labels: [TFLabel];
+}
+
 export interface TFFileContents {
   blocks: TFBlock[];
   surroundingText: SurroundingOuterText;
+}
+
+/**
+ * A Terraform module, made up of ASTs of the files in the module.
+ * Note that a "module" is different from a "module block".
+ */
+interface TFModule {
+  files: { [K: string]: TFFileContents };
 }
