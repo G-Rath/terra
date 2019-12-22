@@ -7,7 +7,7 @@ import { TFBlock, TFFileContents } from '@src/types';
  * @param {string} contents
  * @param {boolean} record
  *
- * @return {TFFileAST}
+ * @return {TFBlocks}
  */
 export const parseTFFileContents = (
   contents: string,
