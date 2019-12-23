@@ -1,23 +1,32 @@
-import { StringCursor } from '@src/parser/StringCursor';
+import { makeTFIdentifier } from '@src/makers';
+import { StringCursor } from '@src/parser';
+import { TFIdentifier } from '@src/types';
+import { assertQuotedStringIsClosed } from '@src/utils';
 
-export const parseTFIdentifier = (cursor: StringCursor) => {
-  // the text leading up to the identifier; the last char is the start of the identifier
-  cursor.collectUntilWithComments(/[\w]/).slice(0, -1);
+export const parseTFIdentifier = (cursor: StringCursor): TFIdentifier => {
+  const leadingOuterText = cursor
+    .collectUntilWithComments(/["'\w]/)
+    .slice(0, -1);
 
   cursor.rewind(1);
 
   let identifier = cursor.advance();
 
-  identifier += cursor.collectUntil([
-    '/*', //
-    '\n',
-    ' '
-  ]);
+  identifier += cursor.collectUntil(/[^\w\d_-]/).slice(0, -1);
 
-  const rewindBy = identifier.endsWith('/*') ? 2 : 1;
+  cursor.rewind(1);
 
-  identifier = identifier.slice(0, -rewindBy);
-  cursor.rewind(rewindBy);
+  if (['"', "'"].includes(cursor.char)) {
+    identifier += cursor.advance();
+  }
 
-  return identifier;
+  if (identifier.endsWith('"') && !identifier.startsWith('"')) {
+    throw new Error('missing opening " quote');
+  }
+
+  assertQuotedStringIsClosed(identifier);
+
+  return makeTFIdentifier(identifier, {
+    leadingOuterText
+  });
 };

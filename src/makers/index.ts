@@ -2,6 +2,7 @@ export * from './makeTFLabel';
 export * from './makeTFBlock';
 export * from './makeTFArgument';
 export * from './makeTFBlockBody';
+export * from './makeTFIdentifier';
 export * from './makeTFModuleBlock';
 export * from './makeTFDynamicBlock';
 export * from './makeTFResourceBlock';

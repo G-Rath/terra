@@ -1,6 +1,7 @@
 import {
   makeTFArgument,
   makeTFBlockBody,
+  makeTFIdentifier,
   makeTFStringArgument
 } from '@src/makers';
 import { TFBlockBody, TFBlockBodyBody } from '@src/types';
@@ -108,6 +109,18 @@ describe('toContainTFArgument', () => {
       expect(() => {
         expect<TFBlockBodyBody>(body).toContainTFArgument('ttl');
       }).toThrow("Received isn't a TFBlockBody");
+    });
+  });
+
+  describe('when the identifier is a TFIdentifier node', () => {
+    it('can fail due to surrounding text', () => {
+      const body = makeTFBlockBody([expectedArgument]);
+
+      expect(() => {
+        expect<TFBlockBody>(body).toContainTFArgument(
+          makeTFIdentifier('ttl', { trailingOuterText: 'hello world' })
+        );
+      }).toThrow('Body contains zero arguments with the expected identifier.');
     });
   });
 });

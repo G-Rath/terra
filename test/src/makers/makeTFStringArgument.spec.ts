@@ -1,4 +1,8 @@
-import { makeTFSimpleLiteral, makeTFStringArgument } from '@src/makers';
+import {
+  makeTFIdentifier,
+  makeTFSimpleLiteral,
+  makeTFStringArgument
+} from '@src/makers';
 import { TFArgument, TFNodeType } from '@src/types';
 
 describe('makeTFStringArgument', () => {
@@ -9,7 +13,7 @@ describe('makeTFStringArgument', () => {
       })
     ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
-      identifier: 'identifier',
+      identifier: makeTFIdentifier('identifier'),
       expression: makeTFSimpleLiteral(expect.stringContaining('expression')),
       surroundingText: {
         leadingInnerText: 'hello sunshine',
@@ -20,12 +24,12 @@ describe('makeTFStringArgument', () => {
 
   it('surrounds the string with double quotes', () => {
     expect(
-      makeTFStringArgument('identifier', 'expression', {
+      makeTFStringArgument(makeTFIdentifier('identifier'), 'expression', {
         leadingInnerText: 'hello sunshine'
       })
     ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
-      identifier: 'identifier',
+      identifier: makeTFIdentifier('identifier'),
       expression: makeTFSimpleLiteral(expect.stringMatching(/^".+"$/)),
       surroundingText: {
         leadingInnerText: 'hello sunshine',

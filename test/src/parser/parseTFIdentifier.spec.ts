@@ -1,53 +1,73 @@
+import { makeTFIdentifier } from '@src/makers';
 import { parseTFIdentifier, StringCursor } from '@src/parser';
+import { TFIdentifier } from '@src/types';
 
 describe('parseTFIdentifier', () => {
-  describe('leading text', () => {
-    it('collects basic leading text correctly', () => {
-      expect(parseTFIdentifier(new StringCursor('  hello '))).toBe('hello');
+  describe('leading outer text', () => {
+    it('collects basic leading text', () => {
+      const { leadingOuterText } = parseTFIdentifier(
+        new StringCursor(' name = "value"')
+      ).surroundingText;
+
+      expect(leadingOuterText).toBe(' ');
     });
 
-    it('handles complex leading text correctly', () => {
-      expect(
-        parseTFIdentifier(new StringCursor('/* hello */ /* world */sunshine '))
-      ).toBe('sunshine');
-    });
+    it('collects leading comments', () => {
+      const { leadingOuterText } = parseTFIdentifier(
+        new StringCursor('/* hello world */ name = "value"')
+      ).surroundingText;
 
-    it('does not treat comments in leading text as the start of the identifier', () => {
-      expect(
-        parseTFIdentifier(new StringCursor('/* hello *//*again*/world '))
-      ).toBe('world');
+      expect(leadingOuterText).toBe('/* hello world */ ');
     });
   });
 
   describe('identifier text', () => {
+    it('terminates on equals', () => {
+      expect(parseTFIdentifier(new StringCursor('hello='))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
+    });
+
     it('terminates on space', () => {
-      expect(parseTFIdentifier(new StringCursor('hello '))).toBe('hello');
+      expect(parseTFIdentifier(new StringCursor('hello '))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
     });
 
     it('terminates on newline', () => {
-      expect(parseTFIdentifier(new StringCursor('hello\n'))).toBe('hello');
+      expect(parseTFIdentifier(new StringCursor('hello\n'))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
+    });
+
+    it('terminates on pound comments', () => {
+      expect(parseTFIdentifier(new StringCursor('hello#world'))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
+    });
+
+    it('terminates on // comments', () => {
+      expect(parseTFIdentifier(new StringCursor('hello//world'))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
     });
 
     it('terminates on opening multi-line comment', () => {
-      expect(parseTFIdentifier(new StringCursor('hello/*'))).toBe('hello');
+      expect(parseTFIdentifier(new StringCursor('hello/*'))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('hello'));
     });
 
-    describe('when terminating', () => {
-      it('rewinds the cursor 1 for spaces', () => {
-        const cursor = new StringCursor('hello ');
+    it('terminates after a double quote', () => {
+      expect(parseTFIdentifier(new StringCursor('"hello"'))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier('"hello"'));
+    });
 
-        parseTFIdentifier(cursor);
-
-        expect(cursor.position).toBe('hello '.length - 1);
-      });
-
-      it('rewinds the cursor 2 for multi-line comments', () => {
-        const cursor = new StringCursor('hello/*');
-
-        parseTFIdentifier(cursor);
-
-        expect(cursor.position).toBe('hello/*'.length - 2);
-      });
+    it('terminates after a single quote', () => {
+      expect(parseTFIdentifier(new StringCursor("'hello'"))).toStrictEqual<
+        TFIdentifier
+      >(makeTFIdentifier("'hello'"));
     });
   });
 });
