@@ -2,6 +2,7 @@ import {
   makeTFArgument,
   makeTFBlock,
   makeTFBlockBody,
+  makeTFIdentifier,
   makeTFLabel
 } from '@src/makers';
 import { printTFBlock } from '@src/printer';
@@ -28,18 +29,25 @@ describe('printTFBlock', () => {
           ],
           makeTFBlockBody(
             [
-              makeTFArgument('name', '"example.com"'),
-              makeTFArgument('comment', '"This is my Zone!"')
+              makeTFArgument(
+                makeTFIdentifier('name', { leadingOuterText: '\n  ' }),
+                '"example.com"',
+                { leadingInnerText: ' ', trailingInnerText: ' ' }
+              ),
+              makeTFArgument(
+                makeTFIdentifier('comment', { leadingOuterText: '\n  ' }),
+                '"This is my Zone!"',
+                { leadingInnerText: ' ', trailingInnerText: ' ' }
+              )
             ],
-            {
-              leadingOuterText: ' ',
-              trailingInnerText: '\n'
-            }
+            { leadingOuterText: ' ', trailingInnerText: '\n' }
           )
         )
       )
     ).toMatchInlineSnapshot(`
-      "resource aws_route53_zone my_route {name = \\"example.com\\"comment = \\"This is my Zone!\\"
+      "resource aws_route53_zone my_route {
+        name = \\"example.com\\"
+        comment = \\"This is my Zone!\\"
       }"
     `);
   });

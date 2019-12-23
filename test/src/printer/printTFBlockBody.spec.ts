@@ -1,4 +1,4 @@
-import { makeTFArgument, makeTFBlockBody } from '@src/makers';
+import { makeTFArgument, makeTFBlockBody, makeTFIdentifier } from '@src/makers';
 import { printTFBlockBody } from '@src/printer';
 
 describe('printTFBlockBody', () => {
@@ -17,14 +17,28 @@ describe('printTFBlockBody', () => {
   it('prints the body in-between the braces', () => {
     expect(
       printTFBlockBody(
-        makeTFBlockBody([
-          makeTFArgument('name', '"example.com"'),
-          makeTFArgument('comment', '"This is my Zone!"')
-        ])
+        makeTFBlockBody(
+          [
+            makeTFArgument(
+              makeTFIdentifier('name', { leadingOuterText: '\n  ' }),
+              '"example.com"',
+              { leadingInnerText: ' ', trailingInnerText: ' ' }
+            ),
+            makeTFArgument(
+              makeTFIdentifier('comment', { leadingOuterText: '\n  ' }),
+              '"This is my Zone!"',
+              { leadingInnerText: ' ', trailingInnerText: ' ' }
+            )
+          ],
+          { trailingInnerText: '\n' }
+        )
       )
-    ).toMatchInlineSnapshot(
-      `"{name = \\"example.com\\"comment = \\"This is my Zone!\\"}"`
-    );
+    ).toMatchInlineSnapshot(`
+      "{
+        name = \\"example.com\\"
+        comment = \\"This is my Zone!\\"
+      }"
+    `);
   });
 
   it('prints the trailingInnerText before the closing brace', () => {
