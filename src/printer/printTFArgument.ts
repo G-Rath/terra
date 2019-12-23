@@ -1,9 +1,9 @@
-import { printTFLiteralExpression } from '@src/printer';
+import { printTFIdentifier, printTFLiteralExpression } from '@src/printer';
 import { TFArgument } from '@src/types';
 
 export const printTFArgument = (blockArgument: TFArgument): string =>
   [
-    blockArgument.identifier,
+    printTFIdentifier(blockArgument.identifier),
     '=',
     printTFLiteralExpression(blockArgument.expression)
   ].join(' ');

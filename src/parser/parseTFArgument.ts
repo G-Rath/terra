@@ -10,9 +10,7 @@ export const parseTFArgument = (cursor: StringCursor): TFArgument => {
   const identifier = parseTFIdentifier(cursor);
   let leadingInnerText = '';
 
-  if (cursor.char !== '=') {
-    leadingInnerText = cursor.collectUntil('=').slice(0, -1);
-  }
+  leadingInnerText = cursor.collectUntilWithComments('=').slice(0, -1);
 
   return makeTFArgument(
     identifier, //

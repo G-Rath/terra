@@ -42,7 +42,15 @@ atlas {
                 "type": "simple",
                 "value": "\\"hello world\\"",
               },
-              "identifier": "name",
+              "identifier": Object {
+                "surroundingText": Object {
+                  "leadingOuterText": "
+        ",
+                  "trailingOuterText": "",
+                },
+                "type": "identifier",
+                "value": "name",
+              },
               "surroundingText": Object {
                 "leadingInnerText": " ",
                 "trailingInnerText": "",

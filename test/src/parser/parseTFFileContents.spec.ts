@@ -81,7 +81,15 @@ resource "aws_route53_zone" my_zone {
                     "type": "simple",
                     "value": "\\"example.com\\"",
                   },
-                  "identifier": "name",
+                  "identifier": Object {
+                    "surroundingText": Object {
+                      "leadingOuterText": "
+          ",
+                      "trailingOuterText": "",
+                    },
+                    "type": "identifier",
+                    "value": "name",
+                  },
                   "surroundingText": Object {
                     "leadingInnerText": " ",
                     "trailingInnerText": "",
@@ -171,7 +179,15 @@ resource "aws_route53_zone" my_zone {
                     "type": "simple",
                     "value": "\\"example.com\\"",
                   },
-                  "identifier": "name",
+                  "identifier": Object {
+                    "surroundingText": Object {
+                      "leadingOuterText": "
+          ",
+                      "trailingOuterText": "",
+                    },
+                    "type": "identifier",
+                    "value": "name",
+                  },
                   "surroundingText": Object {
                     "leadingInnerText": " ",
                     "trailingInnerText": "",

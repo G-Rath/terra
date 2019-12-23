@@ -5,6 +5,7 @@ export enum TFNodeType {
   List = 'list',
   Argument = 'argument',
   Function = 'function',
+  Identifier = 'identifier',
   Simple = 'simple',
   Block = 'block',
   Label = 'label',
@@ -50,6 +51,13 @@ export interface TFLabel<TValue extends string = string> {
   surroundingText: SurroundingOuterText;
 }
 
+// identifiers are the same as labels except they shouldn't have quotes
+export interface TFIdentifier<TValue extends string = string> {
+  type: TFNodeType.Identifier;
+  value: TValue;
+  surroundingText: SurroundingOuterText;
+}
+
 export interface TFListExpression extends TFBaseNode {
   type: TFNodeType.List;
   values: TFLiteralExpression[];
@@ -72,7 +80,7 @@ interface TFFunctionCall extends TFBaseNode {
 export interface TFArgument<TIdentifier extends string = string>
   extends TFBaseNode {
   type: TFNodeType.Argument;
-  identifier: TIdentifier;
+  identifier: TFIdentifier<TIdentifier>;
   expression: TFLiteralExpression;
   surroundingText: SurroundingInnerText;
 }

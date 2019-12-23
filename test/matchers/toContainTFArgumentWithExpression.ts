@@ -1,11 +1,20 @@
-import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
+import {
+  makeTFIdentifier,
+  makeTFListExpression,
+  makeTFSimpleLiteral
+} from '@src/makers';
 import {
   TFArgument,
   TFBlockBody,
+  TFIdentifier,
   TFLiteralExpression,
   TFNodeType
 } from '@src/types';
-import { failMatcherDueToNotTFBlockBody, isTFBlockBody } from '@test/matchers';
+import {
+  failMatcherDueToNotTFBlockBody,
+  isAsymmetricMatcher,
+  isTFBlockBody
+} from '@test/matchers';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
@@ -23,15 +32,12 @@ declare global {
        * @template TIdentifier
        */
       toContainTFArgumentWithExpression<TIdentifier extends string = string>(
-        identifier: TIdentifier,
+        identifier: TIdentifier | TFIdentifier<TIdentifier>,
         expression: TFLiteralExpression | string | string[]
       ): R;
     }
   }
 }
-
-const isAsymmetricMatcher = (v: unknown): v is AsymmetricMatcher<unknown> =>
-  typeof v === 'object' && v !== null && '$$typeof' in v;
 
 const buildExpectedExpression = (
   expression:
@@ -59,7 +65,10 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
 >(
   this: jest.MatcherUtils,
   body: TFBlockBody<TIdentifier> | unknown,
-  identifier: TIdentifier | AsymmetricMatcher<unknown>,
+  identifier:
+    | TIdentifier
+    | TFIdentifier<TIdentifier>
+    | AsymmetricMatcher<unknown>,
   expression: TFLiteralExpression | string | AsymmetricMatcher<unknown>
 ): jest.CustomMatcherResult {
   const { utils, isNot } = this;
@@ -70,18 +79,26 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
     return failMatcherDueToNotTFBlockBody(this, matcherName, body);
   }
 
+  const theIdentifier =
+    typeof identifier === 'string' || isAsymmetricMatcher(identifier)
+      ? makeTFIdentifier(identifier as string, {
+          leadingOuterText: expect.any(String),
+          trailingOuterText: expect.any(String)
+        })
+      : identifier;
+
   const args = body.body.filter(
     (item): item is TFArgument<TIdentifier> => item.type === TFNodeType.Argument
   );
 
   const argsMatchingIdentifier = args.filter(arg =>
-    this.equals(arg.identifier, identifier)
+    this.equals(arg.identifier, theIdentifier)
   );
 
   if (argsMatchingIdentifier.length !== 1) {
     // if type is not string, it'll be an expect.<something>, so allow multiple
     const pass =
-      isNot || typeof identifier !== 'string'
+      isNot || isAsymmetricMatcher(identifier)
         ? argsMatchingIdentifier.length > 0
         : argsMatchingIdentifier.length === 1;
 
@@ -100,7 +117,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
             argsMatchingIdentifier.length
           )} with the expected identifier.`,
           '',
-          `${printLabel(labelExpected)}${utils.printExpected(identifier)}`,
+          `${printLabel(labelExpected)}${utils.printExpected(theIdentifier)}`,
           `${printLabel(labelReceived)}${utils.printReceived(body)}`
         ].join('\n');
       }

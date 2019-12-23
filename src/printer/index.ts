@@ -3,6 +3,7 @@ export * from './printTFLabel';
 export * from './printTFBlock';
 export * from './printTFBlockBody';
 export * from './printTFBlocks';
+export * from './printTFIdentifier';
 export * from './printTFFileContents';
 export * from './printTFSimpleLiteral';
 export * from './printTFListExpression';

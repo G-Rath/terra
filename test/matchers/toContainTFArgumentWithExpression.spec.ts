@@ -1,6 +1,7 @@
 import {
   makeTFArgument,
   makeTFBlockBody,
+  makeTFIdentifier,
   makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
@@ -165,6 +166,19 @@ describe('toContainTFArgumentWithExpression', () => {
           '300'
         );
       }).toThrow("Received isn't a TFBlockBody");
+    });
+  });
+
+  describe('when the identifier is a TFIdentifier node', () => {
+    it('can fail due to surrounding text', () => {
+      const body = makeTFBlockBody([expectedArgument]);
+
+      expect(() => {
+        expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
+          makeTFIdentifier('ttl', { trailingOuterText: 'hello world' }),
+          makeTFSimpleLiteral('300', { trailingOuterText: 'hello world' })
+        );
+      }).toThrow('Body contains zero arguments with the expected identifier.');
     });
   });
 

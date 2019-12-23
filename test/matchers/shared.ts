@@ -1,4 +1,10 @@
 import { TFBlockBody, TFNodeType } from '@src/types';
+import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
+
+export const isAsymmetricMatcher = (
+  v: unknown
+): v is AsymmetricMatcher<unknown> =>
+  typeof v === 'object' && v !== null && '$$typeof' in v;
 
 const hasProperty = <TProperty extends string>(
   subject: object,
