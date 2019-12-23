@@ -8,11 +8,7 @@ describe('printTFListExpression', () => {
       printTFListExpression(
         makeTFListExpression(['aws_route53_zone.my_zone.name'], false)
       )
-    ).toMatchInlineSnapshot(`
-      "[
-        aws_route53_zone.my_zone.name
-      ]"
-    `);
+    ).toMatchInlineSnapshot(`"[aws_route53_zone.my_zone.name]"`);
   });
 
   it('prints multiple simple values correctly', () => {
@@ -20,12 +16,25 @@ describe('printTFListExpression', () => {
       printTFListExpression(
         makeTFListExpression(
           [
-            'aws_route53_zone.my_zone.name_servers.0',
-            'aws_route53_zone.my_zone.name_servers.1',
-            'aws_route53_zone.my_zone.name_servers.2',
-            'aws_route53_zone.my_zone.name_servers.3'
+            makeTFSimpleLiteral(
+              'aws_route53_zone.my_zone.name_servers.0', //
+              { leadingOuterText: '\n  ' }
+            ),
+            makeTFSimpleLiteral(
+              'aws_route53_zone.my_zone.name_servers.1', //
+              { leadingOuterText: '\n  ' }
+            ),
+            makeTFSimpleLiteral(
+              'aws_route53_zone.my_zone.name_servers.2', //
+              { leadingOuterText: '\n  ' }
+            ),
+            makeTFSimpleLiteral(
+              'aws_route53_zone.my_zone.name_servers.3', //
+              { leadingOuterText: '\n  ' }
+            )
           ],
-          false
+          false,
+          { trailingInnerText: '\n' }
         )
       )
     ).toMatchInlineSnapshot(`
@@ -45,22 +54,48 @@ describe('printTFListExpression', () => {
           [
             makeTFListExpression(
               [
-                'aws_subnet.private_a.id',
-                'aws_subnet.private_b.id',
-                'aws_subnet.private_c.id'
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_a.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_b.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral('aws_subnet.private_c.id', {
+                  leadingOuterText: '\n    '
+                })
               ],
-              true
+              true,
+              {
+                leadingOuterText: '\n  ',
+                trailingInnerText: '\n  '
+              }
             ),
             makeTFListExpression(
               [
-                'aws_subnet.public_a.id',
-                'aws_subnet.public_b.id',
-                'aws_subnet.public_c.id'
+                makeTFSimpleLiteral(
+                  'aws_subnet.public_a.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.public_b.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.public_c.id', //
+                  { leadingOuterText: '\n    ' }
+                )
               ],
-              false
+              false,
+              {
+                leadingOuterText: '\n  ',
+                trailingInnerText: '\n  '
+              }
             )
           ],
-          false
+          false,
+          { trailingInnerText: '\n' }
         )
       )
     ).toMatchInlineSnapshot(`
@@ -96,12 +131,10 @@ describe('printTFListExpression', () => {
         )
       )
     ).toMatchInlineSnapshot(`
-      "[
-        {
-          Name = \\"MyName\\"
-          TTL = 300
-        }
-      ]"
+      "[{
+        Name = \\"MyName\\"
+        TTL = 300
+      }]"
     `);
   });
 
@@ -113,11 +146,24 @@ describe('printTFListExpression', () => {
           [
             makeTFListExpression(
               [
-                'aws_subnet.private_a.id',
-                'aws_subnet.private_b.id',
-                'aws_subnet.private_c.id'
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_a.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_b.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_c.id', //
+                  { leadingOuterText: '\n    ' }
+                )
               ],
-              true
+              true,
+              {
+                leadingOuterText: '\n  ',
+                trailingInnerText: '\n  '
+              }
             ),
             {
               type: TFNodeType.Function,
@@ -125,7 +171,8 @@ describe('printTFListExpression', () => {
               args: []
             }
           ],
-          false
+          false,
+          { trailingInnerText: '\n' }
         )
       )
     ).toMatchInlineSnapshot(`
@@ -134,10 +181,9 @@ describe('printTFListExpression', () => {
           aws_subnet.private_a.id,
           aws_subnet.private_b.id,
           aws_subnet.private_c.id,
-        ],
-        map(
-          # FIXME - FUNCTIONS NOT YET SUPPORTED
-        )
+        ],map(
+        # FIXME - FUNCTIONS NOT YET SUPPORTED
+      )
       ]"
     `);
   });
@@ -147,11 +193,27 @@ describe('printTFListExpression', () => {
       printTFListExpression(
         makeTFListExpression(
           [
-            makeTFListExpression([
-              'aws_subnet.private_a.id',
-              'aws_subnet.private_b.id',
-              'aws_subnet.private_c.id'
-            ]),
+            makeTFListExpression(
+              [
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_a.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_b.id', //
+                  { leadingOuterText: '\n    ' }
+                ),
+                makeTFSimpleLiteral(
+                  'aws_subnet.private_c.id', //
+                  { leadingOuterText: '\n    ' }
+                )
+              ],
+              false,
+              {
+                leadingOuterText: '\n  ',
+                trailingInnerText: '\n  '
+              }
+            ),
             makeTFSimpleLiteral('true'),
             makeTFSimpleLiteral('300'),
             {
@@ -168,11 +230,24 @@ describe('printTFListExpression', () => {
                         'MyList',
                         makeTFListExpression(
                           [
-                            'aws_subnet.public_a.id',
-                            'aws_subnet.public_b.id',
-                            'aws_subnet.public_c.id'
+                            makeTFSimpleLiteral(
+                              'aws_subnet.private_a.id', //
+                              { leadingOuterText: '\n    ' }
+                            ),
+                            makeTFSimpleLiteral(
+                              'aws_subnet.private_b.id', //
+                              { leadingOuterText: '\n    ' }
+                            ),
+                            makeTFSimpleLiteral(
+                              'aws_subnet.private_c.id', //
+                              { leadingOuterText: '\n    ' }
+                            )
                           ],
-                          true
+                          true,
+                          {
+                            leadingOuterText: '\n  ',
+                            trailingInnerText: '\n  '
+                          }
                         )
                       ]
                     ]
@@ -181,7 +256,8 @@ describe('printTFListExpression', () => {
               ]
             }
           ],
-          false
+          false,
+          { trailingInnerText: '\n' }
         )
       )
     ).toMatchInlineSnapshot(`
@@ -190,20 +266,18 @@ describe('printTFListExpression', () => {
           aws_subnet.private_a.id,
           aws_subnet.private_b.id,
           aws_subnet.private_c.id
-        ],
-        true,
-        300,
-        {
-          MyMap = {
-            Enabled = false
-            TTL = 300
-            MyList = [
-              aws_subnet.public_a.id,
-              aws_subnet.public_b.id,
-              aws_subnet.public_c.id,
+        ],true,300,{
+        MyMap = {
+          Enabled = false
+          TTL = 300
+          MyList =
+            [
+              aws_subnet.private_a.id,
+              aws_subnet.private_b.id,
+              aws_subnet.private_c.id,
             ]
-          }
         }
+      }
       ]"
     `);
   });

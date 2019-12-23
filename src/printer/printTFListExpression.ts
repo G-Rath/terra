@@ -1,20 +1,16 @@
 import { printTFLiteralExpression } from '@src/printer';
 import { TFListExpression } from '@src/types';
-import indentString from 'indent-string';
 
-export const printTFListExpression = (expression: TFListExpression): string => {
-  let content = indentString(
-    expression.values
+export const printTFListExpression = (expression: TFListExpression): string =>
+  [
+    expression.surroundingText.leadingOuterText,
+    '[',
+    expression.surroundingText.leadingInnerText,
+    ...expression.values
       .map(subexpression => `${printTFLiteralExpression(subexpression)}`)
-      .join(',\n'),
-    2
-  );
-
-  if (expression.hasTrailingComma) {
-    content += ',';
-  }
-
-  // content += expression.innerTrailingText;
-
-  return ['[', content, ']'].join('\n');
-};
+      .join(','),
+    expression.hasTrailingComma ? ',' : '',
+    expression.surroundingText.trailingInnerText,
+    ']',
+    expression.surroundingText.trailingOuterText
+  ].join('');
