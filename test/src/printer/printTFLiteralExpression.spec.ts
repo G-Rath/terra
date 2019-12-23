@@ -75,11 +75,7 @@ describe('printTFLiteralExpression', () => {
         })
       ).toMatchInlineSnapshot(`
         "{
-          MyArray = [
-            aws_subnet.public_a.id,
-            aws_subnet.public_b.id,
-            aws_subnet.public_c.id
-          ]
+          MyArray = [aws_subnet.public_a.idaws_subnet.public_b.idaws_subnet.public_c.id]
         }"
       `);
     });
@@ -201,11 +197,7 @@ describe('printTFLiteralExpression', () => {
           MyMap = {
             Enabled = false
             TTL = 300
-            MyArray = [
-              aws_subnet.public_a.id,
-              aws_subnet.public_b.id,
-              aws_subnet.public_c.id
-            ]
+            MyArray = [aws_subnet.public_a.idaws_subnet.public_b.idaws_subnet.public_c.id]
           }
         }"
       `);
