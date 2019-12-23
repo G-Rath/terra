@@ -33,6 +33,21 @@ describe('printTFBlocks', () => {
             { leadingOuterText: ' ', trailingInnerText: '\n' }
           ),
           { leadingOuterText: '\n' }
+        ),
+        makeTFBlock(
+          'module',
+          [makeTFLabel('my_module', { leadingOuterText: ' ' })],
+          makeTFBlockBody(
+            [
+              makeTFArgument(
+                makeTFIdentifier('source', { leadingOuterText: '\n  ' }),
+                '"../modules/my_module"',
+                { leadingInnerText: ' ', trailingInnerText: ' ' }
+              )
+            ],
+            { leadingOuterText: ' ', trailingInnerText: '\n' }
+          ),
+          { leadingOuterText: '\n\n' }
         )
       ])
     ).toMatchInlineSnapshot(`
@@ -40,6 +55,10 @@ describe('printTFBlocks', () => {
       resource aws_route53_zone my_route {
         name = \\"example.com\\"
         comment = \\"This is my Zone!\\"
+      }
+
+      module my_module {
+        source = \\"../modules/my_module\\"
       }"
     `);
   });
