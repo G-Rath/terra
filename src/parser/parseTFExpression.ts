@@ -1,5 +1,9 @@
 import { makeTFSimpleLiteral } from '@src/makers';
-import { parseTFListExpression, StringCursor } from '@src/parser';
+import {
+  parseTFListExpression,
+  parseTFMapExpression,
+  StringCursor
+} from '@src/parser';
 import { TFLiteralExpression } from '@src/types';
 
 export const parseTFExpression = (
@@ -20,10 +24,8 @@ export const parseTFExpression = (
 
   if (cursor.char === '{') {
     cursor.rewind(leadingOuterText.length);
-    // map of elements
-    throw new Error('maps are not yet supported');
-    // parseTFBlockBody();
-    // parseTFMapExpression();
+
+    return parseTFMapExpression(cursor);
   }
 
   if (cursor.char === '"') {

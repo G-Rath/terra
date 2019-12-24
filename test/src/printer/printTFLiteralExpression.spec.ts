@@ -1,4 +1,9 @@
-import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
+import {
+  makeTFAttribute,
+  makeTFListExpression,
+  makeTFMapExpression,
+  makeTFSimpleLiteral
+} from '@src/makers';
 import * as printer from '@src/printer';
 import { printTFLiteralExpression } from '@src/printer';
 import { TFNodeType } from '@src/types';
@@ -43,141 +48,108 @@ describe('printTFLiteralExpression', () => {
   describe('when literal is a Map', () => {
     it('prints simple attributes correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            ['Name', makeTFSimpleLiteral('"MyName"')], //
-            ['TTL', makeTFSimpleLiteral('300')]
-          ]
-        })
-      ).toMatchInlineSnapshot(`
-        "{
-          Name = \\"MyName\\"
-          TTL = 300
-        }"
-      `);
+        printTFLiteralExpression(
+          makeTFMapExpression(
+            ([
+              ['Name', makeTFSimpleLiteral('"MyName"')], //
+              ['TTL', makeTFSimpleLiteral('300')]
+            ] as const).map(value => makeTFAttribute(value[0], value[1]))
+          )
+        )
+      ).toMatchInlineSnapshot(`"{Name=\\"MyName\\"TTL=300}"`);
     });
 
     it('prints array attributes correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            [
+        printTFLiteralExpression(
+          makeTFMapExpression([
+            makeTFAttribute(
               'MyArray',
               makeTFListExpression([
                 'aws_subnet.public_a.id',
                 'aws_subnet.public_b.id',
                 'aws_subnet.public_c.id'
               ])
-            ]
-          ]
-        })
-      ).toMatchInlineSnapshot(`
-        "{
-          MyArray = [aws_subnet.public_a.idaws_subnet.public_b.idaws_subnet.public_c.id]
-        }"
-      `);
+            )
+          ])
+        )
+      ).toMatchInlineSnapshot(
+        `"{MyArray=[aws_subnet.public_a.id,aws_subnet.public_b.id,aws_subnet.public_c.id]}"`
+      );
     });
 
     it('prints function attributes correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            [
-              'MyFunction',
-              {
-                type: TFNodeType.Function,
-                name: 'flatten',
-                args: [
+        printTFLiteralExpression(
+          makeTFMapExpression([
+            makeTFAttribute('MyFunction', {
+              type: TFNodeType.Function,
+              name: 'flatten',
+              args: [
+                [
+                  'MyArray',
                   [
-                    'MyArray',
-                    [
-                      'aws_subnet.public_a.id',
-                      'aws_subnet.public_b.id',
-                      'aws_subnet.public_c.id'
-                    ]
+                    'aws_subnet.public_a.id',
+                    'aws_subnet.public_b.id',
+                    'aws_subnet.public_c.id'
                   ]
                 ]
-              }
-            ]
-          ]
-        })
+              ]
+            })
+          ])
+        )
       ).toMatchInlineSnapshot(`
-        "{
-          MyFunction = flatten(
-            # FIXME - FUNCTIONS NOT YET SUPPORTED
-          )
-        }"
+        "{MyFunction=flatten(
+          # FIXME - FUNCTIONS NOT YET SUPPORTED
+        )}"
       `);
     });
 
     it('prints shallow maps correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            [
+        printTFLiteralExpression(
+          makeTFMapExpression([
+            makeTFAttribute(
               'MyMap',
-              {
-                type: TFNodeType.Map,
-                attributes: [
-                  ['Name', makeTFSimpleLiteral('"MyName"')],
+              makeTFMapExpression(
+                ([
+                  ['Name', makeTFSimpleLiteral('"MyName"')], //
                   ['TTL', makeTFSimpleLiteral('300')]
-                ]
-              }
-            ]
-          ]
-        })
-      ).toMatchInlineSnapshot(`
-        "{
-          MyMap = {
-            Name = \\"MyName\\"
-            TTL = 300
-          }
-        }"
-      `);
+                ] as const).map(value => makeTFAttribute(value[0], value[1]))
+              )
+            )
+          ])
+        )
+      ).toMatchInlineSnapshot(`"{MyMap={Name=\\"MyName\\"TTL=300}}"`);
     });
 
     it('prints nested maps correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            [
+        printTFLiteralExpression(
+          makeTFMapExpression([
+            makeTFAttribute(
               'MyMap',
-              {
-                type: TFNodeType.Map,
-                attributes: [
-                  ['Name', makeTFSimpleLiteral('"MyName"')],
+              makeTFMapExpression(
+                ([
+                  ['Name', makeTFSimpleLiteral('"MyName"')], //
                   ['TTL', makeTFSimpleLiteral('300')]
-                ]
-              }
-            ]
-          ]
-        })
-      ).toMatchInlineSnapshot(`
-        "{
-          MyMap = {
-            Name = \\"MyName\\"
-            TTL = 300
-          }
-        }"
-      `);
+                ] as const).map(value => makeTFAttribute(value[0], value[1]))
+              )
+            )
+          ])
+        )
+      ).toMatchInlineSnapshot(`"{MyMap={Name=\\"MyName\\"TTL=300}}"`);
     });
 
     it('prints a mixed map correctly', () => {
       expect(
-        printTFLiteralExpression({
-          type: TFNodeType.Map,
-          attributes: [
-            [
+        printTFLiteralExpression(
+          makeTFMapExpression([
+            makeTFAttribute(
               'MyMap',
-              {
-                type: TFNodeType.Map,
-                attributes: [
-                  ['Enabled', makeTFSimpleLiteral('false')],
+              makeTFMapExpression(
+                ([
+                  ['Name', makeTFSimpleLiteral('"MyName"')], //
                   ['TTL', makeTFSimpleLiteral('300')],
                   [
                     'MyArray',
@@ -187,20 +159,14 @@ describe('printTFLiteralExpression', () => {
                       'aws_subnet.public_c.id'
                     ])
                   ]
-                ]
-              }
-            ]
-          ]
-        })
-      ).toMatchInlineSnapshot(`
-        "{
-          MyMap = {
-            Enabled = false
-            TTL = 300
-            MyArray = [aws_subnet.public_a.idaws_subnet.public_b.idaws_subnet.public_c.id]
-          }
-        }"
-      `);
+                ] as const).map(value => makeTFAttribute(value[0], value[1]))
+              )
+            )
+          ])
+        )
+      ).toMatchInlineSnapshot(
+        `"{MyMap={Name=\\"MyName\\"TTL=300MyArray=[aws_subnet.public_a.id,aws_subnet.public_b.id,aws_subnet.public_c.id]}}"`
+      );
     });
   });
 });
