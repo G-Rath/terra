@@ -1,4 +1,5 @@
 export * from './printTFArgument';
+export * from './printTFAttribute';
 export * from './printTFLabel';
 export * from './printTFBlock';
 export * from './printTFBlockBody';
@@ -8,3 +9,4 @@ export * from './printTFFileContents';
 export * from './printTFSimpleLiteral';
 export * from './printTFListExpression';
 export * from './printTFLiteralExpression';
+export * from './printTFMapExpression';

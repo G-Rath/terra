@@ -37,19 +37,18 @@ describe('parseTFExpression', () => {
     });
 
     describe('when the expression is a map', () => {
-      it('identifies the start of maps', () => {
-        expect(() =>
-          parseTFExpression(new StringCursor('{ Name = "My App" } '))
-        ).toThrow('maps are not yet supported');
+      it('uses parseTFMapExpression', () => {
+        const parseTFMapExpressionSpy = jest.spyOn(
+          parser,
+          'parseTFMapExpression'
+        );
+
+        parseTFExpression(new StringCursor('{ "key" = "value" } '));
+
+        expect(parseTFMapExpressionSpy).toHaveBeenCalledWith(
+          expect.any(StringCursor)
+        );
       });
-
-      it.todo('parses empty maps');
-
-      it.todo('parses single element maps');
-
-      it.todo('parses multi-line maps');
-
-      it.todo('parses single-line maps');
     });
 
     describe('when the expression is a string literal', () => {

@@ -1,4 +1,9 @@
-import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
+import {
+  makeTFAttribute,
+  makeTFListExpression,
+  makeTFMapExpression,
+  makeTFSimpleLiteral
+} from '@src/makers';
 import { printTFListExpression } from '@src/printer';
 import { TFNodeType } from '@src/types';
 
@@ -119,23 +124,17 @@ describe('printTFListExpression', () => {
       printTFListExpression(
         makeTFListExpression(
           [
-            {
-              type: TFNodeType.Map,
-              attributes: [
-                ['Name', makeTFSimpleLiteral('"MyName"')],
+            makeTFMapExpression(
+              ([
+                ['Name', makeTFSimpleLiteral('"MyName"')], //
                 ['TTL', makeTFSimpleLiteral('300')]
-              ]
-            }
+              ] as const).map(value => makeTFAttribute(value[0], value[1]))
+            )
           ],
           false
         )
       )
-    ).toMatchInlineSnapshot(`
-      "[{
-        Name = \\"MyName\\"
-        TTL = 300
-      }]"
-    `);
+    ).toMatchInlineSnapshot(`"[{Name=\\"MyName\\"TTL=300}]"`);
   });
 
   it('prints function values correctly', () => {
@@ -216,45 +215,41 @@ describe('printTFListExpression', () => {
             ),
             makeTFSimpleLiteral('true'),
             makeTFSimpleLiteral('300'),
-            {
-              type: TFNodeType.Map,
-              attributes: [
-                [
-                  'MyMap',
-                  {
-                    type: TFNodeType.Map,
-                    attributes: [
-                      ['Enabled', makeTFSimpleLiteral('false')],
-                      ['TTL', makeTFSimpleLiteral('300')],
-                      [
-                        'MyList',
-                        makeTFListExpression(
-                          [
-                            makeTFSimpleLiteral(
-                              'aws_subnet.private_a.id', //
-                              { leadingOuterText: '\n    ' }
-                            ),
-                            makeTFSimpleLiteral(
-                              'aws_subnet.private_b.id', //
-                              { leadingOuterText: '\n    ' }
-                            ),
-                            makeTFSimpleLiteral(
-                              'aws_subnet.private_c.id', //
-                              { leadingOuterText: '\n    ' }
-                            )
-                          ],
-                          true,
-                          {
-                            leadingOuterText: '\n  ',
-                            trailingInnerText: '\n  '
-                          }
-                        )
-                      ]
+            makeTFMapExpression([
+              makeTFAttribute(
+                'MyMap',
+                makeTFMapExpression(
+                  ([
+                    ['Enabled', makeTFSimpleLiteral('false')],
+                    ['TTL', makeTFSimpleLiteral('300')],
+                    [
+                      'MyList',
+                      makeTFListExpression(
+                        [
+                          makeTFSimpleLiteral(
+                            'aws_subnet.private_a.id', //
+                            { leadingOuterText: '\n    ' }
+                          ),
+                          makeTFSimpleLiteral(
+                            'aws_subnet.private_b.id', //
+                            { leadingOuterText: '\n    ' }
+                          ),
+                          makeTFSimpleLiteral(
+                            'aws_subnet.private_c.id', //
+                            { leadingOuterText: '\n    ' }
+                          )
+                        ],
+                        true,
+                        {
+                          leadingOuterText: '\n  ',
+                          trailingInnerText: '\n  '
+                        }
+                      )
                     ]
-                  }
-                ]
-              ]
-            }
+                  ] as const).map(value => makeTFAttribute(value[0], value[1]))
+                )
+              )
+            ])
           ],
           false,
           { trailingInnerText: '\n' }
@@ -266,18 +261,12 @@ describe('printTFListExpression', () => {
           aws_subnet.private_a.id,
           aws_subnet.private_b.id,
           aws_subnet.private_c.id
-        ],true,300,{
-        MyMap = {
-          Enabled = false
-          TTL = 300
-          MyList =
-            [
-              aws_subnet.private_a.id,
-              aws_subnet.private_b.id,
-              aws_subnet.private_c.id,
-            ]
-        }
-      }
+        ],true,300,{MyMap={Enabled=falseTTL=300MyList=
+        [
+          aws_subnet.private_a.id,
+          aws_subnet.private_b.id,
+          aws_subnet.private_c.id,
+        ]}}
       ]"
     `);
   });

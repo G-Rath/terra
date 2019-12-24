@@ -3,6 +3,7 @@ import { AwsResourceType } from '@src/utils';
 export enum TFNodeType {
   Body = 'body',
   List = 'list',
+  Attribute = 'attribute',
   Argument = 'argument',
   Function = 'function',
   Identifier = 'identifier',
@@ -28,9 +29,24 @@ export interface TFSimpleLiteral extends TFBaseNode {
   surroundingText: SurroundingOuterText;
 }
 
-export interface TFMapLiteral extends TFBaseNode {
+export interface TFAttribute<TKey extends string = string> extends TFBaseNode {
+  type: TFNodeType.Attribute;
+  key: TFAttributeKey<TKey>;
+  value: TFAttributeValue;
+  surroundingText: SurroundingInnerText;
+}
+
+export type TFAttributeKey<TIdentifier extends string = string> =
+  | TFIdentifier<TIdentifier>
+  | TFLabel<TIdentifier>;
+
+export type TFAttributeValue = TFLiteralExpression;
+
+export interface TFMapExpression<TKey extends string = string>
+  extends TFBaseNode {
   type: TFNodeType.Map;
-  attributes: Array<[string, TFLiteralExpression]>;
+  attributes: Array<TFAttribute<TKey>>;
+  surroundingText: SurroundingText;
 }
 
 export interface SurroundingInnerText {
@@ -69,7 +85,7 @@ export type TFLiteralExpression =
   | TFSimpleLiteral
   | TFFunctionCall
   | TFListExpression
-  | TFMapLiteral;
+  | TFMapExpression;
 
 interface TFFunctionCall extends TFBaseNode {
   type: TFNodeType.Function;
