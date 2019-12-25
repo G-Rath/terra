@@ -91,3 +91,41 @@ actions such as:
 
 Printers convert Terraform AST nodes into valid Terraform code as raw multiline
 string literals.
+
+### TerraParse
+
+Terra has its own Terraform parser, referred to as "TerraParse" in docs to help
+differentiate it from the native parser used by Terraform proper.
+
+Compared to the native Terraform parser, TerraParse is much looser, parsing
+numerous syntax errors as semantic errors instead.
+
+It does this by only erroring when it's unable to determine what it's parsing,
+either because it does not recognise the syntax _or_ because the syntax is too
+ambiguous for the parser to be able to remain lossless.
+
+The logic behind the second reason for erroring is what makes TerraParse less
+strict than Terraform, as it inversely means the parser can convert the majority
+of would-be syntax errors into semantic ones.
+
+For example, Terraform only accepts double quotes, and so will error on single
+quotes. In comparision, TerraParse will parse such quotes as valid syntax.
+
+However, both Terraform native & TerraParse will error on an unclosed quote, as
+that is a _hard_ syntax error. In TerraParse' case, it will error because it's
+not possible to confidently determine where the string should be closed without
+making assumptions that could charge the parsing of the rest of the file.
+
+Such syntax-turned-semantic errors can be thought of as "misused syntax".
+
+Examples of syntax errors that are considered semantic by the parser include:
+
+- newlines before and after the equals in block arguments
+- newlines before the opening brace of a block body
+- using single quotes instead of double quotes
+- missing comma separator in list expressions
+
+Generally most forms of syntax-turned-semantic errors involve newlines.
+
+Overall, TerraParse attempts to parse "lossless-ly", with being able to print
+the parsed file exactly as it was read.
