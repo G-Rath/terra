@@ -83,14 +83,16 @@ export interface TFListExpression extends TFBaseNode {
 
 export type TFLiteralExpression =
   | TFSimpleLiteral
-  | TFFunctionCall
+  | TFFunctionExpression
   | TFListExpression
   | TFMapExpression;
 
-interface TFFunctionCall extends TFBaseNode {
+export interface TFFunctionExpression extends TFBaseNode {
   type: TFNodeType.Function;
-  name: string;
-  args: unknown[];
+  name: TFIdentifier;
+  args: TFLiteralExpression[];
+  hasTrailingComma: boolean;
+  surroundingText: SurroundingText;
 }
 
 export interface TFArgument<TIdentifier extends string = string>

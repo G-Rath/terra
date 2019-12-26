@@ -1,10 +1,10 @@
 import {
-  printTFSimpleLiteral,
+  printTFFunctionExpression,
   printTFListExpression,
-  printTFMapExpression
+  printTFMapExpression,
+  printTFSimpleLiteral
 } from '@src/printer';
 import { TFLiteralExpression, TFNodeType } from '@src/types';
-import indentString from 'indent-string';
 
 export const printTFLiteralExpression = (
   literal: TFLiteralExpression
@@ -24,13 +24,7 @@ export const printTFLiteralExpression = (
   }
 
   if (literal.type === TFNodeType.Function) {
-    return [
-      `${literal.name}(`,
-      ...(['# FIXME - FUNCTIONS NOT YET SUPPORTED'] || literal.args).map(str =>
-        indentString(str, 2)
-      ),
-      ')'
-    ].join('\n');
+    return printTFFunctionExpression(literal);
   }
 
   throw new Error(`structural error - cannot print type "${type}"`);

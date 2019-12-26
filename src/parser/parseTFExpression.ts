@@ -1,5 +1,6 @@
 import { makeTFSimpleLiteral } from '@src/makers';
 import {
+  parseTFFunctionExpression,
   parseTFListExpression,
   parseTFMapExpression,
   StringCursor
@@ -43,12 +44,12 @@ export const parseTFExpression = (
     return makeTFSimpleLiteral(expression, { leadingOuterText });
   }
 
-  const expression = cursor.collectUntil([' ', '\n', '(', ',']);
+  const expression = cursor.collectUntil([' ', '\n', '(', ')', ']', ',']);
 
   if (expression.endsWith('(')) {
-    // function expression
+    cursor.rewind(expression.length + leadingOuterText.length);
 
-    throw new Error('functions are not yet supported');
+    return parseTFFunctionExpression(cursor);
   }
 
   cursor.rewind(1);

@@ -6,6 +6,7 @@ export * from './printTFBlockBody';
 export * from './printTFBlocks';
 export * from './printTFIdentifier';
 export * from './printTFFileContents';
+export * from './printTFFunctionExpression';
 export * from './printTFSimpleLiteral';
 export * from './printTFListExpression';
 export * from './printTFLiteralExpression';
