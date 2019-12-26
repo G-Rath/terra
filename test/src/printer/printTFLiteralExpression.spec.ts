@@ -1,12 +1,12 @@
 import {
   makeTFAttribute,
+  makeTFFunctionExpression,
   makeTFListExpression,
   makeTFMapExpression,
   makeTFSimpleLiteral
 } from '@src/makers';
 import * as printer from '@src/printer';
 import { printTFLiteralExpression } from '@src/printer';
-import { TFNodeType } from '@src/types';
 
 describe('printTFLiteralExpression', () => {
   describe('when literal is Simple', () => {
@@ -82,27 +82,23 @@ describe('printTFLiteralExpression', () => {
       expect(
         printTFLiteralExpression(
           makeTFMapExpression([
-            makeTFAttribute('MyFunction', {
-              type: TFNodeType.Function,
-              name: 'flatten',
-              args: [
+            makeTFAttribute(
+              'MyFunction',
+              makeTFFunctionExpression(
+                'flatten',
                 [
-                  'MyArray',
-                  [
-                    'aws_subnet.public_a.id',
-                    'aws_subnet.public_b.id',
-                    'aws_subnet.public_c.id'
-                  ]
-                ]
-              ]
-            })
+                  'aws_subnet.public_a.id',
+                  'aws_subnet.public_b.id',
+                  'aws_subnet.public_c.id'
+                ],
+                false
+              )
+            )
           ])
         )
-      ).toMatchInlineSnapshot(`
-        "{MyFunction=flatten(
-          # FIXME - FUNCTIONS NOT YET SUPPORTED
-        )}"
-      `);
+      ).toMatchInlineSnapshot(
+        `"{MyFunction=flatten(aws_subnet.public_a.id,aws_subnet.public_b.id,aws_subnet.public_c.id)}"`
+      );
     });
 
     it('prints shallow maps correctly', () => {

@@ -118,10 +118,17 @@ describe('parseTFExpression', () => {
     });
 
     describe('when the expression is a function', () => {
-      it('identifies the start of functions', () => {
-        expect(() =>
-          parseTFExpression(new StringCursor('length(aws_eip.external_ips) '))
-        ).toThrow('functions are not yet supported');
+      it('uses parseTFFunctionExpression', () => {
+        const parseTFFunctionExpressionSpy = jest.spyOn(
+          parser,
+          'parseTFFunctionExpression'
+        );
+
+        parseTFExpression(new StringCursor('trim("hello world")'));
+
+        expect(parseTFFunctionExpressionSpy).toHaveBeenCalledWith(
+          expect.any(StringCursor)
+        );
       });
     });
   });

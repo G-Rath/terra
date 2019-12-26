@@ -1,5 +1,6 @@
 import {
   makeTFAttribute,
+  makeTFFunctionExpression,
   makeTFListExpression,
   makeTFMapExpression,
   makeTFSimpleLiteral
@@ -164,11 +165,7 @@ describe('printTFListExpression', () => {
                 trailingInnerText: '\n  '
               }
             ),
-            {
-              type: TFNodeType.Function,
-              name: 'map',
-              args: []
-            }
+            makeTFFunctionExpression('map', [], false)
           ],
           false,
           { trailingInnerText: '\n' }
@@ -180,9 +177,7 @@ describe('printTFListExpression', () => {
           aws_subnet.private_a.id,
           aws_subnet.private_b.id,
           aws_subnet.private_c.id,
-        ],map(
-        # FIXME - FUNCTIONS NOT YET SUPPORTED
-      )
+        ],map()
       ]"
     `);
   });
