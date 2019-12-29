@@ -4,9 +4,7 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53RecordResource', () => {
   it('builds an aws_route53_record resource', () => {
-    const {
-      labels: [{ value: resource }]
-    } = buildRoute53RecordResource({
+    const resource = buildRoute53RecordResource({
       name: 'imnotcrazy.info.',
       type: 'NS',
       target: {
@@ -17,15 +15,16 @@ describe('buildRoute53RecordResource', () => {
       zoneName: 'imnotcrazy.info'
     });
 
-    expect(resource).toBe(AwsResourceType.AWS_ROUTE53_RECORD);
+    expect(resource).toBeTFBlockWithLabel(
+      AwsResourceType.AWS_ROUTE53_RECORD,
+      0
+    );
   });
 
   describe('the resource name', () => {
     describe('when the "name" argument is an empty string', () => {
       it('omits it from the name', () => {
-        const {
-          labels: [, { value: name }]
-        } = buildRoute53RecordResource({
+        const resource = buildRoute53RecordResource({
           name: 'imnotcrazy.info.',
           type: 'NS',
           target: {
@@ -36,14 +35,12 @@ describe('buildRoute53RecordResource', () => {
           zoneName: 'imnotcrazy.info'
         });
 
-        expect(name).toBe('imnotcrazy_info_ns');
+        expect(resource).toBeTFBlockWithLabel('imnotcrazy_info_ns', 1);
       });
     });
 
     it('names the resource as expected', () => {
-      const {
-        labels: [, { value: name }]
-      } = buildRoute53RecordResource({
+      const resource = buildRoute53RecordResource({
         name: 'www.imnotcrazy.info.',
         type: 'A',
         target: {
@@ -54,9 +51,10 @@ describe('buildRoute53RecordResource', () => {
         zoneName: 'imnotcrazy.info'
       });
 
-      expect(name).toBe('imnotcrazy_info_www_a');
+      expect(resource).toBeTFBlockWithLabel('imnotcrazy_info_www_a', 1);
     });
   });
+
   describe('the required arguments', () => {
     it('includes the "name" argument', () => {
       const { body } = buildRoute53RecordResource({

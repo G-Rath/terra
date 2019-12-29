@@ -1,5 +1,5 @@
 import { TFBlockBody, TFDynamicBlock, TFNodeType } from '@src/types';
-import { failMatcherDueToNotTFBlockBody, isTFBlockBody } from '@test/matchers';
+import { failMatcherDueToNotTFNode, isTFBlockBody } from '@test/matchers';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
@@ -28,7 +28,7 @@ const toContainTFDynamicBlock: jest.CustomMatcher = function(
   const matcherHint = utils.matcherHint(matcherName);
 
   if (!isTFBlockBody(body)) {
-    return failMatcherDueToNotTFBlockBody(this, matcherName, body);
+    return failMatcherDueToNotTFNode(this, matcherName, body, TFNodeType.Body);
   }
 
   const dynamics = body.body.filter(

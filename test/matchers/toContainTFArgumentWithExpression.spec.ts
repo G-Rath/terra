@@ -165,7 +165,7 @@ describe('toContainTFArgumentWithExpression', () => {
           'ttl',
           '300'
         );
-      }).toThrow("Received isn't a TFBlockBody");
+      }).toThrow("Received isn't a body");
     });
   });
 

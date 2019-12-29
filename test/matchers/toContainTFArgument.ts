@@ -1,7 +1,7 @@
 import { makeTFIdentifier } from '@src/makers';
 import { TFArgument, TFBlockBody, TFIdentifier, TFNodeType } from '@src/types';
 import {
-  failMatcherDueToNotTFBlockBody,
+  failMatcherDueToNotTFNode,
   isAsymmetricMatcher,
   isTFBlockBody
 } from '@test/matchers';
@@ -42,7 +42,7 @@ export const toContainTFArgument: jest.CustomMatcher = function<
   const matcherHint = utils.matcherHint(matcherName);
 
   if (!isTFBlockBody(body)) {
-    return failMatcherDueToNotTFBlockBody(this, matcherName, body);
+    return failMatcherDueToNotTFNode(this, matcherName, body, TFNodeType.Body);
   }
 
   const theIdentifier =

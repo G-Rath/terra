@@ -3,23 +3,19 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildS3BucketResource', () => {
   it('builds an aws_s3_bucket resource', () => {
-    const {
-      labels: [{ value: resource }]
-    } = buildS3BucketResource({
+    const resource = buildS3BucketResource({
       BucketName: 'mybucket'
     });
 
-    expect(resource).toBe(AwsResourceType.AWS_S3_BUCKET);
+    expect(resource).toBeTFBlockWithLabel(AwsResourceType.AWS_S3_BUCKET, 0);
   });
 
   it('uses "BucketName" to build the resource name', () => {
-    const {
-      labels: [, { value: name }]
-    } = buildS3BucketResource({
+    const resource = buildS3BucketResource({
       BucketName: 'mybucket'
     });
 
-    expect(name).toBe('mybucket');
+    expect(resource).toBeTFBlockWithLabel('mybucket', 1);
   });
 
   describe('the required arguments', () => {

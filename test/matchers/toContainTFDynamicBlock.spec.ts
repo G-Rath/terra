@@ -116,7 +116,7 @@ describe('toContainTFDynamicBlock', () => {
     it('fails', () => {
       expect(() => {
         expect('body').toContainTFDynamicBlock('ingress');
-      }).toThrow("Received isn't a TFBlockBody");
+      }).toThrow("Received isn't a body");
     });
   });
 });

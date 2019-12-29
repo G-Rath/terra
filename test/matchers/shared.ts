@@ -1,4 +1,4 @@
-import { TFBlockBody, TFNodeType } from '@src/types';
+import { TFBlock, TFBlockBody, TFNodeType } from '@src/types';
 import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export const isAsymmetricMatcher = (
@@ -11,41 +11,49 @@ const hasProperty = <TProperty extends string>(
   property: TProperty
 ): subject is { [K in TProperty]: unknown } => property in subject;
 
+const isObjectWithTypeProperty = (obj: unknown): obj is { type: string } =>
+  typeof obj === 'object' && obj !== null && hasProperty(obj, 'type');
+
+export const isTFBlock = <TIdentifier extends string = string>(
+  body: TFBlock<TIdentifier> | unknown
+): body is TFBlock<TIdentifier> =>
+  isObjectWithTypeProperty(body) && body.type === TFNodeType.Block;
+
 export const isTFBlockBody = <TIdentifier extends string = string>(
   body: TFBlockBody<TIdentifier> | unknown
 ): body is TFBlockBody<TIdentifier> =>
-  typeof body === 'object' &&
-  body !== null &&
-  hasProperty(body, 'type') &&
-  body.type === TFNodeType.Body;
+  isObjectWithTypeProperty(body) && body.type === TFNodeType.Body;
 
-const explainWhyArgIsNotTFBlockBody = (
-  body: unknown /* & not TFBlockBody */
+const explainWhyArgIsNotTFNodeType = (
+  nodeType: TFNodeType,
+  value: unknown
 ): unknown => {
-  if (typeof body !== 'object') {
-    return typeof body;
+  if (typeof value !== 'object') {
+    return typeof value;
   }
 
-  if (Array.isArray(body)) {
+  if (Array.isArray(value)) {
     return 'An array';
   }
 
-  if (body === null || !hasProperty(body, 'type')) {
-    return body;
+  if (value === null || !hasProperty(value, 'type')) {
+    return value;
   }
 
   /* istanbul ignore if */
-  if (body.type === TFNodeType.Body) {
-    throw new Error('Given argument *should* be a TFBlockBody');
+  if (value.type === TFNodeType) {
+    throw new Error(`Given argument *should* be a ${nodeType}`);
   }
 
-  return body.type;
+  return value.type;
 };
 
-export const failMatcherDueToNotTFBlockBody = (
+export const failMatcherDueToReason = (
   matcher: jest.MatcherUtils,
   matcherName: string,
-  received: unknown /* & not TFBlockBody */
+  bodyMessage: string,
+  expectedMessage: unknown,
+  receivedMessage: unknown
 ) => ({
   pass: matcher.isNot,
   message: () => {
@@ -56,15 +64,28 @@ export const failMatcherDueToNotTFBlockBody = (
     const labelExpected = 'Expected';
     const labelReceived = 'Received';
     const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
-    const reason = explainWhyArgIsNotTFBlockBody(received);
 
     return [
       matcherHint,
       '',
-      "Received isn't a TFBlockBody.",
+      bodyMessage,
       '',
-      `${printLabel(labelExpected)}${utils.printExpected('TFBlockBody')}`,
-      `${printLabel(labelReceived)}${utils.printReceived(reason)}`
+      `${printLabel(labelExpected)}${utils.printExpected(expectedMessage)}`,
+      `${printLabel(labelReceived)}${utils.printReceived(receivedMessage)}`
     ].join('\n');
   }
 });
+
+export const failMatcherDueToNotTFNode = (
+  matcher: jest.MatcherUtils,
+  matcherName: string,
+  received: unknown,
+  nodeType: TFNodeType
+) =>
+  failMatcherDueToReason(
+    matcher,
+    matcherName,
+    `Received isn't a ${nodeType}.`,
+    nodeType,
+    explainWhyArgIsNotTFNodeType(nodeType, received)
+  );
