@@ -108,7 +108,7 @@ describe('toContainTFArgument', () => {
 
       expect(() => {
         expect<TFBlockBodyBody>(body).toContainTFArgument('ttl');
-      }).toThrow("Received isn't a TFBlockBody");
+      }).toThrow("Received isn't a body");
     });
   });
 

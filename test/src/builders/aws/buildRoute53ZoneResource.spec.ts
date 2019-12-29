@@ -3,27 +3,23 @@ import { AwsResourceType } from '@src/utils';
 
 describe('buildRoute53ZoneResource', () => {
   it('builds an aws_route53_zone resource', () => {
-    const {
-      labels: [{ value: resource }]
-    } = buildRoute53ZoneResource({
+    const resource = buildRoute53ZoneResource({
       id: '/HostedZone/123456789',
       name: 'imnotcrazy.info',
       isPrivate: false
     });
 
-    expect(resource).toBe(AwsResourceType.AWS_ROUTE53_ZONE);
+    expect(resource).toBeTFBlockWithLabel(AwsResourceType.AWS_ROUTE53_ZONE, 0);
   });
 
-  it('uses "Name" to build the resource name', () => {
-    const {
-      labels: [, { value: name }]
-    } = buildRoute53ZoneResource({
+  it('uses "name" to build the resource name', () => {
+    const resource = buildRoute53ZoneResource({
       id: '/HostedZone/123456789',
       name: 'imnotcrazy.info',
       isPrivate: false
     });
 
-    expect(name).toBe('imnotcrazy_info');
+    expect(resource).toBeTFBlockWithLabel('imnotcrazy_info', 1);
   });
 
   it('normalizes the "name" argument', () => {

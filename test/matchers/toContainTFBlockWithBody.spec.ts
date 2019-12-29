@@ -182,7 +182,7 @@ describe('toContainTFBlockWithBody', () => {
         expect(
           makeTFArgument('evaluate_target_health', 'false')
         ).toContainTFBlockWithBody('alias', []);
-      }).toThrow("Received isn't a TFBlockBody");
+      }).toThrow("Received isn't a body");
     });
   });
 });

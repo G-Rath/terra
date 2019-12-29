@@ -1,3 +1,4 @@
+import './toBeTFBlockWithLabel';
 import './toContainTFArgument';
 import './toContainTFArgumentWithExpression';
 import './toContainTFBlock';
