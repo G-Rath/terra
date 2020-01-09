@@ -1,5 +1,9 @@
 type AWSClientMap = typeof import('aws-sdk/clients/all');
 
+interface MockReturn {
+  promise: () => unknown;
+}
+
 /** Map of `aws-sdk` clients to their mocked endpoints */
 const clientMocks: { [K in keyof AWSClientMap]?: unknown } = {};
 
@@ -15,12 +19,12 @@ export const mockAwsClientEndpoints = <
     construct(): object {
       return clientProxy;
     },
-    get(t, property: TEndpoint) {
+    get(_, property: TEndpoint & string): (...args: unknown[]) => MockReturn {
       const endpointMock = mockedEndpoints[property];
 
       if (endpointMock) {
-        return (...args: unknown[]) => ({
-          promise: () => endpointMock(...args)
+        return (...args: unknown[]): MockReturn => ({
+          promise: (): unknown => endpointMock(...args)
         });
       }
 
