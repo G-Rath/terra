@@ -11,22 +11,27 @@ export const mockAwsClientEndpoints = <
   client: TClient,
   mockedEndpoints: TMockedEndpoints
 ): TMockedEndpoints => {
-  const clientProxy = new Proxy(class {}, {
-    construct(): object {
-      return clientProxy;
-    },
-    get(t, property: TEndpoint) {
-      const endpointMock = mockedEndpoints[property];
+  const clientProxy = new Proxy(
+    {},
+    {
+      construct(): object {
+        return clientProxy;
+      },
+      get(t, property: TEndpoint) {
+        const endpointMock = mockedEndpoints[property];
 
-      if (endpointMock) {
-        return (...args: unknown[]) => ({
-          promise: () => endpointMock(...args)
-        });
+        if (endpointMock) {
+          return (...args: unknown[]) => ({
+            promise: () => endpointMock(...args)
+          });
+        }
+
+        throw new Error(
+          `${client}#${property} was called without being mocked`
+        );
       }
-
-      throw new Error(`${client}#${property} was called without being mocked`);
     }
-  });
+  );
 
   clientMocks[client] = clientProxy;
 
