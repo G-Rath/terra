@@ -38,7 +38,7 @@ export class StringCursorRecorder {
   private readonly _stepStack: StepInFlight[] = [];
   private readonly _recording: Omit<CursorRecording, 'stoppedAt'>;
 
-  constructor(input: string) {
+  public constructor(input: string) {
     this._recording = {
       input,
       steps: [],

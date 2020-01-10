@@ -10,9 +10,9 @@ export class StringCursor {
    */
   private _position: number;
 
-  readonly recorder: StringCursorRecorder | null;
+  public readonly recorder: StringCursorRecorder | null;
 
-  constructor(
+  public constructor(
     str: string,
     recorder: StringCursorRecorder | null = new StringCursorRecorder(str)
   ) {
@@ -40,7 +40,7 @@ export class StringCursor {
    *
    * @return {string}
    */
-  get char() {
+  public get char() {
     return this._string.charAt(this.position);
   }
 
@@ -49,14 +49,14 @@ export class StringCursor {
    *
    * @return {number}
    */
-  get position() {
+  public get position() {
     return this._position;
   }
 
   /**
    * Rewinds the cursor back by the given `amount` of characters.
    */
-  rewind(amount: number) {
+  public rewind(amount: number) {
     this._position -= amount;
 
     if (this.position < 0) {
@@ -74,7 +74,7 @@ export class StringCursor {
    *
    * @return {string}
    */
-  advance(): string {
+  public advance(): string {
     const char = this.char;
 
     this._position += 1;
@@ -93,7 +93,7 @@ export class StringCursor {
    *
    * @return {string}
    */
-  peek(): string {
+  public peek(): string {
     if (this.isAtEnd()) {
       throw new Error('Cannot peek past end of string');
     }
@@ -106,7 +106,7 @@ export class StringCursor {
    *
    * @return {boolean}
    */
-  isAtStart() {
+  public isAtStart() {
     return this.position === 0;
   }
 
@@ -115,14 +115,14 @@ export class StringCursor {
    *
    * @return {boolean}
    */
-  hasNextChar() {
+  public hasNextChar() {
     return this.position < this._string.length - 1;
   }
 
   /**
    * Checks if the cursor is at the end of the string.
    */
-  isAtEnd() {
+  public isAtEnd() {
     return this.position === this._string.length;
   }
 
@@ -135,7 +135,9 @@ export class StringCursor {
    *
    * @return {string}
    */
-  collectUntil(predicate: (string | RegExp) | Array<string | RegExp>): string {
+  public collectUntil(
+    predicate: (string | RegExp) | Array<string | RegExp>
+  ): string {
     const predicates = Array.isArray(predicate) ? predicate : [predicate];
     let collection = '';
 
@@ -172,7 +174,7 @@ export class StringCursor {
    *
    * @return {string}
    */
-  collectUntilWithComments(
+  public collectUntilWithComments(
     predicate: (string | RegExp) | Array<string | RegExp>
   ): string {
     const predicates = Array.isArray(predicate) ? predicate : [predicate];

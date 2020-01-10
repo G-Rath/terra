@@ -5,15 +5,16 @@ import { TFNodeType, TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 export default class AwsRoute53Zone extends Command {
-  static description = 'Generates Terraform configuration for a Route53 Zone';
+  public static description =
+    'Generates Terraform configuration for a Route53 Zone';
 
-  static examples = [
+  public static examples = [
     `$ terraport aws_route53_zone /hostedzone/123456789
 hello world from ./src/hello.ts!
 `
   ];
 
-  static flags = {
+  public static flags = {
     greedy: flags.boolean({
       description:
         'if true, will greedily nado configuration for related resources, such as records',
@@ -22,11 +23,11 @@ hello world from ./src/hello.ts!
     })
   };
 
-  static args: Parser.args.IArg[] = [
+  public static args: Parser.args.IArg[] = [
     { name: 'zoneId', required: true } //
   ];
 
-  async run() {
+  public async run() {
     const {
       args: { zoneId },
       flags: { greedy }
