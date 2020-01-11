@@ -5,13 +5,13 @@ describe('printTFBlockBody', () => {
   it('prints the leadingOuterText before the opening brace', () => {
     expect(
       printTFBlockBody(makeTFBlockBody([], { leadingOuterText: '\n' }))
-    ).toMatch(/^\n/);
+    ).toMatch(/^\n/u);
   });
 
   it('prints leadingInnerText after the opening brace', () => {
     expect(
       printTFBlockBody(makeTFBlockBody([], { leadingInnerText: '\n' }))
-    ).toMatch(/^{\n/);
+    ).toMatch(/^\{\n/u);
   });
 
   it('prints the body in-between the braces', () => {
@@ -44,12 +44,12 @@ describe('printTFBlockBody', () => {
   it('prints the trailingInnerText before the closing brace', () => {
     expect(
       printTFBlockBody(makeTFBlockBody([], { trailingInnerText: '\n' }))
-    ).toMatch(/\n}$/);
+    ).toMatch(/\n\}$/u);
   });
 
   it('prints the trailingOuterText after the closing brace', () => {
     expect(
       printTFBlockBody(makeTFBlockBody([], { trailingOuterText: '\n' }))
-    ).toMatch(/}\n$/);
+    ).toMatch(/\}\n$/u);
   });
 });

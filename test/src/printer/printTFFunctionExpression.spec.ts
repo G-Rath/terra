@@ -16,7 +16,7 @@ describe('printTFFunctionExpression', () => {
           leadingOuterText: ' hello world '
         })
       )
-    ).toMatch(/^ hello world \(/);
+    ).toMatch(/^ hello world \(/u);
   });
 
   it('prints leadingInnerText after the opening parenthesis', () => {
@@ -26,7 +26,7 @@ describe('printTFFunctionExpression', () => {
           leadingInnerText: ' hello world '
         })
       )
-    ).toMatch(/^\( hello world /);
+    ).toMatch(/^\( hello world /u);
   });
 
   it('prints empty args correctly', () => {
@@ -239,7 +239,7 @@ describe('printTFFunctionExpression', () => {
           trailingInnerText: ' hello world '
         })
       )
-    ).toMatch(/ hello world \)$/);
+    ).toMatch(/ hello world \)$/u);
   });
 
   it('prints trailingOuterText after the closing parenthesis', () => {
@@ -249,6 +249,6 @@ describe('printTFFunctionExpression', () => {
           trailingOuterText: ' hello world '
         })
       )
-    ).toMatch(/\) hello world $/);
+    ).toMatch(/\) hello world $/u);
   });
 });

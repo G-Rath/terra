@@ -178,11 +178,11 @@ describe('StringCursor', () => {
 
       describe('when the predicate is a regexp', () => {
         it('tests appropriately', () => {
-          expect(cursor.collectUntil([/.l/])).toBe('hel');
+          expect(cursor.collectUntil([/.l/u])).toBe('hel');
         });
 
         it('works with negation', () => {
-          expect(cursor.collectUntil([/[^\w]/])).toBe('hello ');
+          expect(cursor.collectUntil([/\W/u])).toBe('hello ');
         });
       });
 

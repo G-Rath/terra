@@ -11,7 +11,7 @@
  */
 export const asResourceName = (str: string): string =>
   str
-    .replace(/\./g, '_')
-    .replace(/\*/g, '_wild_')
-    .replace(/\\052/g, '_wild_')
-    .replace(/^(\d)/, '_n_$1');
+    .replace(/\./gu, '_')
+    .replace(/\*/gu, '_wild_')
+    .replace(/\\052/gu, '_wild_')
+    .replace(/^(\d)/u, '_n_$1');

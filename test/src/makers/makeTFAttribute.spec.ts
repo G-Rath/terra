@@ -33,7 +33,7 @@ describe('makeTFAttribute', () => {
       ).toStrictEqual<TFAttribute>({
         type: TFNodeType.Attribute,
         key: expect.objectContaining<Partial<TFAttributeKey>>({
-          type: expect.stringMatching(/label|identifier/),
+          type: expect.stringMatching(/label|identifier/u),
           value: 'key',
           surroundingText: {
             leadingOuterText: '',

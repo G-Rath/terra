@@ -10,7 +10,7 @@ describe('printTFArgument', () => {
           trailingInnerText: ' '
         })
       )
-    ).toMatch(/^identifier/);
+    ).toMatch(/^identifier/u);
   });
 
   it('prints the leadingInnerText after the identifier and before the equals', () => {
@@ -21,7 +21,7 @@ describe('printTFArgument', () => {
           trailingInnerText: ''
         })
       )
-    ).toMatch(/leadingInnerText=$/);
+    ).toMatch(/leadingInnerText=$/u);
   });
 
   it('prints the trailingInnerText before the expression and after the equals', () => {
@@ -32,7 +32,7 @@ describe('printTFArgument', () => {
           trailingInnerText: 'trailingInnerText'
         })
       )
-    ).toMatch(/^=trailingInnerText/);
+    ).toMatch(/^=trailingInnerText/u);
   });
 
   it('prints the expression last', () => {
@@ -43,6 +43,6 @@ describe('printTFArgument', () => {
           trailingInnerText: ' '
         })
       )
-    ).toMatch(/expression$/);
+    ).toMatch(/expression$/u);
   });
 });

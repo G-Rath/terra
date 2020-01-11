@@ -30,7 +30,7 @@ describe('makeTFStringArgument', () => {
     ).toStrictEqual<TFArgument>({
       type: TFNodeType.Argument,
       identifier: makeTFIdentifier('identifier'),
-      expression: makeTFSimpleLiteral(expect.stringMatching(/^".+"$/)),
+      expression: makeTFSimpleLiteral(expect.stringMatching(/^".+"$/u)),
       surroundingText: {
         leadingInnerText: 'hello sunshine',
         trailingInnerText: ''

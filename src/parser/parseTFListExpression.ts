@@ -6,13 +6,16 @@ export const parseTFListExpression = (
   cursor: StringCursor
 ): TFListExpression => {
   // the text leading up to the list; the last char is the start of the list
-  const leadingOuterText = cursor.collectUntilWithComments(/[[]/).slice(0, -1);
+  const leadingOuterText = cursor.collectUntilWithComments(/\[/u).slice(0, -1);
 
   const values: TFLiteralExpression[] = [];
   let hasTrailingComma = false;
 
   do {
-    const trailingInnerText = cursor.collectUntilWithComments([/[^\n /]/, ']']);
+    const trailingInnerText = cursor.collectUntilWithComments([
+      /[^\n /]/u,
+      ']'
+    ]);
 
     if (trailingInnerText.endsWith(']')) {
       return makeTFListExpression(

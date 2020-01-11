@@ -247,7 +247,7 @@ resource "aws_route53_zone" my_zone {
       );
 
       expect(fsMock.writeFileSync).toHaveBeenCalledWith(
-        expect.stringMatching(/\.json$/),
+        expect.stringMatching(/\.json$/u),
         expect.any(String)
       );
     });
@@ -270,7 +270,7 @@ resource "aws_route53_zone" my_zone {
       ).toThrow('error!');
 
       expect(fsMock.writeFileSync).toHaveBeenCalledWith(
-        expect.stringMatching(/\.json$/),
+        expect.stringMatching(/\.json$/u),
         expect.any(String)
       );
     });

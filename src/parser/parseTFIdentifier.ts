@@ -5,14 +5,14 @@ import { assertQuotedStringIsClosed } from '@src/utils';
 
 export const parseTFIdentifier = (cursor: StringCursor): TFIdentifier => {
   const leadingOuterText = cursor
-    .collectUntilWithComments(/["'\w]/)
+    .collectUntilWithComments(/["'\w]/u)
     .slice(0, -1);
 
   cursor.rewind(1);
 
   let identifier = cursor.advance();
 
-  identifier += cursor.collectUntil(/[^\w\d_-]/).slice(0, -1);
+  identifier += cursor.collectUntil(/[^\w-]/u).slice(0, -1);
 
   cursor.rewind(1);
 

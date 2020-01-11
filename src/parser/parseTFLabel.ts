@@ -5,7 +5,7 @@ import { assertQuotedStringIsClosed } from '@src/utils';
 
 export const parseTFLabel = (cursor: StringCursor): TFLabel => {
   const leadingOuterText = cursor
-    .collectUntilWithComments(/["\w]/)
+    .collectUntilWithComments(/["\w]/u)
     .slice(0, -1);
 
   cursor.rewind(1);

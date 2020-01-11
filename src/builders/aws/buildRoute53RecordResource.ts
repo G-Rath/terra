@@ -127,7 +127,7 @@ const buildRecordsArgumentsOrAliasBlock = (
     makeTFArgument(
       'records',
       makeTFListExpression(
-        details.target.records.map(v => `"${v.replace(/"/g, '\\"')}"`)
+        details.target.records.map(v => `"${v.replace(/"/gu, '\\"')}"`)
       )
     )
   ];

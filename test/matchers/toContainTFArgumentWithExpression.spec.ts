@@ -63,7 +63,7 @@ describe('toContainTFArgumentWithExpression', () => {
           expect(() => {
             expect<TFBlockBody>(body).toContainTFArgumentWithExpression(
               'ttl',
-              expect.stringMatching(/[\d]/)
+              expect.stringMatching(/\d/u)
             );
           }).not.toThrow();
         });

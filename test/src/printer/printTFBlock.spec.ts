@@ -15,7 +15,7 @@ describe('printTFBlock', () => {
           leadingOuterText: '\n'
         })
       )
-    ).toMatch(/^\n/);
+    ).toMatch(/^\n/u);
   });
 
   it('prints the body using printBlockBody', () => {
@@ -59,6 +59,6 @@ describe('printTFBlock', () => {
           trailingOuterText: '\n'
         })
       )
-    ).toMatch(/\n$/);
+    ).toMatch(/\n$/u);
   });
 });

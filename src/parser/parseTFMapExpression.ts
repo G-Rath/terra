@@ -11,7 +11,7 @@ export const parseTFMapExpression = (cursor: StringCursor): TFMapExpression => {
   const attributes: TFAttribute[] = [];
 
   do {
-    trailingInnerText = cursor.collectUntilWithComments([/\w/, '}']);
+    trailingInnerText = cursor.collectUntilWithComments([/\w/u, '}']);
 
     if (trailingInnerText.endsWith('}')) {
       trailingInnerText = trailingInnerText.slice(0, -1);
