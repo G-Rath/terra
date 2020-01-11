@@ -18,7 +18,10 @@ export const parseTFFunctionExpression = (
   let hasTrailingComma = false;
 
   do {
-    const trailingInnerText = cursor.collectUntilWithComments([/[^\n /]/, ')']);
+    const trailingInnerText = cursor.collectUntilWithComments([
+      /[^\n /]/u,
+      ')'
+    ]);
 
     if (trailingInnerText.endsWith(')')) {
       return makeTFFunctionExpression(

@@ -11,7 +11,7 @@ describe('printTFFileContents', () => {
           trailingOuterText: ''
         }
       })
-    ).toMatch(/^# This is the hosted zone for the zone that I own/);
+    ).toMatch(/^# This is the hosted zone for the zone that I own/u);
   });
 
   it('prints the body using printTFBlocks', () => {
@@ -37,6 +37,6 @@ describe('printTFFileContents', () => {
           trailingOuterText: '\n'
         }
       })
-    ).toMatch(/\n$/);
+    ).toMatch(/\n$/u);
   });
 });

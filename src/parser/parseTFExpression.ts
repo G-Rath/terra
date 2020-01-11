@@ -12,7 +12,7 @@ export const parseTFExpression = (
 ): TFLiteralExpression => {
   // the text leading up to the expression; the last char is the start of the expression
   const leadingOuterText = cursor
-    .collectUntilWithComments(/[[{\d"\w]/)
+    .collectUntilWithComments(/[[{"\w]/u)
     .slice(0, -1);
 
   cursor.rewind(1);
@@ -31,13 +31,13 @@ export const parseTFExpression = (
 
   if (cursor.char === '"') {
     return makeTFSimpleLiteral(
-      cursor.collectUntil(/"[^"\\]*(?:\\.[^"\\]*)*"/),
+      cursor.collectUntil(/"[^"\\]*(?:\\.[^"\\]*)*"/u),
       { leadingOuterText }
     );
   }
 
-  if (/\d/.test(cursor.char)) {
-    const expression = cursor.collectUntil(/[^\d.]/).slice(0, -1);
+  if (/\d/u.test(cursor.char)) {
+    const expression = cursor.collectUntil(/[^\d.]/u).slice(0, -1);
 
     cursor.rewind(1);
 

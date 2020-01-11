@@ -20,7 +20,7 @@ export const parseTFFileContents = (
   try {
     while (!cursor.isAtEnd()) {
       try {
-        cursor.collectUntilWithComments(/\w/);
+        cursor.collectUntilWithComments(/\w/u);
       } catch (err) {
         if (!cursor.isAtEnd()) {
           throw err;

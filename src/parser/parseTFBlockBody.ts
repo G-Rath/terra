@@ -11,7 +11,7 @@ export const parseTFBlockBody = (cursor: StringCursor): TFBlockBody => {
   const body: TFBlockBodyBody = [];
 
   do {
-    trailingInnerText = cursor.collectUntilWithComments([/\w/, '}']);
+    trailingInnerText = cursor.collectUntilWithComments([/\w/u, '}']);
 
     if (trailingInnerText.endsWith('}')) {
       trailingInnerText = trailingInnerText.slice(0, -1);

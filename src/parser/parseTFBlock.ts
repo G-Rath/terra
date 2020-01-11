@@ -3,17 +3,17 @@ import { parseTFBlockBody, parseTFLabel, StringCursor } from '@src/parser';
 import { TFBlock, TFLabel } from '@src/types';
 
 export const parseTFBlock = (cursor: StringCursor): TFBlock => {
-  const leadingOuterText = cursor.collectUntilWithComments(/\w/).slice(0, -1);
+  const leadingOuterText = cursor.collectUntilWithComments(/\w/u).slice(0, -1);
   cursor.rewind(1);
 
-  const blockType = cursor.collectUntil(/[^\w_]/).slice(0, -1);
+  const blockType = cursor.collectUntil(/\W/u).slice(0, -1);
 
   cursor.rewind(1);
 
   const labels: TFLabel[] = [];
 
   do {
-    const text = cursor.collectUntilWithComments([/\w/, '{', '"']);
+    const text = cursor.collectUntilWithComments([/\w/u, '{', '"']);
     cursor.rewind(text.length);
 
     if (text.endsWith('{')) {
