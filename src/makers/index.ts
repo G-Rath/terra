@@ -10,6 +10,7 @@ export * from './makeTFModuleBlock';
 export * from './makeTFDynamicBlock';
 export * from './makeTFFunctionExpression';
 export * from './makeTFResourceBlock';
+export * from './makeTFDataBlock';
 export * from './makeTFSimpleLiteral';
 export * from './makeTFStringArgument';
 export * from './makeTFListExpression';
