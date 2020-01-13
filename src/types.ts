@@ -1,4 +1,4 @@
-import { AwsResourceType } from '@src/utils';
+import { AwsDataType, AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
   Body = 'body',
@@ -129,6 +129,11 @@ export type ResourceType =
   | RandomResourceType
   | string;
 
+export type DataType =
+  | ResourceType
+  | AwsDataType //
+  | string;
+
 export type TFBlocks = TFBlock[];
 
 export interface TFBlock<TIdentifier extends string = string>
@@ -144,6 +149,12 @@ export interface TFResourceBlock<TIdentifier extends string = string>
   extends TFBlock<TIdentifier> {
   blockType: 'resource';
   labels: [TFLabel<ResourceType>, TFLabel];
+}
+
+export interface TFDataBlock<TIdentifier extends string = string>
+  extends TFBlock<TIdentifier> {
+  blockType: 'data';
+  labels: [TFLabel<DataType>, TFLabel];
 }
 
 export interface TFModuleBlock<TIdentifier extends string = string>
