@@ -4,7 +4,7 @@ export class StringCursor {
   /**
    * The string that this cursor is navigating.
    */
-  private _string: string;
+  private readonly _string: string;
   /**
    * The current position of this cursor.
    */
