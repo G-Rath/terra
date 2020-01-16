@@ -6,9 +6,7 @@ export const printTFListExpression = (expression: TFListExpression): string =>
     expression.surroundingText.leadingOuterText,
     '[',
     expression.surroundingText.leadingInnerText,
-    ...expression.values
-      .map(subexpression => `${printTFLiteralExpression(subexpression)}`)
-      .join(','),
+    ...expression.values.map(printTFLiteralExpression).join(','),
     expression.hasTrailingComma ? ',' : '',
     expression.surroundingText.trailingInnerText,
     ']',
