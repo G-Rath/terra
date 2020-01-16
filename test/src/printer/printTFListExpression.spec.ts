@@ -6,7 +6,6 @@ import {
   makeTFSimpleLiteral
 } from '@src/makers';
 import { printTFListExpression } from '@src/printer';
-import { TFNodeType } from '@src/types';
 
 describe('printTFListExpression', () => {
   it('prints a single simple value correctly', () => {
