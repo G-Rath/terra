@@ -138,7 +138,6 @@ describe('printTFListExpression', () => {
   });
 
   it('prints function values correctly', () => {
-    // todo: functions not yet supported properly
     expect(
       printTFListExpression(
         makeTFListExpression(
