@@ -10,8 +10,8 @@ export const printTFFunctionExpression = (
     '(',
     expression.surroundingText.leadingInnerText,
     ...expression.args.map(printTFLiteralExpression).join(','),
-    expression.surroundingText.trailingInnerText,
     expression.hasTrailingComma ? ',' : '',
+    expression.surroundingText.trailingInnerText,
     ')',
     expression.surroundingText.trailingOuterText
   ].join('');

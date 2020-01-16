@@ -101,6 +101,27 @@ describe('printTFFunctionExpression', () => {
     ).toMatchInlineSnapshot(`"trim(trim(1))"`);
   });
 
+  it('prints trailing commas correctly', () => {
+    expect(
+      printTFFunctionExpression(
+        makeTFFunctionExpression(
+          makeTFIdentifier('trim', { leadingOuterText: ' ' }), //
+          [makeTFSimpleLiteral('common_tags', { leadingOuterText: '\n    ' })],
+          true,
+          {
+            leadingInnerText: '',
+            leadingOuterText: '',
+            trailingInnerText: '\n  ',
+            trailingOuterText: ''
+          }
+        )
+      )
+    ).toMatchInlineSnapshot(`
+      " trim(
+          common_tags,
+        )"
+    `);
+  });
   it('prints map-type arguments correctly', () => {
     expect(
       printTFFunctionExpression(
