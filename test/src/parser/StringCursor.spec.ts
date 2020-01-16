@@ -74,7 +74,7 @@ describe('StringCursor', () => {
             values.push(cursor.advance());
 
             expect(values.length).toBeLessThanOrEqual(str.length);
-          } while (cursor); // inf. loop - in case we fail ^^
+          } while (values.length <= str.length); // inf loop guard
         }).toThrow('Cannot advance past end of string');
 
         expect(values).not.toContain('');
