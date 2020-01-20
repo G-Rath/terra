@@ -40,7 +40,7 @@ export class StringCursor {
    *
    * @return {string}
    */
-  public get char() {
+  public get char(): string {
     return this._string.charAt(this.position);
   }
 
@@ -49,14 +49,16 @@ export class StringCursor {
    *
    * @return {number}
    */
-  public get position() {
+  public get position(): number {
     return this._position;
   }
 
   /**
    * Rewinds the cursor back by the given `amount` of characters.
+   *
+   * @return {string}
    */
-  public rewind(amount: number) {
+  public rewind(amount: number): string {
     this._position -= amount;
 
     if (this.position < 0) {
@@ -106,7 +108,7 @@ export class StringCursor {
    *
    * @return {boolean}
    */
-  public isAtStart() {
+  public isAtStart(): boolean {
     return this.position === 0;
   }
 
@@ -115,14 +117,16 @@ export class StringCursor {
    *
    * @return {boolean}
    */
-  public hasNextChar() {
+  public hasNextChar(): boolean {
     return this.position < this._string.length - 1;
   }
 
   /**
    * Checks if the cursor is at the end of the string.
+   *
+   * @return {boolean}
    */
-  public isAtEnd() {
+  public isAtEnd(): boolean {
     return this.position === this._string.length;
   }
 
