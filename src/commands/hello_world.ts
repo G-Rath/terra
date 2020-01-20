@@ -18,7 +18,7 @@ hello world from ./src/hello.ts!
 
   public static args = [];
 
-  public async run() {
+  public async run(): Promise<void> {
     const { flags } = this.parse(HelloWorld);
 
     const name = flags.name ?? 'world';

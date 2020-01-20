@@ -27,7 +27,7 @@ hello world from ./src/hello.ts!
     { name: 'zoneId', required: true } //
   ];
 
-  public async run() {
+  public async run(): Promise<void> {
     const {
       args: { zoneId },
       flags: { greedy }
