@@ -2,7 +2,7 @@
  * Asserts that the given `str` has the appropriate closing quote,
  * if it starts with an opening string quote.
  */
-export const assertQuotedStringIsClosed = (str: string) => {
+export const assertQuotedStringIsClosed = (str: string): void => {
   const quote = str[0];
 
   if (
