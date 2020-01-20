@@ -6,5 +6,5 @@
  *
  * @return {string}
  */
-export const ensureStringEndsWith = (str: string, ending: string) =>
+export const ensureStringEndsWith = (str: string, ending: string): string =>
   str.endsWith(ending) ? str : `${str}${ending}`;
