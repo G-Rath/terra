@@ -46,7 +46,7 @@ export class StringCursorRecorder {
     };
   }
 
-  private _popInFlightStep() {
+  private _popInFlightStep(): StepInFlight {
     const inFlightStep = this._stepStack.pop();
 
     if (!inFlightStep) {
@@ -59,14 +59,15 @@ export class StringCursorRecorder {
   /**
    * Starts the recording of a step with the given name.
    *
+   * @param {StringCursor} cursor
    * @param {string} name
    * @param args
    */
   public start(
     cursor: StringCursor,
-    name: string, //
+    name: string,
     args: readonly unknown[]
-  ) {
+  ): void {
     this._stepStack.push({
       uuid: uuidV4(),
       name,
@@ -104,7 +105,7 @@ export class StringCursorRecorder {
   ): (...args: TParams) => TReturn {
     const name = method.name;
 
-    return (...args) => {
+    return (...args): TReturn => {
       // console.log(name, 'was called with', args.length, 'arguments');
 
       try {
@@ -121,7 +122,7 @@ export class StringCursorRecorder {
     };
   }
 
-  public writeToDisk(filePath = '', fileName = Date.now().toString(10)) {
+  public writeToDisk(filePath = '', fileName = Date.now().toString(10)): void {
     const recording: CursorRecording = {
       ...this._recording,
       stoppedAt: Number(process.hrtime.bigint())
