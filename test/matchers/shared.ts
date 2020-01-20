@@ -54,9 +54,9 @@ export const failMatcherDueToReason = (
   bodyMessage: string,
   expectedMessage: unknown,
   receivedMessage: unknown
-) => ({
+): jest.CustomMatcherResult => ({
   pass: matcher.isNot,
-  message: () => {
+  message: (): string => {
     const { utils } = matcher;
 
     const matcherHint = utils.matcherHint(matcherName);
@@ -81,7 +81,7 @@ export const failMatcherDueToNotTFNode = (
   matcherName: string,
   received: unknown,
   nodeType: TFNodeType
-) =>
+): jest.CustomMatcherResult =>
   failMatcherDueToReason(
     matcher,
     matcherName,
