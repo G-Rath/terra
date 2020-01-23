@@ -1,3 +1,4 @@
+import { TokenType, ensureTextEndsWithTokens } from '@src/formatter';
 import { TFFileContents } from '@src/types';
 
 const cloneBlocks = (
@@ -14,6 +15,12 @@ export const format = (fileContents: TFFileContents): TFFileContents => {
 
   return {
     blocks: cloneBlocks(fileContents.blocks),
-    surroundingText: { ...fileContents.surroundingText }
+    surroundingText: {
+      ...fileContents.surroundingText,
+      trailingOuterText: ensureTextEndsWithTokens(
+        fileContents.surroundingText.trailingOuterText,
+        [{ type: TokenType.Newline }]
+      )
+    }
   };
 };
