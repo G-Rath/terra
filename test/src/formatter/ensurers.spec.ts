@@ -1,5 +1,8 @@
-import { ensureTopLevelBlocksAreSeparated } from '@src/formatter';
-import { makeTFBlock } from '@src/makers';
+import {
+  ensureLabelsHaveLeadingSpace,
+  ensureTopLevelBlocksAreSeparated
+} from '@src/formatter';
+import { makeTFBlock, makeTFLabel } from '@src/makers';
 import { TFBlock } from '@src/types';
 
 describe('ensureTopLevelBlocksAreSeparated', () => {
@@ -98,6 +101,98 @@ describe('ensureTopLevelBlocksAreSeparated', () => {
           trailingOuterText: ''
         });
       });
+    });
+  });
+});
+
+describe('ensureLabelsHaveLeadingSpace', () => {
+  describe('when there are no blocks', () => {
+    it('does nothing', () => {
+      expect(ensureLabelsHaveLeadingSpace([])).toStrictEqual([]);
+    });
+  });
+
+  describe('when there are no labels', () => {
+    it('does nothing', () => {
+      expect(
+        ensureLabelsHaveLeadingSpace([
+          makeTFBlock('resource', [], [], {
+            leadingOuterText: '',
+            trailingOuterText: ''
+          }),
+          makeTFBlock('resource', [], [], {
+            leadingOuterText: '',
+            trailingOuterText: ''
+          })
+        ])
+      ).toStrictEqual([
+        makeTFBlock('resource', [], [], {
+          leadingOuterText: '',
+          trailingOuterText: ''
+        }),
+        makeTFBlock('resource', [], [], {
+          leadingOuterText: '',
+          trailingOuterText: ''
+        })
+      ]);
+    });
+  });
+
+  describe('when there are labels', () => {
+    it('ensures all labels have a leading space', () => {
+      expect(
+        ensureLabelsHaveLeadingSpace([
+          makeTFBlock(
+            'resource',
+            [
+              makeTFLabel('aws_route53_zone', {
+                leadingOuterText: '',
+                trailingOuterText: ''
+              }),
+              makeTFLabel('my_zone', {
+                leadingOuterText: ' ',
+                trailingOuterText: ''
+              })
+            ],
+            []
+          ),
+          makeTFBlock(
+            'resource',
+            [
+              makeTFLabel('my_zone', {
+                leadingOuterText: ' ',
+                trailingOuterText: ''
+              })
+            ],
+            []
+          )
+        ])
+      ).toStrictEqual([
+        makeTFBlock(
+          'resource',
+          [
+            makeTFLabel('aws_route53_zone', {
+              leadingOuterText: ' ',
+              trailingOuterText: ''
+            }),
+            makeTFLabel('my_zone', {
+              leadingOuterText: ' ',
+              trailingOuterText: ''
+            })
+          ],
+          []
+        ),
+        makeTFBlock(
+          'resource',
+          [
+            makeTFLabel('my_zone', {
+              leadingOuterText: ' ',
+              trailingOuterText: ''
+            })
+          ],
+          []
+        )
+      ]);
     });
   });
 });

@@ -1,4 +1,9 @@
-import { TokenType, parseSurroundingText, printTokens } from '@src/formatter';
+import {
+  TokenType,
+  ensureTextStartsWithTokens,
+  parseSurroundingText,
+  printTokens
+} from '@src/formatter';
 import { TFBlock } from '@src/types';
 
 export type Ensurer = (blocks: TFBlock[]) => TFBlock[];
@@ -45,3 +50,18 @@ export const ensureTopLevelBlocksAreSeparated: Ensurer = blocks => {
     })
   ];
 };
+
+export const ensureLabelsHaveLeadingSpace: Ensurer = blocks =>
+  blocks.map(block => ({
+    ...block,
+    labels: block.labels.map(label => ({
+      ...label,
+      surroundingText: {
+        ...label.surroundingText,
+        leadingOuterText: ensureTextStartsWithTokens(
+          label.surroundingText.leadingOuterText,
+          [{ type: TokenType.Whitespace, content: ' ' }]
+        )
+      }
+    }))
+  }));
