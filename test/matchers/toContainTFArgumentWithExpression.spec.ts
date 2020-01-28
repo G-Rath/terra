@@ -165,7 +165,7 @@ describe('toContainTFArgumentWithExpression', () => {
           'ttl',
           '300'
         );
-      }).toThrow("Received isn't a body");
+      }).toThrow("Received isn't a Body");
     });
   });
 

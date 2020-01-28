@@ -43,7 +43,7 @@ describe('toBeTFBlockWithLabel', () => {
 
       expect(() => {
         expect(block).toBeTFBlockWithLabel('my_label', 0);
-      }).toThrow("Received isn't a block.");
+      }).toThrow("Received isn't a Block.");
     });
   });
 });

@@ -1,16 +1,16 @@
 import { AwsDataType, AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
-  Body = 'body',
-  List = 'list',
-  Attribute = 'attribute',
-  Argument = 'argument',
-  Function = 'function',
-  Identifier = 'identifier',
-  Simple = 'simple',
-  Block = 'block',
-  Label = 'label',
-  Map = 'map'
+  Body = 'Body',
+  List = 'List',
+  Attribute = 'Attribute',
+  Argument = 'Argument',
+  Function = 'Function',
+  Identifier = 'Identifier',
+  Simple = 'Simple',
+  Block = 'Block',
+  Label = 'Label',
+  Map = 'Map'
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface

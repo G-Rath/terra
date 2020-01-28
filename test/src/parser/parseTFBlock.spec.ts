@@ -39,7 +39,7 @@ atlas {
                   "leadingOuterText": " ",
                   "trailingOuterText": "",
                 },
-                "type": "simple",
+                "type": "Simple",
                 "value": "\\"hello world\\"",
               },
               "identifier": Object {
@@ -48,14 +48,14 @@ atlas {
         ",
                   "trailingOuterText": "",
                 },
-                "type": "identifier",
+                "type": "Identifier",
                 "value": "name",
               },
               "surroundingText": Object {
                 "leadingInnerText": " ",
                 "trailingInnerText": "",
               },
-              "type": "argument",
+              "type": "Argument",
             },
           ],
           "surroundingText": Object {
@@ -65,14 +65,14 @@ atlas {
       ",
             "trailingOuterText": "",
           },
-          "type": "body",
+          "type": "Body",
         },
         "labels": Array [],
         "surroundingText": Object {
           "leadingOuterText": "",
           "trailingOuterText": "",
         },
-        "type": "block",
+        "type": "Block",
       }
     `);
   });

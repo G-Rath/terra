@@ -78,7 +78,7 @@ resource "aws_route53_zone" my_zone {
                       "leadingOuterText": " ",
                       "trailingOuterText": "",
                     },
-                    "type": "simple",
+                    "type": "Simple",
                     "value": "\\"example.com\\"",
                   },
                   "identifier": Object {
@@ -87,14 +87,14 @@ resource "aws_route53_zone" my_zone {
           ",
                       "trailingOuterText": "",
                     },
-                    "type": "identifier",
+                    "type": "Identifier",
                     "value": "name",
                   },
                   "surroundingText": Object {
                     "leadingInnerText": " ",
                     "trailingInnerText": "",
                   },
-                  "type": "argument",
+                  "type": "Argument",
                 },
               ],
               "surroundingText": Object {
@@ -104,7 +104,7 @@ resource "aws_route53_zone" my_zone {
         ",
                 "trailingOuterText": "",
               },
-              "type": "body",
+              "type": "Body",
             },
             "labels": Array [
               Object {
@@ -112,7 +112,7 @@ resource "aws_route53_zone" my_zone {
                   "leadingOuterText": " ",
                   "trailingOuterText": "",
                 },
-                "type": "label",
+                "type": "Label",
                 "value": "\\"aws_route53_zone\\"",
               },
               Object {
@@ -120,7 +120,7 @@ resource "aws_route53_zone" my_zone {
                   "leadingOuterText": " ",
                   "trailingOuterText": "",
                 },
-                "type": "label",
+                "type": "Label",
                 "value": "my_zone",
               },
             ],
@@ -128,7 +128,7 @@ resource "aws_route53_zone" my_zone {
               "leadingOuterText": "",
               "trailingOuterText": "",
             },
-            "type": "block",
+            "type": "Block",
           },
         ]
       `);
@@ -176,7 +176,7 @@ resource "aws_route53_zone" my_zone {
                       "leadingOuterText": " ",
                       "trailingOuterText": "",
                     },
-                    "type": "simple",
+                    "type": "Simple",
                     "value": "\\"example.com\\"",
                   },
                   "identifier": Object {
@@ -185,14 +185,14 @@ resource "aws_route53_zone" my_zone {
           ",
                       "trailingOuterText": "",
                     },
-                    "type": "identifier",
+                    "type": "Identifier",
                     "value": "name",
                   },
                   "surroundingText": Object {
                     "leadingInnerText": " ",
                     "trailingInnerText": "",
                   },
-                  "type": "argument",
+                  "type": "Argument",
                 },
               ],
               "surroundingText": Object {
@@ -202,7 +202,7 @@ resource "aws_route53_zone" my_zone {
         ",
                 "trailingOuterText": "",
               },
-              "type": "body",
+              "type": "Body",
             },
             "labels": Array [
               Object {
@@ -210,7 +210,7 @@ resource "aws_route53_zone" my_zone {
                   "leadingOuterText": " ",
                   "trailingOuterText": "",
                 },
-                "type": "label",
+                "type": "Label",
                 "value": "\\"aws_route53_zone\\"",
               },
               Object {
@@ -218,7 +218,7 @@ resource "aws_route53_zone" my_zone {
                   "leadingOuterText": " ",
                   "trailingOuterText": "",
                 },
-                "type": "label",
+                "type": "Label",
                 "value": "my_zone",
               },
             ],
@@ -227,7 +227,7 @@ resource "aws_route53_zone" my_zone {
         ",
               "trailingOuterText": "",
             },
-            "type": "block",
+            "type": "Block",
           },
         ]
       `);

@@ -95,7 +95,7 @@ describe('toContainTFBlock', () => {
     it('fails', () => {
       expect(() => {
         expect(1).toContainTFBlock('alias');
-      }).toThrow("Received isn't a body");
+      }).toThrow("Received isn't a Body");
     });
   });
 });
