@@ -2,7 +2,8 @@ import {
   TokenType,
   ensureTextStartsWithTokens,
   parseSurroundingText,
-  printTokens
+  printTokens,
+  walkNodes
 } from '@src/formatter';
 import { TFBlock } from '@src/types';
 
@@ -52,19 +53,14 @@ export const ensureTopLevelBlocksAreSeparated: Ensurer = blocks => {
 };
 
 export const ensureLabelsHaveLeadingSpace: Ensurer = blocks =>
-  blocks.map(block => ({
-    ...block,
-    labels: block.labels.map(label => ({
-      ...label,
-      surroundingText: {
-        ...label.surroundingText,
-        leadingOuterText: ensureTextStartsWithTokens(
-          label.surroundingText.leadingOuterText,
-          [{ type: TokenType.Whitespace, content: ' ' }]
-        )
-      }
-    }))
-  }));
+  walkNodes(blocks, {
+    Label: node => {
+      node.surroundingText.leadingOuterText = ensureTextStartsWithTokens(
+        node.surroundingText.leadingOuterText,
+        [{ type: TokenType.Whitespace, content: ' ' }]
+      );
+    }
+  });
 
 export const ensurers: readonly Ensurer[] = Object.freeze([
   ensureTopLevelBlocksAreSeparated,
