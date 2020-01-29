@@ -1,5 +1,4 @@
-import { TokenType, ensureTextEndsWithTokens } from '@src/formatter';
-import * as ensurers from '@src/formatter/ensurers';
+import { TokenType, ensureTextEndsWithTokens, ensurers } from '@src/formatter';
 import { TFFileContents } from '@src/types';
 
 const cloneBlocks = (
@@ -23,12 +22,10 @@ export const format = (fileContents: TFFileContents): TFFileContents => {
   };
 
   return {
-    blocks: Object.values(ensurers)
-      .filter(v => typeof v === 'function')
-      .reduce(
-        (blocks, ensurer) => ensurer(blocks),
-        cloneBlocks(fileContents.blocks)
-      ),
+    blocks: ensurers.reduce(
+      (blocks, ensurer) => ensurer(blocks),
+      cloneBlocks(fileContents.blocks)
+    ),
     surroundingText
   };
 };

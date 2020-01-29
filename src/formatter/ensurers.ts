@@ -65,3 +65,8 @@ export const ensureLabelsHaveLeadingSpace: Ensurer = blocks =>
       }
     }))
   }));
+
+export const ensurers: readonly Ensurer[] = Object.freeze([
+  ensureTopLevelBlocksAreSeparated,
+  ensureLabelsHaveLeadingSpace
+]);
