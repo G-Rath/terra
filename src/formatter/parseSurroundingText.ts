@@ -3,7 +3,8 @@ import { StringCursor } from '@src/parser';
 export enum TokenType {
   Whitespace = 'whitespace',
   Newline = 'newline',
-  Comment = 'comment'
+  Comment = 'comment',
+  Comma = 'comma'
 }
 
 export interface WhitespaceToken {
@@ -20,7 +21,15 @@ export interface CommentToken {
   content: string;
 }
 
-export type Token = WhitespaceToken | NewlineToken | CommentToken;
+export interface CommaToken {
+  type: TokenType.Comma;
+}
+
+export type Token =
+  | WhitespaceToken //
+  | NewlineToken
+  | CommentToken
+  | CommaToken;
 
 const parseComment = (cursor: StringCursor): string => {
   const multiLineComment = cursor.char === '/' && cursor.peek() === '*';
@@ -46,6 +55,8 @@ const buildToken = (cursor: StringCursor): Token => {
   switch (char) {
     case '\n':
       return { type: TokenType.Newline };
+    case ',':
+      return { type: TokenType.Comma };
     case ' ':
       return {
         type: TokenType.Whitespace,

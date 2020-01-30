@@ -4,6 +4,8 @@ export const printTokens = (tokens: readonly Token[]): string =>
   tokens
     .map(token => {
       switch (token.type) {
+        case TokenType.Comma:
+          return ',';
         case TokenType.Newline:
           return '\n';
         case TokenType.Comment:
