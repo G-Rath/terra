@@ -1,4 +1,4 @@
-import { makeTFArgument, makeTFBlock } from '@src/makers';
+import { makeTFArgument, makeTFBlock, makeTFLabel } from '@src/makers';
 
 import './toBeTFBlockWithLabel';
 
@@ -37,12 +37,31 @@ describe('toBeTFBlockWithLabel', () => {
     });
   });
 
+  describe('when the label is a TFLabel node', () => {
+    it('can fail due to surrounding text', () => {
+      const block = makeTFBlock('resource', ['my_label_1'], []);
+
+      expect(() => {
+        expect(block).toBeTFBlockWithLabel(
+          makeTFLabel('my_label_1', { leadingOuterText: ' ' }),
+          0
+        );
+      }).toThrow('Labels are not equal');
+    });
+  });
+
   describe('when the expected is not a TFBlock', () => {
     it('fails', () => {
       const block = makeTFArgument('hello', 'world');
 
       expect(() => {
         expect(block).toBeTFBlockWithLabel('my_label', 0);
+      }).toThrow("Received isn't a Block.");
+    });
+
+    it('fails on null', () => {
+      expect(() => {
+        expect(null).toBeTFBlockWithLabel('my_label', 0);
       }).toThrow("Received isn't a Block.");
     });
   });
