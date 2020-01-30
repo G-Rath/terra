@@ -82,7 +82,7 @@
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.2",
     "@types/jest": "^25.1.1",
-    "@types/ts-nameof": "^4.2.0",
+    "@types/ts-nameof": "^4.2.1",
     "@types/uuid": "^3.4.6",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
@@ -98,11 +98,11 @@
     "prettier": "^1.19.1",
     "ts-jest": "^25.1.0",
     "ts-nameof": "^4.2.2",
-    "ts-node": "^8.5.4",
+    "ts-node": "^8.6.2",
     "ts-transform-paths": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
-    "ttypescript": "^1.5.8",
-    "typescript": "^3.7.4"
+    "ttypescript": "^1.5.10",
+    "typescript": "^3.7.5"
   },
   "oclif": {
     "commands": "./lib/commands",
