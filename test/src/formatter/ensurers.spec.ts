@@ -1,8 +1,11 @@
 import {
+  ensureClosingBraceOnNewline,
   ensureLabelsHaveLeadingSpace,
   ensureTopLevelBlocksAreSeparated
 } from '@src/formatter';
 import { makeTFBlock, makeTFLabel } from '@src/makers';
+import { parseTFFileContents } from '@src/parser';
+import { printTFBlocks } from '@src/printer';
 import { TFBlock } from '@src/types';
 
 describe('ensureTopLevelBlocksAreSeparated', () => {
@@ -193,6 +196,68 @@ describe('ensureLabelsHaveLeadingSpace', () => {
           []
         )
       ]);
+    });
+  });
+});
+
+describe('ensureClosingBraceOnNewline', () => {
+  describe('when there are no blocks', () => {
+    it('does nothing', () => {
+      expect(ensureClosingBraceOnNewline([])).toStrictEqual([]);
+    });
+  });
+
+  it('formats Map and Body nodes', () => {
+    expect(
+      printTFBlocks(
+        ensureClosingBraceOnNewline(
+          parseTFFileContents('locals { map = { key = value } }').blocks
+        )
+      )
+    ).toMatchInlineSnapshot(`
+      "locals { map = { key = value
+       }
+       }"
+    `);
+  });
+
+  it('handles trailing commas', () => {
+    expect(
+      printTFBlocks(
+        ensureClosingBraceOnNewline(
+          parseTFFileContents('locals { map = { key = value, } }').blocks
+        )
+      )
+    ).toMatchInlineSnapshot(`
+        "locals { map = { key = value,
+         }
+         }"
+      `);
+  });
+
+  describe('when closing braces are already on a newline', () => {
+    it('leaves them be', () => {
+      expect(
+        printTFBlocks(
+          ensureClosingBraceOnNewline(
+            parseTFFileContents(
+              `
+locals {
+  map = {
+    key = value
+  }
+}
+              `.trim()
+            ).blocks
+          )
+        )
+      ).toMatchInlineSnapshot(`
+        "locals {
+          map = {
+            key = value
+          }
+        }"
+      `);
     });
   });
 });
