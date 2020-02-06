@@ -1,11 +1,19 @@
 import { makeTFSimpleLiteral } from '@src/makers';
 import {
+  StringCursor,
   parseTFFunctionExpression,
   parseTFListExpression,
-  parseTFMapExpression,
-  StringCursor
+  parseTFMapExpression
 } from '@src/parser';
 import { TFLiteralExpression } from '@src/types';
+
+const isFunctionCall = (cursor: StringCursor): boolean => {
+  const next = cursor.collectUntilWithComments(/[^/\s]/u);
+
+  cursor.rewind(next.length);
+
+  return next.endsWith('(');
+};
 
 export const parseTFExpression = (
   cursor: StringCursor
@@ -44,15 +52,15 @@ export const parseTFExpression = (
     return makeTFSimpleLiteral(expression, { leadingOuterText });
   }
 
-  const expression = cursor.collectUntil([' ', '\n', '(', ')', ']', ',']);
+  const expression = cursor.collectUntil(/[^\w.-]/u).slice(0, -1);
 
-  if (expression.endsWith('(')) {
+  cursor.rewind(1);
+
+  if (isFunctionCall(cursor)) {
     cursor.rewind(expression.length + leadingOuterText.length);
 
     return parseTFFunctionExpression(cursor);
   }
 
-  cursor.rewind(1);
-
-  return makeTFSimpleLiteral(expression.slice(0, -1), { leadingOuterText });
+  return makeTFSimpleLiteral(expression, { leadingOuterText });
 };

@@ -12,3 +12,4 @@ export * from './parseTFIdentifier';
 export * from './parseTFLabel';
 export * from './parseTFListExpression';
 export * from './parseTFMapExpression';
+export * from './shared';

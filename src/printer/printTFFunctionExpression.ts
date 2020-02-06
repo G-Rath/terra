@@ -1,4 +1,7 @@
-import { printTFIdentifier, printTFLiteralExpression } from '@src/printer';
+import {
+  printCommaSeparatedLiteralExpressionsWithinBrackets,
+  printTFIdentifier
+} from '@src/printer';
 import { TFFunctionExpression } from '@src/types';
 
 export const printTFFunctionExpression = (
@@ -6,12 +9,10 @@ export const printTFFunctionExpression = (
 ): string =>
   [
     printTFIdentifier(expression.name),
-    expression.surroundingText.leadingOuterText,
-    '(',
-    expression.surroundingText.leadingInnerText,
-    ...expression.args.map(printTFLiteralExpression).join(','),
-    expression.hasTrailingComma ? ',' : '',
-    expression.surroundingText.trailingInnerText,
-    ')',
-    expression.surroundingText.trailingOuterText
+    printCommaSeparatedLiteralExpressionsWithinBrackets(
+      '(',
+      expression.args,
+      expression,
+      ')'
+    )
   ].join('');

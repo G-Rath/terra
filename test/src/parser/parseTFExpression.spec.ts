@@ -1,19 +1,19 @@
 import { makeTFSimpleLiteral } from '@src/makers';
 import * as parser from '@src/parser';
-import { parseTFExpression, StringCursor } from '@src/parser';
+import { StringCursor, parseTFExpression } from '@src/parser';
 import { TFSimpleLiteral } from '@src/types';
 
 describe('parseTFExpression', () => {
   describe('leading text', () => {
     it('collects basic leading text correctly', () => {
-      expect(parseTFExpression(new StringCursor(' hello '))).toStrictEqual<
+      expect(parseTFExpression(new StringCursor(' hello /**/'))).toStrictEqual<
         TFSimpleLiteral
       >(makeTFSimpleLiteral('hello', { leadingOuterText: ' ' }));
     });
 
     it('does not treat comments in leading text as the start of the label', () => {
       expect(
-        parseTFExpression(new StringCursor('/* hello */world '))
+        parseTFExpression(new StringCursor('/* hello */world /**/'))
       ).toStrictEqual<TFSimpleLiteral>(
         makeTFSimpleLiteral('world', { leadingOuterText: '/* hello */' })
       );
@@ -110,7 +110,9 @@ describe('parseTFExpression', () => {
     describe('when the expression is unquoted', () => {
       it('parses unquoted expressions', () => {
         expect(
-          parseTFExpression(new StringCursor('aws_route53_zone.my_zone.id '))
+          parseTFExpression(
+            new StringCursor('aws_route53_zone.my_zone.id /**/')
+          )
         ).toStrictEqual<TFSimpleLiteral>(
           makeTFSimpleLiteral('aws_route53_zone.my_zone.id')
         );
@@ -129,6 +131,21 @@ describe('parseTFExpression', () => {
         expect(parseTFFunctionExpressionSpy).toHaveBeenCalledWith(
           expect.any(StringCursor)
         );
+      });
+
+      describe('when there is text between the function name and call', () => {
+        it('uses parseTFFunctionExpression', () => {
+          const parseTFFunctionExpressionSpy = jest.spyOn(
+            parser,
+            'parseTFFunctionExpression'
+          );
+
+          parseTFExpression(new StringCursor('trim /* hello */("world")'));
+
+          expect(parseTFFunctionExpressionSpy).toHaveBeenCalledWith(
+            expect.any(StringCursor)
+          );
+        });
       });
     });
   });

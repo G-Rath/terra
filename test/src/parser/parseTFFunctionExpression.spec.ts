@@ -1,11 +1,5 @@
-import {
-  makeTFFunctionExpression,
-  makeTFIdentifier,
-  makeTFSimpleLiteral
-} from '@src/makers';
 import * as parser from '@src/parser';
-import { parseTFFunctionExpression, StringCursor } from '@src/parser';
-import { TFFunctionExpression } from '@src/types';
+import { StringCursor, parseTFFunctionExpression } from '@src/parser';
 
 describe('parseTFFunctionExpression', () => {
   describe('function name', () => {
@@ -50,24 +44,293 @@ describe('parseTFFunctionExpression', () => {
       );
     });
 
-    it('notes trailing commas', () => {
+    it('parses trailing commas', () => {
+      expect(
+        parseTFFunctionExpression(new StringCursor('trim("hello", "world",)'))
+      ).toMatchInlineSnapshot(`
+        Object {
+          "args": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\"hello\\"",
+            },
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": " ",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\"world\\"",
+            },
+          ],
+          "hasTrailingComma": true,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "trim",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
+    });
+
+    it('parses empty args', () => {
+      expect(parseTFFunctionExpression(new StringCursor('date()')))
+        .toMatchInlineSnapshot(`
+        Object {
+          "args": Array [],
+          "hasTrailingComma": false,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "date",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
+    });
+
+    it('parses comments before the comma', () => {
       expect(
         parseTFFunctionExpression(
-          new StringCursor(['trim(', '"hello",', '"world",', ')'].join('\n'))
+          new StringCursor('max(1, 2/*hello*/, 3/*world*/,')
         )
-      ).toStrictEqual<TFFunctionExpression>({
-        ...makeTFFunctionExpression(
-          makeTFIdentifier('trim'),
-          ['"hello"', '"world"'].map(v =>
-            makeTFSimpleLiteral(v, {
-              leadingOuterText: expect.any(String),
-              trailingOuterText: expect.any(String)
-            })
-          ),
-          true
-        ),
-        surroundingText: expect.any(Object)
-      });
+      ).toMatchInlineSnapshot(`
+        Object {
+          "args": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "1",
+            },
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": " ",
+                "trailingOuterText": "/*hello*/",
+              },
+              "type": "Simple",
+              "value": "2",
+            },
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": " ",
+                "trailingOuterText": "/*world*/",
+              },
+              "type": "Simple",
+              "value": "3",
+            },
+          ],
+          "hasTrailingComma": true,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "max",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": " 3",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
+    });
+
+    it('parses list args properly', () => {
+      expect(
+        parseTFFunctionExpression(
+          new StringCursor('join(" ", ["hello", "world"])')
+        )
+      ).toMatchInlineSnapshot(`
+        Object {
+          "args": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\" \\"",
+            },
+            Object {
+              "hasTrailingComma": false,
+              "surroundingText": Object {
+                "leadingInnerText": "",
+                "leadingOuterText": " ",
+                "trailingInnerText": "",
+                "trailingOuterText": "",
+              },
+              "type": "List",
+              "values": Array [
+                Object {
+                  "surroundingText": Object {
+                    "leadingOuterText": "",
+                    "trailingOuterText": "",
+                  },
+                  "type": "Simple",
+                  "value": "\\"hello\\"",
+                },
+                Object {
+                  "surroundingText": Object {
+                    "leadingOuterText": " ",
+                    "trailingOuterText": "",
+                  },
+                  "type": "Simple",
+                  "value": "\\"world\\"",
+                },
+              ],
+            },
+          ],
+          "hasTrailingComma": false,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "join",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
+    });
+
+    it('parses empty list args properly', () => {
+      expect(parseTFFunctionExpression(new StringCursor('join(" ", [])')))
+        .toMatchInlineSnapshot(`
+        Object {
+          "args": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\" \\"",
+            },
+            Object {
+              "hasTrailingComma": false,
+              "surroundingText": Object {
+                "leadingInnerText": "",
+                "leadingOuterText": " ",
+                "trailingInnerText": "",
+                "trailingOuterText": "",
+              },
+              "type": "List",
+              "values": Array [],
+            },
+          ],
+          "hasTrailingComma": false,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "join",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
+    });
+
+    it('parses comments between args', () => {
+      expect(
+        parseTFFunctionExpression(
+          new StringCursor(`
+            max(
+              1,
+              // world
+              2,
+              # sunshine
+            )
+          `)
+        )
+      ).toMatchInlineSnapshot(`
+        Object {
+          "args": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "
+                      ",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "1",
+            },
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "
+                      // world
+                      ",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "2",
+            },
+          ],
+          "hasTrailingComma": true,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "
+                    ",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "max",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "
+                      # sunshine
+                    ",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
     });
   });
 

@@ -1,14 +1,10 @@
-import { printTFLiteralExpression } from '@src/printer';
+import { printCommaSeparatedLiteralExpressionsWithinBrackets } from '@src/printer';
 import { TFListExpression } from '@src/types';
 
 export const printTFListExpression = (expression: TFListExpression): string =>
-  [
-    expression.surroundingText.leadingOuterText,
+  printCommaSeparatedLiteralExpressionsWithinBrackets(
     '[',
-    expression.surroundingText.leadingInnerText,
-    ...expression.values.map(printTFLiteralExpression).join(','),
-    expression.hasTrailingComma ? ',' : '',
-    expression.surroundingText.trailingInnerText,
-    ']',
-    expression.surroundingText.trailingOuterText
-  ].join('');
+    expression.values,
+    expression,
+    ']'
+  );

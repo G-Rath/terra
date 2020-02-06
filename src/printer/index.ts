@@ -11,3 +11,4 @@ export * from './printTFSimpleLiteral';
 export * from './printTFListExpression';
 export * from './printTFLiteralExpression';
 export * from './printTFMapExpression';
+export * from './shared';

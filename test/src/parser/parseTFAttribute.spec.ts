@@ -1,5 +1,5 @@
 import * as parser from '@src/parser';
-import { parseTFAttribute, StringCursor } from '@src/parser';
+import { StringCursor, parseTFAttribute } from '@src/parser';
 import { TFNodeType } from '@src/types';
 
 describe('parseTFAttribute', () => {
@@ -21,7 +21,7 @@ describe('parseTFAttribute', () => {
 
   describe('when the key is quoted', () => {
     it('uses TFLabel for the key', () => {
-      const { key } = parseTFAttribute(new StringCursor('"key" = value '));
+      const { key } = parseTFAttribute(new StringCursor('"key" = value /**/'));
 
       expect(key.type).toBe(TFNodeType.Label);
     });
@@ -29,7 +29,7 @@ describe('parseTFAttribute', () => {
 
   describe('when the key is not quoted', () => {
     it('uses TFIdentifier for the key', () => {
-      const { key } = parseTFAttribute(new StringCursor('key = value '));
+      const { key } = parseTFAttribute(new StringCursor('key = value /**/'));
 
       expect(key.type).toBe(TFNodeType.Identifier);
     });
