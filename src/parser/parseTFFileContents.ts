@@ -1,4 +1,4 @@
-import { parseTFBlock, StringCursor } from '@src/parser';
+import { StringCursor, parseTFBlock } from '@src/parser';
 import { TFBlock, TFFileContents } from '@src/types';
 
 /**
@@ -13,7 +13,7 @@ export const parseTFFileContents = (
   contents: string,
   record = false
 ): TFFileContents => {
-  const cursor = new StringCursor(contents, record ? undefined : null);
+  const cursor = new StringCursor(contents, record);
   const blocks: TFBlock[] = [];
   let trailingOuterTextPosition = cursor.position;
 

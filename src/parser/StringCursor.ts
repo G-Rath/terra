@@ -10,18 +10,18 @@ export class StringCursor {
    */
   private _position: number;
 
-  public readonly recorder: StringCursorRecorder | null;
+  public readonly recorder: StringCursorRecorder | null = null;
 
   public constructor(
     str: string,
-    recorder: StringCursorRecorder | null = new StringCursorRecorder(str)
+    record: StringCursorRecorder | boolean = false
   ) {
     this._string = str;
     this._position = 0;
 
-    this.recorder = recorder;
+    if (record) {
+      this.recorder = record === true ? new StringCursorRecorder(str) : record;
 
-    if (this.recorder) {
       /* eslint-disable @typescript-eslint/unbound-method */
       this.rewind = this.recorder.wrapMethod(this, this.rewind);
       this.advance = this.recorder.wrapMethod(this, this.advance);
