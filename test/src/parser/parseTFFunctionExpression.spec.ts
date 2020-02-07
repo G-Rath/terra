@@ -1,17 +1,20 @@
-import * as parser from '@src/parser';
 import { StringCursor, parseTFFunctionExpression } from '@src/parser';
+import dedent from 'dedent';
 
 describe('parseTFFunctionExpression', () => {
-  describe('function name', () => {
-    it('uses parseTFIdentifier', () => {
-      const parseTFIdentifierSpy = jest.spyOn(parser, 'parseTFIdentifier');
+  it('parses the name as expected', () => {
+    const { name } = parseTFFunctionExpression(new StringCursor('trim()'));
 
-      parseTFFunctionExpression(new StringCursor('trim()'));
-
-      expect(parseTFIdentifierSpy).toHaveBeenCalledWith(
-        expect.any(StringCursor)
-      );
-    });
+    expect(name).toMatchInlineSnapshot(`
+      Object {
+        "surroundingText": Object {
+          "leadingOuterText": "",
+          "trailingOuterText": "",
+        },
+        "type": "Identifier",
+        "value": "trim",
+      }
+    `);
   });
 
   describe('leading text', () => {
@@ -33,15 +36,29 @@ describe('parseTFFunctionExpression', () => {
   });
 
   describe('function arguments', () => {
-    it('uses parseTFExpression', () => {
-      const parseTFExpressionSpy = jest.spyOn(parser, 'parseTFExpression');
-
-      parseTFFunctionExpression(new StringCursor('trim(1, 2, 3)'));
-
-      expect(parseTFExpressionSpy).toHaveBeenCalledTimes(3);
-      expect(parseTFExpressionSpy).toHaveBeenCalledWith(
-        expect.any(StringCursor)
-      );
+    it('parses empty args', () => {
+      expect(parseTFFunctionExpression(new StringCursor('date()')))
+        .toMatchInlineSnapshot(`
+        Object {
+          "args": Array [],
+          "hasTrailingComma": false,
+          "name": Object {
+            "surroundingText": Object {
+              "leadingOuterText": "",
+              "trailingOuterText": "",
+            },
+            "type": "Identifier",
+            "value": "date",
+          },
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "Function",
+        }
+      `);
     });
 
     it('parses trailing commas', () => {
@@ -75,31 +92,6 @@ describe('parseTFFunctionExpression', () => {
             },
             "type": "Identifier",
             "value": "trim",
-          },
-          "surroundingText": Object {
-            "leadingInnerText": "",
-            "leadingOuterText": "",
-            "trailingInnerText": "",
-            "trailingOuterText": "",
-          },
-          "type": "Function",
-        }
-      `);
-    });
-
-    it('parses empty args', () => {
-      expect(parseTFFunctionExpression(new StringCursor('date()')))
-        .toMatchInlineSnapshot(`
-        Object {
-          "args": Array [],
-          "hasTrailingComma": false,
-          "name": Object {
-            "surroundingText": Object {
-              "leadingOuterText": "",
-              "trailingOuterText": "",
-            },
-            "type": "Identifier",
-            "value": "date",
           },
           "surroundingText": Object {
             "leadingInnerText": "",
@@ -278,7 +270,7 @@ describe('parseTFFunctionExpression', () => {
     it('parses comments between args', () => {
       expect(
         parseTFFunctionExpression(
-          new StringCursor(`
+          new StringCursor(dedent`
             max(
               1,
               // world
@@ -293,7 +285,7 @@ describe('parseTFFunctionExpression', () => {
             Object {
               "surroundingText": Object {
                 "leadingOuterText": "
-                      ",
+          ",
                 "trailingOuterText": "",
               },
               "type": "Simple",
@@ -302,8 +294,8 @@ describe('parseTFFunctionExpression', () => {
             Object {
               "surroundingText": Object {
                 "leadingOuterText": "
-                      // world
-                      ",
+          // world
+          ",
                 "trailingOuterText": "",
               },
               "type": "Simple",
@@ -313,8 +305,7 @@ describe('parseTFFunctionExpression', () => {
           "hasTrailingComma": true,
           "name": Object {
             "surroundingText": Object {
-              "leadingOuterText": "
-                    ",
+              "leadingOuterText": "",
               "trailingOuterText": "",
             },
             "type": "Identifier",
@@ -324,8 +315,8 @@ describe('parseTFFunctionExpression', () => {
             "leadingInnerText": "",
             "leadingOuterText": "",
             "trailingInnerText": "
-                      # sunshine
-                    ",
+          # sunshine
+        ",
             "trailingOuterText": "",
           },
           "type": "Function",
@@ -345,20 +336,21 @@ describe('parseTFFunctionExpression', () => {
 
     it('collects over multiple lines', () => {
       const { trailingInnerText } = parseTFFunctionExpression(
-        new StringCursor(
-          [
-            'trim(',
-            '"hello world"',
-            '/* hello world */',
-            '// hello sunshine',
-            ')'
-          ].join('\n')
-        )
+        new StringCursor(dedent`
+          trim(
+            "hello world"
+            /* hello world */
+            // hello sunshine
+          )
+        `)
       ).surroundingText;
 
-      expect(trailingInnerText).toBe(
-        ['', '/* hello world */', '// hello sunshine', ''].join('\n')
-      );
+      expect(trailingInnerText).toMatchInlineSnapshot(`
+        "
+          /* hello world */
+          // hello sunshine
+        "
+      `);
     });
 
     it('includes comments', () => {

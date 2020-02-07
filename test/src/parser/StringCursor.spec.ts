@@ -1,4 +1,5 @@
 import { StringCursor } from '@src/parser';
+import dedent from 'dedent';
 
 describe('StringCursor', () => {
   const str = 'hello world';
@@ -214,39 +215,31 @@ describe('StringCursor', () => {
       });
 
       it('collects // comments', () => {
-        cursor = new StringCursor(
-          [
-            'hello', //
-            '// hello world',
-            'world'
-          ].join('\n')
-        );
+        cursor = new StringCursor(dedent`
+          hello
+          // hello world
+          world
+        `);
 
-        expect(cursor.collectUntilWithComments('world')).toBe(
-          [
-            'hello', //
-            '// hello world',
-            'world'
-          ].join('\n')
-        );
+        expect(cursor.collectUntilWithComments('world')).toBe(dedent`
+          hello
+          // hello world
+          world
+        `);
       });
 
       it('collects # comments', () => {
-        cursor = new StringCursor(
-          [
-            'hello', //
-            '# hello world',
-            'world'
-          ].join('\n')
-        );
+        cursor = new StringCursor(dedent`
+          hello
+          # hello world
+          world
+        `);
 
-        expect(cursor.collectUntilWithComments('world')).toBe(
-          [
-            'hello', //
-            '# hello world',
-            'world'
-          ].join('\n')
-        );
+        expect(cursor.collectUntilWithComments('world')).toBe(dedent`
+          hello
+          # hello world
+          world
+        `);
       });
       describe('when the predicate is only in comments', () => {
         it('throws', () => {

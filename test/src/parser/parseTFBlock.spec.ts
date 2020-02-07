@@ -1,17 +1,16 @@
 import { makeTFLabel } from '@src/makers';
-import { parseTFBlock, StringCursor } from '@src/parser';
+import { StringCursor, parseTFBlock } from '@src/parser';
+import dedent from 'dedent';
 
 describe('parseTFBlock', () => {
   it('collects leading outer comments', () => {
     const { leadingOuterText } = parseTFBlock(
-      new StringCursor(
-        `
-# hello world
-resource "aws_route53_zone" "my_zone" {
-  name = "example.com"
-}
-      `.trim()
-      )
+      new StringCursor(dedent`
+        # hello world
+        resource "aws_route53_zone" "my_zone" {
+          name = "example.com"
+        }
+      `)
     ).surroundingText;
 
     expect(leadingOuterText).toBe('# hello world\n');
@@ -20,13 +19,11 @@ resource "aws_route53_zone" "my_zone" {
   it('parses label-less blocks', () => {
     expect(
       parseTFBlock(
-        new StringCursor(
-          `
-atlas {
-  name = "hello world"
-}
-      `.trim()
-        )
+        new StringCursor(dedent`
+          atlas {
+            name = "hello world"
+          }
+        `)
       )
     ).toMatchInlineSnapshot(`
       Object {
@@ -79,13 +76,11 @@ atlas {
 
   it('parses labels', () => {
     const { labels } = parseTFBlock(
-      new StringCursor(
-        `
-module "my_module" {
-  source = "../../my_module"
-}
-      `.trim()
-      )
+      new StringCursor(dedent`
+        module "my_module" {
+          source = "../../my_module"
+        }
+      `)
     );
 
     expect(labels).toStrictEqual([
@@ -99,13 +94,11 @@ module "my_module" {
       .map((v, i) => makeTFLabel(`label-${i}`, { leadingOuterText: ' ' }));
 
     const { labels } = parseTFBlock(
-      new StringCursor(
-        `
-resource ${expectedLabels.map(label => label.value).join(' ')} {
-  name = "hello world"
-}
-      `.trim()
-      )
+      new StringCursor(dedent`
+        resource ${expectedLabels.map(label => label.value).join(' ')} {
+          name = "hello world"
+        }
+      `)
     );
 
     expect(labels).toStrictEqual(expectedLabels);

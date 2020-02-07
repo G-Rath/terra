@@ -1,16 +1,15 @@
-import { parseTFBlockBody, StringCursor } from '@src/parser';
+import { StringCursor, parseTFBlockBody } from '@src/parser';
+import dedent from 'dedent';
 
 describe('parseTFBlockBody', () => {
   describe('leadingOuterText', () => {
     it('collects leading outer comments', () => {
       const { leadingOuterText } = parseTFBlockBody(
-        new StringCursor(
-          `
-/* hello world */ {
-  name = "hello world"
-}
-      `.trim()
-        )
+        new StringCursor(dedent`
+          /* hello world */ {
+            name = "hello world"
+          }
+        `)
       ).surroundingText;
 
       expect(leadingOuterText).toBe('/* hello world */ ');
@@ -19,13 +18,11 @@ describe('parseTFBlockBody', () => {
 
   it('parses arguments', () => {
     const body = parseTFBlockBody(
-      new StringCursor(
-        `
-/* hello world */ {
-  name = "hello world"
-}
-      `.trim()
-      )
+      new StringCursor(dedent`
+        /* hello world */ {
+          name = "hello world"
+        }
+      `)
     );
 
     expect(body.body).toHaveLength(1);
@@ -34,15 +31,13 @@ describe('parseTFBlockBody', () => {
 
   it('parses blocks', () => {
     const body = parseTFBlockBody(
-      new StringCursor(
-        `
-/* hello world */ {
-  ingress {
-    name = "hello world"
-  }
-}
-      `.trim()
-      )
+      new StringCursor(dedent`
+        /* hello world */ {
+          ingress {
+            name = "hello world"
+          }
+        }
+      `)
     );
 
     expect(body.body).toHaveLength(1);
@@ -52,19 +47,19 @@ describe('parseTFBlockBody', () => {
   describe('trailingInnerText', () => {
     it('collects trailing inner comments', () => {
       const { trailingInnerText } = parseTFBlockBody(
-        new StringCursor(
-          `
-{
-  name = "hello world"
-  /* hello world */
-}
-      `.trim()
-        )
+        new StringCursor(dedent`
+          {
+            name = "hello world"
+            /* hello world */
+          }
+        `)
       ).surroundingText;
 
-      expect(trailingInnerText).toBe(`
-  /* hello world */
-`);
+      expect(trailingInnerText).toMatchInlineSnapshot(`
+        "
+          /* hello world */
+        "
+      `);
     });
   });
 });

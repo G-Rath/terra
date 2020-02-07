@@ -2,6 +2,7 @@ import AwsRoute53Zone from '@src/commands/aws_route53_zone';
 import { makeTFResourceBlock } from '@src/makers';
 import { nadoRoute53Zone } from '@src/nados';
 import { AwsResourceType } from '@src/utils';
+import dedent from 'dedent';
 import { mocked } from 'ts-jest/utils';
 
 jest.mock('@src/nados/aws/nadoRoute53Zone');
@@ -21,13 +22,11 @@ describe('aws_route53_zone', () => {
   );
 
   it('should require the zoneId', async () => {
-    await expect(AwsRoute53Zone.run([])).rejects.toThrow(
-      [
-        'Missing 1 required arg:', //
-        'zoneId',
-        'See more help with --help'
-      ].join('\n')
-    );
+    await expect(AwsRoute53Zone.run([])).rejects.toThrow(dedent`
+      Missing 1 required arg:
+      zoneId
+      See more help with --help
+    `);
   });
 
   it('should pass the zoneId to nadoRoute53Zone', async () => {

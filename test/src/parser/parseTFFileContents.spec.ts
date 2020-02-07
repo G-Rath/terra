@@ -1,6 +1,7 @@
 import * as parser from '@src/parser';
 import { parseTFFileContents } from '@src/parser';
 import { TFFileContents } from '@src/types';
+import dedent from 'dedent';
 import * as fs from 'fs';
 import { mocked } from 'ts-jest/utils';
 
@@ -45,26 +46,22 @@ describe('parseTFFileContents', () => {
       const {
         leadingOuterText, //
         trailingOuterText
-      } = parseTFFileContents(
-        `
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim()
-      ).surroundingText;
+      } = parseTFFileContents(dedent`
+        resource "aws_route53_zone" my_zone {
+          name = "example.com"
+        }
+      `).surroundingText;
 
       expect(leadingOuterText).toBe('');
       expect(trailingOuterText).toBe('');
     });
 
     it('parses the blocks', () => {
-      const { blocks } = parseTFFileContents(
-        `
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim()
-      );
+      const { blocks } = parseTFFileContents(dedent`
+        resource "aws_route53_zone" my_zone {
+          name = "example.com"
+        }
+      `);
 
       expect(blocks).toMatchInlineSnapshot(`
         Array [
@@ -137,14 +134,12 @@ resource "aws_route53_zone" my_zone {
 
   describe('when the contents contain both blocks and comments', () => {
     it('parses the surroundingText', () => {
-      const { surroundingText } = parseTFFileContents(
-        `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim()
-      );
+      const { surroundingText } = parseTFFileContents(dedent`
+        # This is the hosted zone for the zone that I own
+        resource "aws_route53_zone" my_zone {
+          name = "example.com"
+        }
+      `);
 
       expect(surroundingText).toMatchInlineSnapshot(`
         Object {
@@ -155,14 +150,12 @@ resource "aws_route53_zone" my_zone {
     });
 
     it('parses the blocks', () => {
-      const { blocks } = parseTFFileContents(
-        `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim()
-      );
+      const { blocks } = parseTFFileContents(dedent`
+        # This is the hosted zone for the zone that I own
+        resource "aws_route53_zone" my_zone {
+          name = "example.com"
+        }
+      `);
 
       expect(blocks).toMatchInlineSnapshot(`
         Array [
@@ -237,12 +230,12 @@ resource "aws_route53_zone" my_zone {
   describe('when the "record" parameter is "true"', () => {
     it('writes recordings of successfully parses to disk', () => {
       parseTFFileContents(
-        `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim(),
+        dedent`
+          # This is the hosted zone for the zone that I own
+          resource "aws_route53_zone" my_zone {
+            name = "example.com"
+          }
+        `,
         true
       );
 
@@ -259,12 +252,12 @@ resource "aws_route53_zone" my_zone {
 
       expect(() =>
         parseTFFileContents(
-          `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim(),
+          dedent`
+            # This is the hosted zone for the zone that I own
+            resource "aws_route53_zone" my_zone {
+              name = "example.com"
+            }
+          `,
           true
         )
       ).toThrow('error!');
@@ -279,12 +272,12 @@ resource "aws_route53_zone" my_zone {
   describe('when the "record" parameter is "false"', () => {
     it('does not write recordings of successfully parses to disk', () => {
       parseTFFileContents(
-        `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim(),
+        dedent`
+          # This is the hosted zone for the zone that I own
+          resource "aws_route53_zone" my_zone {
+            name = "example.com"
+          }
+        `,
         false
       );
 
@@ -298,12 +291,12 @@ resource "aws_route53_zone" my_zone {
 
       expect(() =>
         parseTFFileContents(
-          `
-# This is the hosted zone for the zone that I own
-resource "aws_route53_zone" my_zone {
-  name = "example.com"
-}
-`.trim(),
+          dedent`
+            # This is the hosted zone for the zone that I own
+            resource "aws_route53_zone" my_zone {
+              name = "example.com"
+            }
+          `,
           false
         )
       ).toThrow('error!');

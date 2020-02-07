@@ -1,7 +1,5 @@
-import { makeTFListExpression, makeTFSimpleLiteral } from '@src/makers';
-import * as parser from '@src/parser';
 import { StringCursor, parseTFListExpression } from '@src/parser';
-import { TFListExpression } from '@src/types';
+import dedent from 'dedent';
 
 describe('parseTFListExpression', () => {
   describe('leading text', () => {
@@ -23,77 +21,6 @@ describe('parseTFListExpression', () => {
   });
 
   describe('values text', () => {
-    it('parses a single value single line list correctly', () => {
-      expect(
-        parseTFListExpression(new StringCursor('["hello world"] '))
-      ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(['"hello world"']),
-        surroundingText: expect.any(Object)
-      });
-    });
-
-    it('parses a multi-value single line list correctly', () => {
-      expect(
-        parseTFListExpression(new StringCursor('["hello", "world"] '))
-      ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(
-          ['"hello"', '"world"'].map(v =>
-            makeTFSimpleLiteral(v, {
-              leadingOuterText: expect.any(String),
-              trailingOuterText: expect.any(String)
-            })
-          )
-        ),
-        surroundingText: expect.any(Object)
-      });
-    });
-
-    it('parses a single value multi-line list correctly', () => {
-      expect(
-        parseTFListExpression(
-          new StringCursor(['[', '"hello world"', ']'].join('\n'))
-        )
-      ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(
-          ['"hello world"'].map(v =>
-            makeTFSimpleLiteral(v, {
-              leadingOuterText: expect.any(String),
-              trailingOuterText: expect.any(String)
-            })
-          )
-        ),
-        surroundingText: expect.any(Object)
-      });
-    });
-
-    it('parses a multi-value multi-line list', () => {
-      expect(
-        parseTFListExpression(
-          new StringCursor(['[', '"hello",', '"world"', '] '].join('\n'))
-        )
-      ).toStrictEqual<TFListExpression>({
-        ...makeTFListExpression(
-          ['"hello"', '"world"'].map(v =>
-            makeTFSimpleLiteral(v, {
-              leadingOuterText: expect.any(String),
-              trailingOuterText: expect.any(String)
-            })
-          )
-        ),
-        surroundingText: expect.any(Object)
-      });
-    });
-
-    it('uses parseTFExpression', () => {
-      const parseTFExpressionSpy = jest.spyOn(parser, 'parseTFExpression');
-
-      parseTFListExpression(new StringCursor('["hello world"] '));
-
-      expect(parseTFExpressionSpy).toHaveBeenCalledWith(
-        expect.any(StringCursor)
-      );
-    });
-
     it('parses empty lists', () => {
       expect(parseTFListExpression(new StringCursor('[]')))
         .toMatchInlineSnapshot(`
@@ -107,6 +34,67 @@ describe('parseTFListExpression', () => {
           },
           "type": "List",
           "values": Array [],
+        }
+      `);
+    });
+
+    it('parses a single value single line list correctly', () => {
+      expect(parseTFListExpression(new StringCursor('["hello world"] ')))
+        .toMatchInlineSnapshot(`
+        Object {
+          "hasTrailingComma": false,
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "",
+            "trailingOuterText": "",
+          },
+          "type": "List",
+          "values": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\"hello world\\"",
+            },
+          ],
+        }
+      `);
+    });
+
+    it('parses a single value multi-line list correctly', () => {
+      expect(
+        parseTFListExpression(
+          new StringCursor(dedent`
+            [
+              "hello world"
+            ]
+          `)
+        )
+      ).toMatchInlineSnapshot(`
+        Object {
+          "hasTrailingComma": false,
+          "surroundingText": Object {
+            "leadingInnerText": "",
+            "leadingOuterText": "",
+            "trailingInnerText": "
+        ",
+            "trailingOuterText": "",
+          },
+          "type": "List",
+          "values": Array [
+            Object {
+              "surroundingText": Object {
+                "leadingOuterText": "
+          ",
+                "trailingOuterText": "",
+              },
+              "type": "Simple",
+              "value": "\\"hello world\\"",
+            },
+          ],
         }
       `);
     });
@@ -271,7 +259,7 @@ describe('parseTFListExpression', () => {
     it('parses comments between elements', () => {
       expect(
         parseTFListExpression(
-          new StringCursor(`
+          new StringCursor(dedent`
             [
               "hello",
               // world
@@ -285,11 +273,10 @@ describe('parseTFListExpression', () => {
           "hasTrailingComma": true,
           "surroundingText": Object {
             "leadingInnerText": "",
-            "leadingOuterText": "
-                    ",
+            "leadingOuterText": "",
             "trailingInnerText": "
-                      # sunshine
-                    ",
+          # sunshine
+        ",
             "trailingOuterText": "",
           },
           "type": "List",
@@ -297,7 +284,7 @@ describe('parseTFListExpression', () => {
             Object {
               "surroundingText": Object {
                 "leadingOuterText": "
-                      ",
+          ",
                 "trailingOuterText": "",
               },
               "type": "Simple",
@@ -306,8 +293,8 @@ describe('parseTFListExpression', () => {
             Object {
               "surroundingText": Object {
                 "leadingOuterText": "
-                      // world
-                      ",
+          // world
+          ",
                 "trailingOuterText": "",
               },
               "type": "Simple",
@@ -330,20 +317,21 @@ describe('parseTFListExpression', () => {
 
     it('collects over multiple lines', () => {
       const { trailingInnerText } = parseTFListExpression(
-        new StringCursor(
+        new StringCursor(dedent`
           [
-            '[',
-            '"hello world"',
-            '/* hello world */',
-            '// hello sunshine',
-            ']'
-          ].join('\n')
-        )
+            "hello world"
+            /* hello world */
+            // hello sunshine
+          ]
+        `)
       ).surroundingText;
 
-      expect(trailingInnerText).toBe(
-        ['', '/* hello world */', '// hello sunshine', ''].join('\n')
-      );
+      expect(trailingInnerText).toMatchInlineSnapshot(`
+        "
+          /* hello world */
+          // hello sunshine
+        "
+      `);
     });
 
     it('includes comments', () => {
