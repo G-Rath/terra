@@ -1,6 +1,6 @@
 import {
   makeTFAttribute,
-  makeTFFunctionExpression,
+  makeTFFunctionCall,
   makeTFListExpression,
   makeTFMapExpression,
   makeTFSimpleLiteral
@@ -84,7 +84,7 @@ describe('printTFLiteralExpression', () => {
           makeTFMapExpression([
             makeTFAttribute(
               'MyFunction',
-              makeTFFunctionExpression(
+              makeTFFunctionCall(
                 'flatten',
                 [
                   'aws_subnet.public_a.id',

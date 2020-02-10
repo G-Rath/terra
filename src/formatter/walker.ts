@@ -3,7 +3,7 @@ import {
   TFAttribute,
   TFBlock,
   TFBlockBody,
-  TFFunctionExpression,
+  TFFunctionCall,
   TFIdentifier,
   TFLabel,
   TFListExpression,
@@ -16,7 +16,7 @@ export type TFNode =
   | TFListExpression
   | TFAttribute
   | TFArgument
-  | TFFunctionExpression
+  | TFFunctionCall
   | TFIdentifier
   | TFSimpleLiteral
   | TFBlock
@@ -52,7 +52,7 @@ interface NodeListeners {
   List?: TFNodeListener<TFListExpression>;
   Attribute?: TFNodeListener<TFAttribute>;
   Argument?: TFNodeListener<TFArgument>;
-  Function?: TFNodeListener<TFFunctionExpression>;
+  Function?: TFNodeListener<TFFunctionCall>;
   Identifier?: TFNodeListener<TFIdentifier>;
   Simple?: TFNodeListener<TFSimpleLiteral>;
   Block?: TFNodeListener<TFBlock>;

@@ -8,7 +8,7 @@ export * from './makeTFIdentifier';
 export * from './makeTFMapExpression';
 export * from './makeTFModuleBlock';
 export * from './makeTFDynamicBlock';
-export * from './makeTFFunctionExpression';
+export * from './makeTFFunctionCall';
 export * from './makeTFResourceBlock';
 export * from './makeTFDataBlock';
 export * from './makeTFSimpleLiteral';

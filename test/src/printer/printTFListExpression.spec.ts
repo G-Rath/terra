@@ -1,6 +1,6 @@
 import {
   makeTFAttribute,
-  makeTFFunctionExpression,
+  makeTFFunctionCall,
   makeTFListExpression,
   makeTFMapExpression,
   makeTFSimpleLiteral
@@ -163,7 +163,7 @@ describe('printTFListExpression', () => {
                 trailingInnerText: '\n  '
               }
             ),
-            makeTFFunctionExpression('map', [], false)
+            makeTFFunctionCall('map', [], false)
           ],
           false,
           { trailingInnerText: '\n' }

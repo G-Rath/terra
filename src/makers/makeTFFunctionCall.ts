@@ -1,17 +1,17 @@
 import { makeTFIdentifier, makeTFSimpleLiteral } from '@src/makers';
 import {
-  TFFunctionExpression,
+  TFFunctionCall,
   TFIdentifier,
   TFLiteralExpression,
   TFNodeType
 } from '@src/types';
 
-export const makeTFFunctionExpression = (
+export const makeTFFunctionCall = (
   name: string | TFIdentifier,
   args: Array<TFLiteralExpression | string>,
   hasTrailingComma = false,
-  surroundingText?: Partial<TFFunctionExpression['surroundingText']>
-): TFFunctionExpression => ({
+  surroundingText?: Partial<TFFunctionCall['surroundingText']>
+): TFFunctionCall => ({
   type: TFNodeType.Function,
   name:
     typeof name === 'string' //

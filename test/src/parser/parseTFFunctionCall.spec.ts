@@ -1,9 +1,9 @@
-import { StringCursor, parseTFFunctionExpression } from '@src/parser';
+import { StringCursor, parseTFFunctionCall } from '@src/parser';
 import dedent from 'dedent';
 
-describe('parseTFFunctionExpression', () => {
+describe('parseTFFunctionCall', () => {
   it('parses the name as expected', () => {
-    const { name } = parseTFFunctionExpression(new StringCursor('trim()'));
+    const { name } = parseTFFunctionCall(new StringCursor('trim()'));
 
     expect(name).toMatchInlineSnapshot(`
       Object {
@@ -19,7 +19,7 @@ describe('parseTFFunctionExpression', () => {
 
   describe('leading text', () => {
     it('collects from the name to the opening parenthesis', () => {
-      const { leadingOuterText } = parseTFFunctionExpression(
+      const { leadingOuterText } = parseTFFunctionCall(
         new StringCursor('trim ()')
       ).surroundingText;
 
@@ -27,7 +27,7 @@ describe('parseTFFunctionExpression', () => {
     });
 
     it('preserves comments', () => {
-      const { leadingOuterText } = parseTFFunctionExpression(
+      const { leadingOuterText } = parseTFFunctionCall(
         new StringCursor('trim/* hello world */()')
       ).surroundingText;
 
@@ -37,7 +37,7 @@ describe('parseTFFunctionExpression', () => {
 
   describe('function arguments', () => {
     it('parses empty args', () => {
-      expect(parseTFFunctionExpression(new StringCursor('date()')))
+      expect(parseTFFunctionCall(new StringCursor('date()')))
         .toMatchInlineSnapshot(`
         Object {
           "args": Array [],
@@ -62,9 +62,8 @@ describe('parseTFFunctionExpression', () => {
     });
 
     it('parses trailing commas', () => {
-      expect(
-        parseTFFunctionExpression(new StringCursor('trim("hello", "world",)'))
-      ).toMatchInlineSnapshot(`
+      expect(parseTFFunctionCall(new StringCursor('trim("hello", "world",)')))
+        .toMatchInlineSnapshot(`
         Object {
           "args": Array [
             Object {
@@ -106,9 +105,7 @@ describe('parseTFFunctionExpression', () => {
 
     it('parses comments before the comma', () => {
       expect(
-        parseTFFunctionExpression(
-          new StringCursor('max(1, 2/*hello*/, 3/*world*/,')
-        )
+        parseTFFunctionCall(new StringCursor('max(1, 2/*hello*/, 3/*world*/,'))
       ).toMatchInlineSnapshot(`
         Object {
           "args": Array [
@@ -159,9 +156,7 @@ describe('parseTFFunctionExpression', () => {
 
     it('parses list args properly', () => {
       expect(
-        parseTFFunctionExpression(
-          new StringCursor('join(" ", ["hello", "world"])')
-        )
+        parseTFFunctionCall(new StringCursor('join(" ", ["hello", "world"])'))
       ).toMatchInlineSnapshot(`
         Object {
           "args": Array [
@@ -223,7 +218,7 @@ describe('parseTFFunctionExpression', () => {
     });
 
     it('parses empty list args properly', () => {
-      expect(parseTFFunctionExpression(new StringCursor('join(" ", [])')))
+      expect(parseTFFunctionCall(new StringCursor('join(" ", [])')))
         .toMatchInlineSnapshot(`
         Object {
           "args": Array [
@@ -269,7 +264,7 @@ describe('parseTFFunctionExpression', () => {
 
     it('parses comments between args', () => {
       expect(
-        parseTFFunctionExpression(
+        parseTFFunctionCall(
           new StringCursor(dedent`
             max(
               1,
@@ -327,7 +322,7 @@ describe('parseTFFunctionExpression', () => {
 
   describe('inner trailing text', () => {
     it('collects up to the closing parenthesis', () => {
-      const { trailingInnerText } = parseTFFunctionExpression(
+      const { trailingInnerText } = parseTFFunctionCall(
         new StringCursor('trim( "hello world" )')
       ).surroundingText;
 
@@ -335,7 +330,7 @@ describe('parseTFFunctionExpression', () => {
     });
 
     it('collects over multiple lines', () => {
-      const { trailingInnerText } = parseTFFunctionExpression(
+      const { trailingInnerText } = parseTFFunctionCall(
         new StringCursor(dedent`
           trim(
             "hello world"
@@ -354,7 +349,7 @@ describe('parseTFFunctionExpression', () => {
     });
 
     it('includes comments', () => {
-      const { trailingInnerText } = parseTFFunctionExpression(
+      const { trailingInnerText } = parseTFFunctionCall(
         new StringCursor('trim("hello"/* world */)')
       ).surroundingText;
 

@@ -120,29 +120,29 @@ describe('parseTFExpression', () => {
     });
 
     describe('when the expression is a function', () => {
-      it('uses parseTFFunctionExpression', () => {
-        const parseTFFunctionExpressionSpy = jest.spyOn(
+      it('uses parseTFFunctionCall', () => {
+        const parseTFFunctionCallSpy = jest.spyOn(
           parser,
-          'parseTFFunctionExpression'
+          'parseTFFunctionCall'
         );
 
         parseTFExpression(new StringCursor('trim("hello world")'));
 
-        expect(parseTFFunctionExpressionSpy).toHaveBeenCalledWith(
+        expect(parseTFFunctionCallSpy).toHaveBeenCalledWith(
           expect.any(StringCursor)
         );
       });
 
       describe('when there is text between the function name and call', () => {
-        it('uses parseTFFunctionExpression', () => {
-          const parseTFFunctionExpressionSpy = jest.spyOn(
+        it('uses parseTFFunctionCall', () => {
+          const parseTFFunctionCallSpy = jest.spyOn(
             parser,
-            'parseTFFunctionExpression'
+            'parseTFFunctionCall'
           );
 
           parseTFExpression(new StringCursor('trim /* hello */("world")'));
 
-          expect(parseTFFunctionExpressionSpy).toHaveBeenCalledWith(
+          expect(parseTFFunctionCallSpy).toHaveBeenCalledWith(
             expect.any(StringCursor)
           );
         });

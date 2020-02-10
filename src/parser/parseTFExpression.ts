@@ -1,7 +1,7 @@
 import { makeTFSimpleLiteral } from '@src/makers';
 import {
   StringCursor,
-  parseTFFunctionExpression,
+  parseTFFunctionCall,
   parseTFListExpression,
   parseTFMapExpression
 } from '@src/parser';
@@ -59,7 +59,7 @@ export const parseTFExpression = (
   if (isFunctionCall(cursor)) {
     cursor.rewind(expression.length + leadingOuterText.length);
 
-    return parseTFFunctionExpression(cursor);
+    return parseTFFunctionCall(cursor);
   }
 
   return makeTFSimpleLiteral(expression, { leadingOuterText });

@@ -1,5 +1,5 @@
 import {
-  printTFFunctionExpression,
+  printTFFunctionCall,
   printTFListExpression,
   printTFMapExpression,
   printTFSimpleLiteral
@@ -24,7 +24,7 @@ export const printTFLiteralExpression = (
   }
 
   if (literal.type === TFNodeType.Function) {
-    return printTFFunctionExpression(literal);
+    return printTFFunctionCall(literal);
   }
 
   throw new Error(`structural error - cannot print type "${type}"`);

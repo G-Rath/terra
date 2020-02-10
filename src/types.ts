@@ -83,11 +83,11 @@ export interface TFListExpression extends TFBaseNode {
 
 export type TFLiteralExpression =
   | TFSimpleLiteral
-  | TFFunctionExpression
+  | TFFunctionCall
   | TFListExpression
   | TFMapExpression;
 
-export interface TFFunctionExpression extends TFBaseNode {
+export interface TFFunctionCall extends TFBaseNode {
   type: TFNodeType.Function;
   name: TFIdentifier;
   args: TFLiteralExpression[];

@@ -1,14 +1,12 @@
-import { makeTFFunctionExpression } from '@src/makers';
+import { makeTFFunctionCall } from '@src/makers';
 import {
   StringCursor,
   parseCommaSeparatedLiteralExpressionsBrackets,
   parseTFIdentifier
 } from '@src/parser';
-import { TFFunctionExpression } from '@src/types';
+import { TFFunctionCall } from '@src/types';
 
-export const parseTFFunctionExpression = (
-  cursor: StringCursor
-): TFFunctionExpression => {
+export const parseTFFunctionCall = (cursor: StringCursor): TFFunctionCall => {
   const name = parseTFIdentifier(cursor);
 
   const {
@@ -17,7 +15,7 @@ export const parseTFFunctionExpression = (
     surroundingText
   } = parseCommaSeparatedLiteralExpressionsBrackets(cursor, '(');
 
-  return makeTFFunctionExpression(
+  return makeTFFunctionCall(
     name,
     expressions,
     hasTrailingComma,

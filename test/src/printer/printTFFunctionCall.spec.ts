@@ -1,18 +1,18 @@
 import {
   makeTFAttribute,
-  makeTFFunctionExpression,
+  makeTFFunctionCall,
   makeTFIdentifier,
   makeTFListExpression,
   makeTFMapExpression,
   makeTFSimpleLiteral
 } from '@src/makers';
-import { printTFFunctionExpression } from '@src/printer';
+import { printTFFunctionCall } from '@src/printer';
 
-describe('printTFFunctionExpression', () => {
+describe('printTFFunctionCall', () => {
   it('prints leadingOuterText after the function name but before the opening parenthesis', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression('', [], false, {
+      printTFFunctionCall(
+        makeTFFunctionCall('', [], false, {
           leadingOuterText: ' hello world '
         })
       )
@@ -21,8 +21,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints leadingInnerText after the opening parenthesis', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression('', [], false, {
+      printTFFunctionCall(
+        makeTFFunctionCall('', [], false, {
           leadingInnerText: ' hello world '
         })
       )
@@ -31,14 +31,14 @@ describe('printTFFunctionExpression', () => {
 
   it('prints empty args correctly', () => {
     expect(
-      printTFFunctionExpression(makeTFFunctionExpression('trim', [], false))
+      printTFFunctionCall(makeTFFunctionCall('trim', [], false))
     ).toMatchInlineSnapshot(`"trim()"`);
   });
 
   it('prints simple-type arguments correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           'trim',
           [makeTFSimpleLiteral('local.common_tags')],
           false
@@ -49,8 +49,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints list-type arguments correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           'trim',
           [
             makeTFListExpression(
@@ -91,10 +91,10 @@ describe('printTFFunctionExpression', () => {
 
   it('prints function-type arguments correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           'trim',
-          [makeTFFunctionExpression('trim', [makeTFSimpleLiteral('1')], false)],
+          [makeTFFunctionCall('trim', [makeTFSimpleLiteral('1')], false)],
           false
         )
       )
@@ -103,8 +103,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints trailing commas correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           makeTFIdentifier('trim', { leadingOuterText: ' ' }), //
           [makeTFSimpleLiteral('common_tags', { leadingOuterText: '\n    ' })],
           true,
@@ -124,8 +124,8 @@ describe('printTFFunctionExpression', () => {
   });
   it('prints map-type arguments correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           'trim',
           [
             makeTFMapExpression(
@@ -158,8 +158,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints mixed-type arguments correctly', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression(
+      printTFFunctionCall(
+        makeTFFunctionCall(
           'trim',
           [
             makeTFListExpression(
@@ -255,8 +255,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints trailingInnerText before the closing parenthesis', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression('', [], false, {
+      printTFFunctionCall(
+        makeTFFunctionCall('', [], false, {
           trailingInnerText: ' hello world '
         })
       )
@@ -265,8 +265,8 @@ describe('printTFFunctionExpression', () => {
 
   it('prints trailingOuterText after the closing parenthesis', () => {
     expect(
-      printTFFunctionExpression(
-        makeTFFunctionExpression('', [], false, {
+      printTFFunctionCall(
+        makeTFFunctionCall('', [], false, {
           trailingOuterText: ' hello world '
         })
       )

@@ -1,20 +1,20 @@
 import {
-  makeTFFunctionExpression,
+  makeTFFunctionCall,
   makeTFIdentifier,
   makeTFSimpleLiteral
 } from '@src/makers';
-import { TFFunctionExpression, TFNodeType } from '@src/types';
+import { TFFunctionCall, TFNodeType } from '@src/types';
 
-describe('makeTFFunctionExpression', () => {
-  it('makes a TFFunctionExpression', () => {
+describe('makeTFFunctionCall', () => {
+  it('makes a TFFunctionCall', () => {
     expect(
-      makeTFFunctionExpression(
+      makeTFFunctionCall(
         makeTFIdentifier('identifier'),
         [makeTFSimpleLiteral('true')],
         true,
         { trailingOuterText: 'hello world' }
       )
-    ).toStrictEqual<TFFunctionExpression>({
+    ).toStrictEqual<TFFunctionCall>({
       type: TFNodeType.Function,
       name: makeTFIdentifier('identifier'),
       args: [makeTFSimpleLiteral('true')],
@@ -31,13 +31,13 @@ describe('makeTFFunctionExpression', () => {
   describe('when name is a string', () => {
     it('makes it into a TFIdentifier node', () => {
       expect(
-        makeTFFunctionExpression(
+        makeTFFunctionCall(
           'identifier',
           [], //
           true,
           { leadingInnerText: 'hello world' }
         )
-      ).toStrictEqual<TFFunctionExpression>({
+      ).toStrictEqual<TFFunctionCall>({
         type: TFNodeType.Function,
         name: makeTFIdentifier('identifier'),
         args: [],
@@ -54,16 +54,11 @@ describe('makeTFFunctionExpression', () => {
   describe('when args includes a string', () => {
     it('makes it into a TFSimpleLiteral node', () => {
       expect(
-        makeTFFunctionExpression(
-          makeTFIdentifier('trim'),
-          ['hello world'],
-          true,
-          {
-            leadingInnerText: 'hello world',
-            trailingInnerText: 'hello sunshine'
-          }
-        )
-      ).toStrictEqual<TFFunctionExpression>({
+        makeTFFunctionCall(makeTFIdentifier('trim'), ['hello world'], true, {
+          leadingInnerText: 'hello world',
+          trailingInnerText: 'hello sunshine'
+        })
+      ).toStrictEqual<TFFunctionCall>({
         type: TFNodeType.Function,
         name: makeTFIdentifier('trim'),
         args: [makeTFSimpleLiteral('hello world')],
