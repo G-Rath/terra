@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "files": [ "bin/terra" ],
+  "files": [ ".eslintrc.js", "bin/terra" ],
   "exclude": [ "node_modules", "lib" ],
   "include": [ "bin", "src", "test", "*.ts", "*.js" ]
 }
