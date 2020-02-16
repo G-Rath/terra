@@ -59,6 +59,7 @@
     "resetMocks": true,
     "restoreMocks": true,
     "setupFilesAfterEnv": [
+      "./test/setupOClifEnv.ts",
       "./test/setupExpectEachTestHasAssertions.ts",
       "./test/setupAwsSdkMock.ts",
       "./test/matchers/index.ts"
