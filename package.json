@@ -78,6 +78,7 @@
     "@oclif/plugin-autocomplete": "^0.1.5",
     "@oclif/plugin-help": "^2.2.3",
     "aws-sdk": "^2.624.0",
+    "disparity": "^3.0.0",
     "indent-string": "^4.0.0",
     "uuid": "^3.4.0"
   },
@@ -100,6 +101,7 @@
     "jest": "^25.1.0",
     "jest-circus": "^25.1.0",
     "lint-staged": "^10.0.7",
+    "memfs": "^3.1.1",
     "prettier": "^1.19.1",
     "ts-jest": "^25.2.1",
     "ts-nameof": "^4.2.2",
@@ -107,7 +109,8 @@
     "ts-transform-paths": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
     "ttypescript": "^1.5.10",
-    "typescript": "^3.8.2"
+    "typescript": "^3.8.2",
+    "unionfs": "^4.3.2"
   },
   "oclif": {
     "commands": "./lib/commands",
