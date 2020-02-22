@@ -1,13 +1,12 @@
-.idea/
-.vscode/
-.terraform/
-coverage/
-node_modules/
-recordings/
-scrap/
-dist/
-lib/
-lib
+/.idea/
+/.vscode/
+/.terraform/
+/.github/
+/coverage/
+/node_modules/
+/recordings/
+/scrap/
+/lib
 
 .eslintcache
 pids
@@ -15,6 +14,7 @@ pids
 *.swp
 *.seed
 *.pid.lock
+*.tsbuildinfo
 .env
 .envrc
-
+.DS_STORE
