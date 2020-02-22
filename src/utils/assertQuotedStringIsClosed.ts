@@ -3,7 +3,7 @@
  * if it starts with an opening string quote.
  */
 export const assertQuotedStringIsClosed = (str: string): void => {
-  const quote = str[0];
+  const [quote] = str;
 
   if (
     (quote === "'" || quote === '"') &&
