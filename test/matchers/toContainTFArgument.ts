@@ -69,7 +69,7 @@ export const toContainTFArgument: jest.CustomMatcher = function<
 
   return {
     pass,
-    message: () => {
+    message: (): string => {
       const labelExpected = 'Expected identifier';
       const labelReceived = 'Received body';
       const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);

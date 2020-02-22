@@ -50,7 +50,7 @@ const toContainTFBlockWithBody: jest.CustomMatcher = function(
 
     return {
       pass,
-      message: () => {
+      message: (): string => {
         const labelExpected = 'Expected blockType';
         const labelReceived = 'Received body';
         const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
@@ -77,7 +77,7 @@ const toContainTFBlockWithBody: jest.CustomMatcher = function(
 
   return {
     pass,
-    message: () =>
+    message: (): string =>
       [
         matcherHint,
         '',

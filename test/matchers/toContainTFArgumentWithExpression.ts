@@ -104,7 +104,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
 
     return {
       pass,
-      message: () => {
+      message: (): string => {
         const labelExpected = 'Expected identifier';
         const labelReceived = 'Received body';
         const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
@@ -129,7 +129,7 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
 
   return {
     pass: this.equals(expressionExpected, expressionReceived),
-    message: () => {
+    message: (): string => {
       const labelExpected = 'Expected expression';
       const labelReceived = 'Received expression';
       const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);

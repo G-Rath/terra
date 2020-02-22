@@ -41,7 +41,7 @@ const toBeTFBlockWithLabel: jest.CustomMatcher = function(
   if (block.labels.length < position + 1) {
     return {
       pass: isNot,
-      message: () => {
+      message: (): string => {
         const labelExpected = 'Expected';
         const labelReceived = 'Received';
         const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
@@ -65,7 +65,7 @@ const toBeTFBlockWithLabel: jest.CustomMatcher = function(
 
   return {
     pass: this.equals(expectedLabel, receivedLabel),
-    message: () => {
+    message: (): string => {
       const labelExpected = 'Expected label';
       const labelReceived = 'Received label';
       const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);

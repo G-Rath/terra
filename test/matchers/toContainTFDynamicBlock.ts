@@ -47,7 +47,7 @@ const toContainTFDynamicBlock: jest.CustomMatcher = function(
 
   return {
     pass,
-    message: () => {
+    message: (): string => {
       const labelExpected = 'Expected name';
       const labelReceived = 'Received body';
       const printLabel = utils.getLabelPrinter(labelExpected, labelReceived);
