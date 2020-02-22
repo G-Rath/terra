@@ -1,4 +1,4 @@
-import AwsRoute53Zone from '@src/commands/aws_route53_zone';
+import { AwsRoute53Zone } from '@src/commands';
 import { makeTFResourceBlock } from '@src/makers';
 import { nadoRoute53Zone } from '@src/nados';
 import { AwsResourceType } from '@src/utils';

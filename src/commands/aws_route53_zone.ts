@@ -4,7 +4,7 @@ import { nadoRoute53Zone } from '@src/nados';
 import { TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
-export default class AwsRoute53Zone extends Command {
+export class AwsRoute53Zone extends Command {
   public static description =
     'Generates Terraform configuration for a Route53 Zone';
 

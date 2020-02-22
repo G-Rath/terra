@@ -1,4 +1,4 @@
-import HelloWorld from '@src/commands/hello_world';
+import { HelloWorld } from '@src/commands';
 
 describe('hello_world', () => {
   let stdoutSpy = jest.spyOn(process.stdout, 'write');

@@ -1,6 +1,6 @@
 import { Command, flags } from '@oclif/command';
 
-export default class HelloWorld extends Command {
+export class HelloWorld extends Command {
   public static description = 'Says hello to the world';
 
   public static examples = [
