@@ -9,23 +9,20 @@ import { TFLiteralExpression, TFNodeType } from '@src/types';
 export const printTFLiteralExpression = (
   literal: TFLiteralExpression
 ): string => {
-  if (literal.type === TFNodeType.Simple) {
-    return printTFSimpleLiteral(literal);
+  switch (literal.type) {
+    case TFNodeType.Simple:
+      return printTFSimpleLiteral(literal);
+    case TFNodeType.List:
+      return printTFListExpression(literal);
+    case TFNodeType.Map:
+      return printTFMapExpression(literal);
+    case TFNodeType.Function:
+      return printTFFunctionCall(literal);
+
+    default: {
+      const { type } = literal as { type: string };
+
+      throw new Error(`structural error - cannot print type "${type}"`);
+    }
   }
-
-  if (literal.type === TFNodeType.List) {
-    return printTFListExpression(literal);
-  }
-
-  const type = literal.type;
-
-  if (literal.type === TFNodeType.Map) {
-    return printTFMapExpression(literal);
-  }
-
-  if (literal.type === TFNodeType.Function) {
-    return printTFFunctionCall(literal);
-  }
-
-  throw new Error(`structural error - cannot print type "${type}"`);
 };
