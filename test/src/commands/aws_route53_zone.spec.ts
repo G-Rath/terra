@@ -12,7 +12,7 @@ const nadoRoute53ZoneMock = mocked(nadoRoute53Zone);
 describe('aws_route53_zone', () => {
   const zoneId = '/HostedZone/123456789';
 
-  let consoleLogSpy = jest.spyOn(console, 'log');
+  let consoleLogSpy: jest.SpiedFunction<typeof console.log>;
 
   beforeEach(() => (consoleLogSpy = jest.spyOn(console, 'log')));
   beforeEach(() =>

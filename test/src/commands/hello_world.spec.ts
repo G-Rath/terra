@@ -1,7 +1,7 @@
 import { HelloWorld } from '@src/commands';
 
 describe('hello_world', () => {
-  let stdoutSpy = jest.spyOn(process.stdout, 'write');
+  let stdoutSpy: jest.SpiedFunction<typeof process.stdout.write>;
 
   beforeEach(() => (stdoutSpy = jest.spyOn(process.stdout, 'write')));
 
