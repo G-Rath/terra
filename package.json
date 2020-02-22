@@ -34,7 +34,8 @@
     "cli": "node -r tsconfig-paths/register bin/terra",
     "lint": "eslint . --ignore-pattern '!.eslintrc.js' --ext js,ts",
     "prepack": "npm run build",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "tools:generate-barrels": "ts-node -T tools/generate-barrels.ts"
   },
   "jest": {
     "globals": {
