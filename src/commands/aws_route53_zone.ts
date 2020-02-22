@@ -33,6 +33,10 @@ hello world from ./src/hello.ts!
       flags: { greedy }
     } = this.parse(AwsRoute53Zone);
 
+    if (typeof zoneId !== 'string') {
+      throw new Error(`zonId must be a string! Got ${typeof zoneId} instead`);
+    }
+
     console.log(
       `Preparing to port "${zoneId}", with${greedy ? '' : 'out'} records`
     );
