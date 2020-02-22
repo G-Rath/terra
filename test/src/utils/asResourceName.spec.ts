@@ -21,6 +21,30 @@ describe('asResourceName', () => {
     });
   });
 
+  describe('when str contains @s', () => {
+    it('replaces them with _at_', () => {
+      expect(asResourceName('person@company')).toBe('person_at_company');
+    });
+  });
+
+  describe('when str contains =s', () => {
+    it('replaces them with _eq_', () => {
+      expect(asResourceName('a=b')).toBe('a_eq_b');
+    });
+  });
+
+  describe('when str contains +s', () => {
+    it('replaces them with _plus_', () => {
+      expect(asResourceName('a+b')).toBe('a_plus_b');
+    });
+  });
+
+  describe('when str contains /s', () => {
+    it('replaces them with _slash_', () => {
+      expect(asResourceName('a/b')).toBe('a_slash_b');
+    });
+  });
+
   describe('when str contains "*"', () => {
     it('replaces them with "_wild_"', () => {
       expect(asResourceName('*_imnotcrazy_info')).toBe(
