@@ -15,6 +15,7 @@ export const mockAwsClientEndpoints = <
   client: TClient,
   mockedEndpoints: TMockedEndpoints
 ): TMockedEndpoints => {
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
   const clientProxy = new Proxy(class {}, {
     construct(): object {
       return clientProxy;

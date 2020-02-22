@@ -19,6 +19,7 @@ hello world from ./src/hello.ts!
 
   public static args = [];
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   public async run(): Promise<void> {
     const {
       flags: { name }

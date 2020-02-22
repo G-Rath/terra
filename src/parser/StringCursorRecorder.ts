@@ -129,6 +129,7 @@ export class StringCursorRecorder {
       stoppedAt: Number(process.hrtime.bigint())
     };
 
+    // eslint-disable-next-line no-sync
     fs.writeFileSync(
       path.join(filePath, `${fileName}.json`),
       JSON.stringify(recording, null, 2)

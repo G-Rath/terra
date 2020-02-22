@@ -191,6 +191,7 @@ const commaSeparatedItems = [
 ];
 
 // disabled for coverage & such - this is a catch grab for shotgun testing
+// eslint-disable-next-line jest/no-disabled-tests
 describe.skip('what goes in matches what comes out', () => {
   describe('lists', () => {
     parsePrintAndExpectNoChange(

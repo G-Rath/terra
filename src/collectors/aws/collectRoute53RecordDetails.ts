@@ -39,6 +39,7 @@ export const collectRoute53RecordDetails = async ({
   let response: Route53.ListResourceRecordSetsResponse | undefined;
 
   do {
+    // eslint-disable-next-line no-await-in-loop
     response = await route53
       .listResourceRecordSets({
         HostedZoneId: zoneId,

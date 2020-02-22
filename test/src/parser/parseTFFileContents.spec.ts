@@ -1,3 +1,4 @@
+/* eslint-disable no-sync */
 import * as parser from '@src/parser';
 import { parseTFFileContents } from '@src/parser';
 import { TFFileContents } from '@src/types';
