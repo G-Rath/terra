@@ -12,11 +12,6 @@
   },
   "license": "ISC",
   "author": "",
-  "files": [
-    "/oclif.manifest.json",
-    "/bin",
-    "/lib"
-  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "bin": {
@@ -25,6 +20,11 @@
   "directories": {
     "test": "test"
   },
+  "files": [
+    "/oclif.manifest.json",
+    "/bin",
+    "/lib"
+  ],
   "scripts": {
     "build": "npm run build-codebase && npm run build-manifest",
     "build-codebase": "npm run clean && ttsc -b tsconfig.build.json",
