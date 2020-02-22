@@ -12,6 +12,7 @@ hello world from ./src/hello.ts!
   public static flags = {
     name: flags.string({
       description: 'the name of the file to create',
+      default: 'world',
       char: 'n'
     })
   };
@@ -19,9 +20,9 @@ hello world from ./src/hello.ts!
   public static args = [];
 
   public async run(): Promise<void> {
-    const { flags } = this.parse(HelloWorld);
-
-    const name = flags.name ?? 'world';
+    const {
+      flags: { name }
+    } = this.parse(HelloWorld);
 
     this.log(`hello ${name} from ${__dirname}`);
   }
