@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import * as Parser from '@oclif/parser';
 import { nadoRoute53Zone } from '@src/nados';
-import { TFNodeType, TFResourceBlock } from '@src/types';
+import { TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 export default class AwsRoute53Zone extends Command {
@@ -44,7 +44,6 @@ hello world from ./src/hello.ts!
 
     const zoneResource = tfRoot.find(
       (block): block is TFResourceBlock =>
-        block.type === TFNodeType.Block &&
         block.blockType === 'resource' &&
         block.labels[0].value === AwsResourceType.AWS_ROUTE53_ZONE
     );
