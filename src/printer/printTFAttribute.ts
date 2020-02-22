@@ -3,7 +3,7 @@ import {
   printTFLabel,
   printTFLiteralExpression
 } from '@src/printer';
-import { TFNodeType, TFAttribute } from '@src/types';
+import { TFAttribute, TFNodeType } from '@src/types';
 
 export const printTFAttribute = (attribute: TFAttribute): string =>
   [

@@ -5,7 +5,7 @@ import {
   makeTFSimpleLiteral
 } from '@src/makers';
 import * as makers from '@src/makers';
-import { TFAttribute, TFNodeType, TFAttributeKey } from '@src/types';
+import { TFAttribute, TFAttributeKey, TFNodeType } from '@src/types';
 
 describe('makeTFAttribute', () => {
   it('makes a TFAttribute', () => {

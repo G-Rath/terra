@@ -12,8 +12,8 @@ import {
   TFResourceBlock
 } from '@src/types';
 import {
-  asResourceName,
   AwsResourceType,
+  asResourceName,
   normaliseRoute53Name
 } from '@src/utils';
 import { Route53 } from 'aws-sdk';

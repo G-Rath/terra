@@ -1,5 +1,5 @@
 import { makeTFIdentifier } from '@src/makers';
-import { parseTFIdentifier, StringCursor } from '@src/parser';
+import { StringCursor, parseTFIdentifier } from '@src/parser';
 import { TFIdentifier } from '@src/types';
 
 describe('parseTFIdentifier', () => {

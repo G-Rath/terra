@@ -1,8 +1,8 @@
 import { makeTFArgument } from '@src/makers';
 import {
+  StringCursor,
   parseTFExpression,
-  parseTFIdentifier,
-  StringCursor
+  parseTFIdentifier
 } from '@src/parser';
 import { TFArgument } from '@src/types';
 

@@ -1,5 +1,5 @@
 import { makeTFAttributeKey } from '@src/makers';
-import { TFIdentifier, TFLabel, TFNodeType, TFAttributeKey } from '@src/types';
+import { TFAttributeKey, TFIdentifier, TFLabel, TFNodeType } from '@src/types';
 
 describe('makeTFAttributeKey', () => {
   describe('when the key is in quotes', () => {

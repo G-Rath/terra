@@ -1,15 +1,15 @@
 import {
-  makeTFListExpression,
   makeTFAttributeKey,
+  makeTFListExpression,
   makeTFSimpleLiteral
 } from '@src/makers';
 import {
+  TFAttribute,
+  TFAttributeValue,
   TFIdentifier,
   TFLabel,
   TFLiteralExpression,
-  TFNodeType,
-  TFAttribute,
-  TFAttributeValue
+  TFNodeType
 } from '@src/types';
 
 const buildValue = (

@@ -1,6 +1,6 @@
 import {
-  makeTFIdentifier,
   makeTFAttribute,
+  makeTFIdentifier,
   makeTFSimpleLiteral
 } from '@src/makers';
 import { printTFAttribute } from '@src/printer';

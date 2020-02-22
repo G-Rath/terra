@@ -1,4 +1,4 @@
-import { printTFLabel, printTFBlockBody } from '@src/printer';
+import { printTFBlockBody, printTFLabel } from '@src/printer';
 import { TFBlock } from '@src/types';
 
 export const printTFBlock = (block: TFBlock): string =>

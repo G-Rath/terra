@@ -1,4 +1,4 @@
-import { TFMapExpression, TFNodeType, TFAttribute } from '@src/types';
+import { TFAttribute, TFMapExpression, TFNodeType } from '@src/types';
 
 export const makeTFMapExpression = <TKey extends string = string>(
   attributes: Array<TFAttribute<TKey>>,

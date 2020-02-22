@@ -1,5 +1,5 @@
 import * as parser from '@src/parser';
-import { parseTFArgument, StringCursor } from '@src/parser';
+import { StringCursor, parseTFArgument } from '@src/parser';
 
 describe('parseTFArgument', () => {
   it('collects leading inner text', () => {

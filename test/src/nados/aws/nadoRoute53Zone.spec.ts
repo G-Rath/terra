@@ -1,7 +1,7 @@
 import {
+  Route53ZoneDetails,
   buildRoute53RecordResource,
-  buildRoute53ZoneResource,
-  Route53ZoneDetails
+  buildRoute53ZoneResource
 } from '@src/builders';
 import {
   collectRoute53RecordDetails,

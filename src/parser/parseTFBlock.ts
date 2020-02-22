@@ -1,5 +1,5 @@
 import { makeTFBlock } from '@src/makers';
-import { parseTFBlockBody, parseTFLabel, StringCursor } from '@src/parser';
+import { StringCursor, parseTFBlockBody, parseTFLabel } from '@src/parser';
 import { TFBlock, TFLabel } from '@src/types';
 
 export const parseTFBlock = (cursor: StringCursor): TFBlock => {

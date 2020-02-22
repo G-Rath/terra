@@ -1,5 +1,5 @@
 import { makeTFLabel } from '@src/makers';
-import { parseTFLabel, StringCursor } from '@src/parser';
+import { StringCursor, parseTFLabel } from '@src/parser';
 import { TFLabel } from '@src/types';
 
 describe('parseTFLabel', () => {

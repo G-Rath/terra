@@ -1,8 +1,8 @@
-import { makeTFLabel, makeTFAttribute } from '@src/makers';
+import { makeTFAttribute, makeTFLabel } from '@src/makers';
 import {
+  StringCursor,
   parseTFExpression,
-  parseTFIdentifier,
-  StringCursor
+  parseTFIdentifier
 } from '@src/parser';
 import { TFAttribute, TFAttributeKey } from '@src/types';
 

@@ -1,5 +1,5 @@
 import { makeTFMapExpression } from '@src/makers';
-import { parseTFAttribute, StringCursor } from '@src/parser';
+import { StringCursor, parseTFAttribute } from '@src/parser';
 import { TFAttribute, TFMapExpression } from '@src/types';
 
 export const parseTFMapExpression = (cursor: StringCursor): TFMapExpression => {
