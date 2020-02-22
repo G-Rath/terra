@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "ES2019",
     "module": "commonjs",
     "moduleResolution": "node",
-    "lib": ["es2020"],
+    "lib": [ "ES2020" ],
     "rootDir": "./",
     "baseUrl": "./",
     "outDir": "lib",
@@ -11,16 +11,11 @@
       "@src/*": [ "./src/*" ],
       "@test/*": [ "./test/*" ]
     },
-    "allowJs": true,
     "strict": true,
     "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
     "noEmitOnError": true,
     "pretty": true,
     "sourceMap": true,
