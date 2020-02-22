@@ -3,12 +3,11 @@ import {
   TFBlockBody,
   TFBlockBodyBody,
   TFDynamicBlock,
-  TFLabel,
   TFNodeType
 } from '@src/types';
 
 export const makeTFDynamicBlock = <TIdentifier extends string = string>(
-  name: TFLabel | string,
+  name: string,
   body:
     | TFBlockBody<TIdentifier | 'content' | 'for_each' | 'iterator'>
     | TFBlockBodyBody<TIdentifier | 'content' | 'for_each' | 'iterator'>,
@@ -16,7 +15,7 @@ export const makeTFDynamicBlock = <TIdentifier extends string = string>(
 ): TFDynamicBlock<TIdentifier | 'content' | 'for_each' | 'iterator'> => ({
   type: TFNodeType.Block,
   blockType: 'dynamic',
-  labels: [typeof name === 'string' ? makeTFLabel(name) : name],
+  labels: [makeTFLabel(name)],
   body: Array.isArray(body) ? makeTFBlockBody(body) : body,
   surroundingText: {
     leadingOuterText: '',
