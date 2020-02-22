@@ -165,4 +165,12 @@ describe('printTFLiteralExpression', () => {
       );
     });
   });
+
+  describe('when the type is somehow not supported', () => {
+    it('throws', () => {
+      expect(() =>
+        printTFLiteralExpression(JSON.parse('{ "type": "NOT_VALID" }'))
+      ).toThrow('structural error - cannot print type "NOT_VALID"');
+    });
+  });
 });
