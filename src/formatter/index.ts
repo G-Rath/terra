@@ -1,3 +1,4 @@
+export * from './discardSurroundingText';
 export * from './parseSurroundingText';
 export * from './printTokens';
 export * from './ensurers';
