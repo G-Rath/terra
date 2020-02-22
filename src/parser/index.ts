@@ -5,7 +5,6 @@ export * from './parseTFArgument';
 export * from './parseTFAttribute';
 export * from './parseTFBlockBody';
 export * from './parseTFBlock';
-export * from './parseTFFile';
 export * from './parseTFFileContents';
 export * from './parseTFFunctionCall';
 export * from './parseTFIdentifier';
