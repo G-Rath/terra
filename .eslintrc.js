@@ -13,12 +13,22 @@ module.exports = {
     'prettier',
     'eslint-comments'
   ],
-  extends: [
-    'ackama', //
-    'ackama/jest',
-    'ackama/@typescript-eslint'
+  extends: ['ackama', 'ackama/@typescript-eslint'],
+  overrides: [
+    {
+      files: ['bin/**'],
+      rules: {
+        '@typescript-eslint/no-require-imports': 'off',
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    },
+    {
+      files: ['test/**'],
+      extends: ['ackama/jest'],
+      rules: {
+        'jest/prefer-expect-assertions': 'off'
+      }
+    }
   ],
-  rules: {
-    'jest/prefer-expect-assertions': 'off'
-  }
+  rules: {}
 };
