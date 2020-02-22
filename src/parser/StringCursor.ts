@@ -145,6 +145,9 @@ export class StringCursor {
     const predicates = Array.isArray(predicate) ? predicate : [predicate];
     let collection = '';
 
+    const testAgainstPredicate = (str: string | RegExp): boolean =>
+      typeof str === 'string' ? collection.endsWith(str) : str.test(collection);
+
     do {
       if (this.isAtEnd()) {
         throw new Error(
@@ -157,13 +160,7 @@ export class StringCursor {
       }
 
       collection += this.advance();
-    } while (
-      !predicates.some(str =>
-        typeof str === 'string'
-          ? collection.endsWith(str) //
-          : str.test(collection)
-      )
-    );
+    } while (!predicates.some(testAgainstPredicate));
 
     return collection;
   }
