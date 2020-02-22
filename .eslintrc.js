@@ -8,11 +8,6 @@ module.exports = {
     sourceType: 'module'
   },
   env: { node: true },
-  plugins: [
-    '@typescript-eslint', //
-    'prettier',
-    'eslint-comments'
-  ],
   extends: ['ackama', 'ackama/@typescript-eslint'],
   overrides: [
     {
