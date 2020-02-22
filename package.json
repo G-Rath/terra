@@ -107,7 +107,7 @@
     "ts-transform-paths": "^2.0.0",
     "tsconfig-paths": "^3.9.0",
     "ttypescript": "^1.5.10",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.2"
   },
   "oclif": {
     "commands": "./lib/commands",
