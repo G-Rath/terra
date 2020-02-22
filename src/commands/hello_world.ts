@@ -22,6 +22,7 @@ hello world from ./src/hello.ts!
     const { flags } = this.parse(HelloWorld);
 
     const name = flags.name ?? 'world';
+
     this.log(`hello ${name} from ${__dirname}`);
   }
 }

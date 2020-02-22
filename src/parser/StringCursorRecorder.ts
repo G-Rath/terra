@@ -111,6 +111,7 @@ export class StringCursorRecorder {
       try {
         this.start(cursor, name, args);
         const value = method.apply(cursor, args);
+
         this.stop(cursor, 'returned', value);
 
         return value;
