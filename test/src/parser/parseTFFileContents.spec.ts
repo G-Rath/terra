@@ -1,15 +1,17 @@
-/* eslint-disable no-sync */
 import * as parser from '@src/parser';
 import { parseTFFileContents } from '@src/parser';
 import { TFFileContents } from '@src/types';
+import { cwdAsJson } from '@test/setupMockFs';
 import dedent from 'dedent';
-import * as fs from 'fs';
-import { mocked } from 'ts-jest/utils';
-
-jest.mock('fs');
-const fsMock = mocked(fs);
+import { promises as fs } from 'fs';
 
 describe('parseTFFileContents', () => {
+  beforeEach(async () => fs.mkdir('recordings'));
+  beforeEach(() => jest.spyOn(Date, 'now').mockReturnValue(1234567890));
+  beforeEach(() =>
+    jest.spyOn(JSON, 'stringify').mockReturnValue('I swear this is valid json')
+  );
+
   describe('when the contents contain nothing', () => {
     it('returns empty', () => {
       const contents = parseTFFileContents('');
@@ -240,10 +242,11 @@ describe('parseTFFileContents', () => {
         true
       );
 
-      expect(fsMock.writeFileSync).toHaveBeenCalledWith(
-        expect.stringMatching(/\.json$/u),
-        expect.any(String)
-      );
+      expect(cwdAsJson()).toMatchInlineSnapshot(`
+        Object {
+          "recordings/1234567890.json": "I swear this is valid json",
+        }
+      `);
     });
 
     it('writes recordings of errored parses to disk', () => {
@@ -263,15 +266,18 @@ describe('parseTFFileContents', () => {
         )
       ).toThrow('error!');
 
-      expect(fsMock.writeFileSync).toHaveBeenCalledWith(
-        expect.stringMatching(/\.json$/u),
-        expect.any(String)
-      );
+      expect(cwdAsJson()).toMatchInlineSnapshot(`
+        Object {
+          "recordings/1234567890.json": "I swear this is valid json",
+        }
+      `);
     });
   });
 
   describe('when the "record" parameter is "false"', () => {
     it('does not write recordings of successfully parses to disk', () => {
+      const cwdAsJsonPreviously = cwdAsJson();
+
       parseTFFileContents(
         dedent`
           # This is the hosted zone for the zone that I own
@@ -282,13 +288,15 @@ describe('parseTFFileContents', () => {
         false
       );
 
-      expect(fsMock.writeFileSync).not.toHaveBeenCalled();
+      expect(cwdAsJson()).toStrictEqual(cwdAsJsonPreviously);
     });
 
     it('does not write recordings of errored parses to disk', () => {
       jest.spyOn(parser, 'parseTFBlock').mockImplementation(() => {
         throw new Error('error!');
       });
+
+      const cwdAsJsonPreviously = cwdAsJson();
 
       expect(() =>
         parseTFFileContents(
@@ -302,7 +310,7 @@ describe('parseTFFileContents', () => {
         )
       ).toThrow('error!');
 
-      expect(fsMock.writeFileSync).not.toHaveBeenCalled();
+      expect(cwdAsJson()).toStrictEqual(cwdAsJsonPreviously);
     });
   });
 });

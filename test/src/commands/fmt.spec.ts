@@ -5,13 +5,8 @@ import {
   discardSurroundingText
 } from '@src/formatter';
 import * as printers from '@src/printer';
-import { DirectoryJSON, vol } from 'memfs';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports,@typescript-eslint/no-var-requires
-jest.mock('fs', require('@test/mockFsFactory'));
-
-const cwdAsJson = (): DirectoryJSON =>
-  vol.toJSON(process.cwd(), undefined, true);
+import { cwdAsJson } from '@test/setupMockFs';
+import { vol } from 'memfs';
 
 describe('fmt', () => {
   const mockPrintContents = 'hello world';
