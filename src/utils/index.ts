@@ -1,3 +1,4 @@
+export * from './collectAllFromPaginatedAwsEndpoint';
 export * from './assertQuotedStringIsClosed';
 export * from './ensureStringEndsWith';
 export * from './normaliseRoute53Name';
