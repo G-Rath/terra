@@ -35,6 +35,7 @@
     "lint": "eslint . --ignore-pattern '!.eslintrc.js' --ext js,ts",
     "prepack": "npm run build",
     "test": "jest --coverage",
+    "tools:generate-aws-port-command": "ts-node -T tools/generate-aws-port-command.ts",
     "tools:generate-barrels": "ts-node -T tools/generate-barrels.ts"
   },
   "jest": {
