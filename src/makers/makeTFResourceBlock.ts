@@ -2,7 +2,8 @@ import {
   TFEC2EIPResource,
   TFRoute53RecordResource,
   TFRoute53ZoneResource,
-  TFS3BucketResource
+  TFS3BucketResource,
+  TFSecretsManagerSecretResource
 } from '@src/builders';
 import { makeTFBlockBody, makeTFLabel } from '@src/makers';
 import {
@@ -18,6 +19,7 @@ interface ResourceIdentifierMap {
   [AwsResourceType.AWS_ROUTE53_RECORD]: keyof TFRoute53RecordResource;
   [AwsResourceType.AWS_ROUTE53_ZONE]: keyof TFRoute53ZoneResource;
   [AwsResourceType.AWS_S3_BUCKET]: keyof TFS3BucketResource;
+  [AwsResourceType.AWS_SECRETSMANAGER_SECRET]: keyof TFSecretsManagerSecretResource;
   [AwsResourceType.AWS_EIP]: keyof TFEC2EIPResource;
   [k: string]: string;
 }
