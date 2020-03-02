@@ -1,6 +1,7 @@
 import {
   TFEC2EIPResource,
   TFIAMGroupResource,
+  TFIAMUserResource,
   TFRoute53RecordResource,
   TFRoute53ZoneResource,
   TFS3BucketResource,
@@ -18,6 +19,7 @@ import { AwsResourceType } from '@src/utils';
 
 interface ResourceIdentifierMap {
   [AwsResourceType.AWS_IAM_GROUP]: keyof TFIAMGroupResource;
+  [AwsResourceType.AWS_IAM_USER]: keyof TFIAMUserResource;
   [AwsResourceType.AWS_ROUTE53_RECORD]: keyof TFRoute53RecordResource;
   [AwsResourceType.AWS_ROUTE53_ZONE]: keyof TFRoute53ZoneResource;
   [AwsResourceType.AWS_S3_BUCKET]: keyof TFS3BucketResource;

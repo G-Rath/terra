@@ -139,7 +139,14 @@ export type TFBlocks = TFBlock[];
 export interface TFBlock<TIdentifier extends string = string>
   extends TFBaseNode {
   type: TFNodeType.Block;
-  blockType: string;
+  blockType:
+    | 'resource'
+    | 'data'
+    | 'variable'
+    | 'locals'
+    | 'output'
+    | 'terraform'
+    | string;
   labels: TFLabel[];
   body: TFBlockBody<TIdentifier>;
   surroundingText: SurroundingOuterText;
