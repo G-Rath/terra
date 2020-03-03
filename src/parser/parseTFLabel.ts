@@ -16,6 +16,8 @@ export const parseTFLabel = (cursor: StringCursor): TFLabel => {
     '/*', //
     '\n',
     '"',
+    '[',
+    '{',
     label.startsWith('"') ? '"' : ' '
   ]);
 

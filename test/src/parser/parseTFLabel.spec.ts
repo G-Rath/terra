@@ -29,6 +29,18 @@ describe('parseTFLabel', () => {
         expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
       });
 
+      it('terminates on opening brace', () => {
+        const label = parseTFLabel(new StringCursor('hello{'));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
+      });
+
+      it('terminates on opening square bracket', () => {
+        const label = parseTFLabel(new StringCursor('hello['));
+
+        expect(label).toStrictEqual<TFLabel>(makeTFLabel('hello'));
+      });
+
       it('terminates on newline', () => {
         const label = parseTFLabel(new StringCursor('hello\n'));
 
