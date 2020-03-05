@@ -5,7 +5,19 @@ import {
   printTokens,
   walkNodes
 } from '@src/formatter';
-import { TFBlock } from '@src/types';
+import {
+  SurroundingInnerText,
+  SurroundingOuterText,
+  TFBlock
+} from '@src/types';
+
+interface NodeWithOuterText {
+  surroundingText: SurroundingOuterText;
+}
+
+interface NodeWithInnerText {
+  surroundingText: SurroundingInnerText;
+}
 
 export type Ensurer = (blocks: TFBlock[]) => TFBlock[];
 
@@ -90,8 +102,23 @@ export const ensureClosingBraceOnNewline: Ensurer = blocks => {
   });
 };
 
+export const ensureSpaceBeforeOpeningBrace: Ensurer = blocks => {
+  const formatLeadingOuterText = (node: NodeWithOuterText): void => {
+    node.surroundingText.leadingOuterText = ensureTextStartsWithTokens(
+      node.surroundingText.leadingOuterText,
+      [{ type: TokenType.Whitespace, content: ' ' }]
+    );
+  };
+
+  return walkNodes(blocks, {
+    Body: formatLeadingOuterText,
+    Map: formatLeadingOuterText
+  });
+};
+
 export const ensurers: readonly Ensurer[] = Object.freeze([
   ensureTopLevelBlocksAreSeparated,
+  ensureSpaceBeforeOpeningBrace,
   ensureLabelsHaveLeadingSpace,
   ensureClosingBraceOnNewline
 ]);
