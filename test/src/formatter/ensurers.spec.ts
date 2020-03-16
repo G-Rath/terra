@@ -10,8 +10,16 @@ import { parseTFFileContents } from '@src/parser';
 import { printTFBlocks } from '@src/printer';
 import dedent from 'dedent';
 
-const makeFormatter = (ensurer: Ensurer) => (contents: string): string =>
-  printTFBlocks(ensurer(parseTFFileContents(dedent(contents)).blocks));
+const makeFormatter = (ensurer: Ensurer) => (
+  contents: string | TemplateStringsArray
+): string => {
+  const actualContents =
+    typeof contents === 'string' ? contents : contents.raw.join('');
+
+  return printTFBlocks(
+    ensurer(parseTFFileContents(dedent(actualContents)).blocks)
+  );
+};
 
 describe('ensureTopLevelBlocksAreSeparated', () => {
   describe('when there are no blocks', () => {
