@@ -1,5 +1,6 @@
 import {
   printTFFunctionCall,
+  printTFHeredocLiteral,
   printTFListExpression,
   printTFMapExpression,
   printTFSimpleLiteral
@@ -18,6 +19,8 @@ export const printTFLiteralExpression = (
       return printTFMapExpression(literal);
     case TFNodeType.Function:
       return printTFFunctionCall(literal);
+    case TFNodeType.Heredoc:
+      return printTFHeredocLiteral(literal);
 
     default: {
       const { type } = literal as { type: string };

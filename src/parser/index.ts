@@ -1,3 +1,4 @@
+export * from './parseTFHeredocLiteral';
 export * from './parseTFListExpression';
 export * from './StringCursorRecorder';
 export * from './parseTFMapExpression';

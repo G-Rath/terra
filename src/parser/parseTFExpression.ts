@@ -2,6 +2,7 @@ import { makeTFSimpleLiteral } from '@src/makers';
 import {
   StringCursor,
   parseTFFunctionCall,
+  parseTFHeredocLiteral,
   parseTFListExpression,
   parseTFMapExpression
 } from '@src/parser';
@@ -20,7 +21,7 @@ export const parseTFExpression = (
 ): TFLiteralExpression => {
   // the text leading up to the expression; the last char is the start of the expression
   const leadingOuterText = cursor
-    .collectUntilWithComments(/[[{"\w]/u)
+    .collectUntilWithComments(/[[<{"\w]/u)
     .slice(0, -1);
 
   cursor.rewind(1);
@@ -29,6 +30,12 @@ export const parseTFExpression = (
     cursor.rewind(leadingOuterText.length);
 
     return parseTFListExpression(cursor);
+  }
+
+  if (cursor.char === '<') {
+    cursor.rewind(leadingOuterText.length);
+
+    return parseTFHeredocLiteral(cursor);
   }
 
   if (cursor.char === '{') {

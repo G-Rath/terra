@@ -1,7 +1,8 @@
 import { makeTFSimpleLiteral } from '@src/makers';
 import * as parser from '@src/parser';
 import { StringCursor, parseTFExpression } from '@src/parser';
-import { TFSimpleLiteral } from '@src/types';
+import { TFHeredocLiteral, TFNodeType, TFSimpleLiteral } from '@src/types';
+import dedent from 'dedent';
 
 describe('parseTFExpression', () => {
   describe('leading text', () => {
@@ -104,6 +105,33 @@ describe('parseTFExpression', () => {
         expect(
           parseTFExpression(new StringCursor('1.23456789 '))
         ).toStrictEqual<TFSimpleLiteral>(makeTFSimpleLiteral('1.23456789'));
+      });
+    });
+
+    describe('when the expression is a heredoc literal', () => {
+      it('parses the expression', () => {
+        expect(
+          parseTFExpression(
+            new StringCursor(dedent`
+              <<EOF
+                hello
+                  world
+                    EOF /* not valid, but we parse it anyway */
+              \n
+            `)
+          )
+        ).toStrictEqual<TFHeredocLiteral>({
+          type: TFNodeType.Heredoc,
+          delimiter: 'EOF',
+          content: '  hello\n    world',
+          indented: false,
+          surroundingText: {
+            leadingOuterText: '',
+            leadingInnerText: '\n',
+            trailingInnerText: '\n      ',
+            trailingOuterText: ' /* not valid, but we parse it anyway */\n'
+          }
+        });
       });
     });
 

@@ -10,7 +10,8 @@ export enum TFNodeType {
   Simple = 'Simple',
   Block = 'Block',
   Label = 'Label',
-  Map = 'Map'
+  Map = 'Map',
+  Heredoc = 'Heredoc'
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,6 +28,14 @@ export interface TFSimpleLiteral extends TFBaseNode {
   //   | boolean
   //   | null;
   surroundingText: SurroundingOuterText;
+}
+
+export interface TFHeredocLiteral extends TFBaseNode {
+  type: TFNodeType.Heredoc;
+  delimiter: string;
+  content: string;
+  indented: boolean;
+  surroundingText: SurroundingText;
 }
 
 export interface TFAttribute<TKey extends string = string> extends TFBaseNode {
@@ -85,7 +94,8 @@ export type TFLiteralExpression =
   | TFSimpleLiteral
   | TFFunctionCall
   | TFListExpression
-  | TFMapExpression;
+  | TFMapExpression
+  | TFHeredocLiteral;
 
 export interface TFFunctionCall extends TFBaseNode {
   type: TFNodeType.Function;

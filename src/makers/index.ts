@@ -1,3 +1,4 @@
+export * from './makeTFHeredocLiteral';
 export * from './makeTFListExpression';
 export * from './makeTFStringArgument';
 export * from './makeTFMapExpression';

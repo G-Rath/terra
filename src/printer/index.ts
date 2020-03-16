@@ -1,4 +1,5 @@
 export * from './printTFLiteralExpression';
+export * from './printTFHeredocLiteral';
 export * from './printTFListExpression';
 export * from './printTFMapExpression';
 export * from './printTFSimpleLiteral';

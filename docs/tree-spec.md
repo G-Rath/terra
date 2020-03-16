@@ -35,3 +35,41 @@ of that surrounding text unless otherwise noted.
 
 This is also representative of the fact that the start of the majority of
 surrounding text is denoted by a Token, most commonly a space or newline.
+
+## HeredocLiteral
+
+[docs](https://www.terraform.io/docs/configuration/expressions.html#string-literals)
+
+```
+interface HeredocLiteral <: Expression {
+  type: 'Heredoc';
+  delimiter: string;
+  content: string;
+  indented: boolean;
+  surroundingText: {
+    leadingOuterText: string;
+    leadingInnerText: string;
+    trailingInnerText: string;
+    trailingOuterText: string;
+  };
+}
+```
+
+#### Structure
+
+```
+<leadingOuterText> <<|delimiter| <leadingInnerText>
+|content|
+<trailingInnerText> |delimiter| <trailingOuterText>
+```
+
+Notes:
+
+Parsing of `content` occurs after the _first_ occurrence of the `delimiter`, and
+continues until the next occurrence of the `delimiter`.
+
+It is semantically invalid for `leadingInnerText` to contain any tokens
+(including whitespace), and will trigger a syntax error in Terraform if printed.
+
+It is semantically invalid for `trailingInnerText` to contain any tokens other
+than whitespace, and will trigger a syntax error in Terraform if printed.

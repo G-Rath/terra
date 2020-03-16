@@ -4,6 +4,7 @@ import {
   TFBlock,
   TFBlockBody,
   TFFunctionCall,
+  TFHeredocLiteral,
   TFIdentifier,
   TFLabel,
   TFListExpression,
@@ -21,7 +22,8 @@ export type TFNode =
   | TFSimpleLiteral
   | TFBlock
   | TFLabel
-  | TFMapExpression;
+  | TFMapExpression
+  | TFHeredocLiteral;
 
 // interface TFNodeMap {
 //   Body: TFBlockBody;
@@ -58,6 +60,7 @@ interface NodeListeners {
   Block?: TFNodeListener<TFBlock>;
   Label?: TFNodeListener<TFLabel>;
   Map?: TFNodeListener<TFMapExpression>;
+  Heredoc?: TFNodeListener<TFHeredocLiteral>;
 }
 
 // type PickTFNode<T extends TFNodeType> = TFNode extends infer TNode
