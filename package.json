@@ -41,6 +41,7 @@
   "jest": {
     "globals": {
       "ts-jest": {
+        "isolatedModules": true,
         "astTransformers": [
           "ts-nameof"
         ]
