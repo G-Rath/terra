@@ -40,7 +40,7 @@ export type TFNode =
 
 type TFNodeListenerFn<T extends TFNode = never> = (node: T) => void;
 
-interface TFNodeListenerPair<T extends TFNode = never> {
+export interface TFNodeListenerPair<T extends TFNode = never> {
   enter?: TFNodeListenerFn<T>;
   exit?: TFNodeListenerFn<T>;
 }
