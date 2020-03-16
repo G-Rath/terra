@@ -40,6 +40,9 @@
     "tools:generate-barrels": "ts-node -T tools/generate-barrels.ts"
   },
   "jest": {
+    "coveragePathIgnorePatterns": [
+      "index.ts"
+    ],
     "globals": {
       "ts-jest": {
         "isolatedModules": true,
