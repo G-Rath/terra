@@ -82,6 +82,27 @@ export const ensureLabelsHaveLeadingSpace: Ensurer = blocks =>
     }
   });
 
+export const ensureOneArgumentPerLine: Ensurer = blocks => {
+  const ensureNodeSurroundingTextHasNewline = ({
+    surroundingText
+  }: NodeWithOuterText): void => {
+    const parsedText = parseSurroundingText(surroundingText.leadingOuterText);
+    const firstCommentTokenIndex = parsedText.findIndex(
+      token => token.type === TokenType.Comment
+    );
+
+    parsedText.splice(firstCommentTokenIndex, 0, { type: TokenType.Newline });
+
+    surroundingText.leadingOuterText = printTokens(parsedText);
+  };
+
+  return walkNodes(blocks, {
+    Attribute: node => ensureNodeSurroundingTextHasNewline(node.key),
+    Argument: node => ensureNodeSurroundingTextHasNewline(node.identifier),
+    Block: ensureNodeSurroundingTextHasNewline
+  });
+};
+
 export const ensureClosingBraceOnNewline: Ensurer = blocks => {
   return walkNodes(blocks, {
     Body: (node): void => {
@@ -365,5 +386,6 @@ export const ensurers: readonly Ensurer[] = Object.freeze([
   ensureSpaceBeforeOpeningBrace,
   ensureLabelsHaveLeadingSpace,
   ensureClosingBraceOnNewline,
+  ensureOneArgumentPerLine,
   ensureIndentation
 ]);
