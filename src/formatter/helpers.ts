@@ -1,4 +1,38 @@
-import { Token, parseSurroundingText, printTokens } from '@src/formatter';
+import {
+  Token,
+  ensureClosingBraceOnNewline,
+  ensureIndentation,
+  ensureLabelsHaveLeadingSpace,
+  ensureNoSpacesAfterFunctionName,
+  ensureSpaceBeforeOpeningBrace,
+  ensureTopLevelBlocksAreSeparated,
+  parseSurroundingText,
+  printTokens
+} from '@src/formatter';
+import {
+  SurroundingInnerText,
+  SurroundingOuterText,
+  TFBlock
+} from '@src/types';
+
+export interface NodeWithOuterText {
+  surroundingText: SurroundingOuterText;
+}
+
+export interface NodeWithInnerText {
+  surroundingText: SurroundingInnerText;
+}
+
+export type Ensurer = (blocks: TFBlock[]) => TFBlock[];
+
+export const ensurers: readonly Ensurer[] = Object.freeze([
+  ensureTopLevelBlocksAreSeparated,
+  ensureNoSpacesAfterFunctionName,
+  ensureSpaceBeforeOpeningBrace,
+  ensureLabelsHaveLeadingSpace,
+  ensureClosingBraceOnNewline,
+  ensureIndentation
+]);
 
 /**
  * Compares the given `Token`s to see if they are equal.

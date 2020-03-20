@@ -102,13 +102,10 @@ class FileWatcher {
   }
 }
 
-const clearFileFromRequireCache = (filepath: string): void => {
-  const absolutePath = path.resolve(filepath);
-  const dir = path.parse(absolutePath).dir;
-
-  const itemsToClear = Object.keys(require.cache).filter(name =>
-    name.startsWith(dir)
-  );
+const clearFilesAlongPathFromRequireCache = (thePath: string): void => {
+  const itemsToClear = Object.values<NodeModule>(require.cache)
+    .filter(e => !path.relative(thePath, e.filename).startsWith('..'))
+    .map(module => module.id);
 
   if (itemsToClear.length) {
     console.log('removing', itemsToClear.length, 'items from require.cache');
@@ -135,7 +132,7 @@ const watchDirectoryFullOfCode = (directory: string): void => {
     }
 
     FileWatcher.watchForChanges(fullpath, () => {
-      clearFileFromRequireCache(fullpath);
+      clearFilesAlongPathFromRequireCache('src/formatter');
     });
   });
 };
