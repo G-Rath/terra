@@ -1,6 +1,7 @@
 import {
   Ensurer,
   TokenType,
+  mutateProp,
   parseSurroundingText,
   printTokens,
   walkNodes
@@ -9,8 +10,8 @@ import {
 export const ensureNoSpacesAfterFunctionName: Ensurer = blocks =>
   walkNodes(blocks, {
     Function: ({ name, surroundingText }) => {
-      surroundingText.leadingOuterText = surroundingText.leadingOuterText.trim();
-      name.surroundingText.trailingOuterText = name.surroundingText.trailingOuterText.trim();
+      mutateProp(surroundingText, 'leadingOuterText', tx => tx.trim());
+      mutateProp(name.surroundingText, 'trailingOuterText', tx => tx.trim());
 
       if (surroundingText.leadingOuterText.length) {
         const parsedText = parseSurroundingText(

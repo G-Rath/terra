@@ -2,6 +2,7 @@ import {
   Ensurer,
   TokenType,
   ensureTextStartsWithTokens,
+  mutateProp,
   parseSurroundingText,
   printTokens,
   walkNodes
@@ -9,10 +10,9 @@ import {
 
 export const ensureClosingBraceOnNewline: Ensurer = blocks => {
   return walkNodes(blocks, {
-    Body: (node): void => {
-      node.surroundingText.trailingInnerText = ensureTextStartsWithTokens(
-        node.surroundingText.trailingInnerText,
-        [{ type: TokenType.Newline }]
+    Body: node => {
+      mutateProp(node.surroundingText, 'trailingInnerText', text =>
+        ensureTextStartsWithTokens(text, [{ type: TokenType.Newline }])
       );
     },
     Map: (node): void => {

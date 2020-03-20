@@ -4,6 +4,8 @@ import {
   TFNodeListenerPair,
   Token,
   TokenType,
+  callWithProp,
+  mutateProp,
   parseSurroundingText,
   printTokens,
   walkNodes
@@ -89,11 +91,8 @@ export const ensureIndentation: Ensurer = blocks => {
     return printTokens(rebuiltTextTokens.reverse());
   };
 
-  const indentLeadingOuterText = (node: NodeWithOuterText): void => {
-    node.surroundingText.leadingOuterText = indentText(
-      node.surroundingText.leadingOuterText
-    );
-  };
+  const indentLeadingOuterText = (node: NodeWithOuterText): void =>
+    mutateProp(node.surroundingText, 'leadingOuterText', indentText);
 
   /**
    * Access the appropriate surrounding text of the given `expression`
@@ -190,9 +189,7 @@ export const ensureIndentation: Ensurer = blocks => {
       const surroundingText = accessSurroundingText(node);
 
       if (surroundingText.leadingOuterText.includes('\n')) {
-        surroundingText.leadingOuterText = indentText(
-          surroundingText.leadingOuterText
-        );
+        mutateProp(surroundingText, 'leadingOuterText', indentText);
       }
 
       if (!expressionsToIndent.length) {
@@ -215,8 +212,8 @@ export const ensureIndentation: Ensurer = blocks => {
   };
 
   return walkNodes(blocks, {
-    Attribute: node => indentLeadingOuterText(node.key),
-    Argument: node => indentLeadingOuterText(node.identifier),
+    Attribute: callWithProp('key', indentLeadingOuterText),
+    Argument: callWithProp('identifier', indentLeadingOuterText),
     Block: indentLeadingOuterText,
     Function: indentFunctionsAndLists,
     List: indentFunctionsAndLists,

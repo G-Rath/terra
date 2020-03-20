@@ -35,6 +35,40 @@ export const ensurers: readonly Ensurer[] = Object.freeze([
 ]);
 
 /**
+ * Returns a function that calls the given `fn` with the value of
+ * the given `prop` on the `obj` passed as the first argument.
+ *
+ * @param {TProp} prop
+ * @param {(value: TObj[TProp]) => void} fn
+ *
+ * @return {(obj: TObj) => void}
+ *
+ * @template TObj, TProp
+ */
+export const callWithProp = <TObj extends object, TProp extends keyof TObj>(
+  prop: TProp,
+  fn: (value: TObj[TProp]) => void
+) => (obj: TObj): void => fn(obj[prop]);
+
+/**
+ * Mutates the specified `prop` on the given `objs`, by assigning the value
+ * returned when calling the given `callback` with the current value of the prop.
+ *
+ * @param {TObj[] | TObj} objs
+ * @param {TKey} key
+ * @param {(value: TObj[TKey]) => TObj[TKey]} callback
+ *
+ * @template TObj, TKey
+ */
+export const mutateProp = <TObj extends object, TKey extends keyof TObj>(
+  objs: TObj | TObj[],
+  key: TKey,
+  callback: (value: TObj[TKey]) => TObj[TKey]
+): void => {
+  [objs].flat().forEach((obj: TObj) => (obj[key] = callback(obj[key])));
+};
+
+/**
  * Compares the given `Token`s to see if they are equal.
  *
  * A `Token` is equal to another if both `Token`s have the same type & content.

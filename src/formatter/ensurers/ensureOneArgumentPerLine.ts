@@ -2,6 +2,7 @@ import {
   Ensurer,
   NodeWithOuterText,
   TokenType,
+  callWithProp,
   parseSurroundingText,
   printTokens,
   walkNodes
@@ -22,8 +23,8 @@ export const ensureOneArgumentPerLine: Ensurer = blocks => {
   };
 
   return walkNodes(blocks, {
-    Attribute: node => ensureNodeSurroundingTextHasNewline(node.key),
-    Argument: node => ensureNodeSurroundingTextHasNewline(node.identifier),
+    Attribute: callWithProp('key', ensureNodeSurroundingTextHasNewline),
+    Argument: callWithProp('identifier', ensureNodeSurroundingTextHasNewline),
     Block: ensureNodeSurroundingTextHasNewline
   });
 };
