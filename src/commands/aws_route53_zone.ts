@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command';
-import * as Parser from '@oclif/parser';
+import type * as Parser from '@oclif/parser';
 import { nadoRoute53Zone } from '@src/nados';
-import { TFResourceBlock } from '@src/types';
+import type { TFResourceBlock } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 export class AwsRoute53Zone extends Command {

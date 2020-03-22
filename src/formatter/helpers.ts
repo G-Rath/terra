@@ -9,7 +9,7 @@ import {
   parseSurroundingText,
   printTokens
 } from '@src/formatter';
-import {
+import type {
   SurroundingInnerText,
   SurroundingOuterText,
   TFBlock

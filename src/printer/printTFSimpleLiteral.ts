@@ -1,4 +1,4 @@
-import { TFSimpleLiteral } from '@src/types';
+import type { TFSimpleLiteral } from '@src/types';
 
 export const printTFSimpleLiteral = (literal: TFSimpleLiteral): string =>
   [

@@ -1,5 +1,5 @@
 import { printTFAttribute } from '@src/printer';
-import { TFMapExpression } from '@src/types';
+import type { TFMapExpression } from '@src/types';
 
 export const printTFMapExpression = (map: TFMapExpression): string =>
   [

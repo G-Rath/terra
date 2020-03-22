@@ -5,7 +5,7 @@ import {
   isAsymmetricMatcher,
   isTFBlockBody
 } from '@test/matchers';
-import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
+import type { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
 

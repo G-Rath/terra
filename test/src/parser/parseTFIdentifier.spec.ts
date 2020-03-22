@@ -1,6 +1,6 @@
 import { makeTFIdentifier } from '@src/makers';
 import { StringCursor, parseTFIdentifier } from '@src/parser';
-import { TFIdentifier } from '@src/types';
+import type { TFIdentifier } from '@src/types';
 
 describe('parseTFIdentifier', () => {
   describe('leading outer text', () => {

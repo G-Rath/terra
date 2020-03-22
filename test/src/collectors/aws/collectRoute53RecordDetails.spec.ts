@@ -1,4 +1,4 @@
-import {
+import type {
   AliasTargetDetails,
   RecordsTargetDetails,
   Route53ZoneDetails

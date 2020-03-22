@@ -5,7 +5,7 @@ import {
   makeTFResourceBlock,
   makeTFStringArgument
 } from '@src/makers';
-import { TFBlockBodyBody, TFResourceBlock } from '@src/types';
+import type { TFBlockBodyBody, TFResourceBlock } from '@src/types';
 import { AwsResourceType, asResourceName } from '@src/utils';
 
 interface TFEC2EIPAttributes {

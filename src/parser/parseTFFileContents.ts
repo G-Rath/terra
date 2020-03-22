@@ -1,5 +1,5 @@
 import { StringCursor, parseTFBlock } from '@src/parser';
-import { TFBlock, TFFileContents } from '@src/types';
+import type { TFBlock, TFFileContents } from '@src/types';
 
 /**
  * Parses the contents of a Terraform file, generating an AST representation.

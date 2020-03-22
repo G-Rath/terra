@@ -1,5 +1,5 @@
 import { Command, flags } from '@oclif/command';
-import * as Parser from '@oclif/parser';
+import type * as Parser from '@oclif/parser';
 import { format } from '@src/formatter';
 import {
   DiscardSurroundingTextBehaviour,

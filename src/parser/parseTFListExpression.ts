@@ -3,7 +3,7 @@ import {
   StringCursor,
   parseCommaSeparatedLiteralExpressionsBrackets
 } from '@src/parser';
-import { TFListExpression } from '@src/types';
+import type { TFListExpression } from '@src/types';
 
 export const parseTFListExpression = (
   cursor: StringCursor

@@ -1,4 +1,4 @@
-import { SecretsManagerSecretDetails } from '@src/builders';
+import type { SecretsManagerSecretDetails } from '@src/builders';
 import { assertDefined, collectAllFromPaginatedAwsEndpoint } from '@src/utils';
 import { SecretsManager } from 'aws-sdk';
 

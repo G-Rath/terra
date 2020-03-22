@@ -1,4 +1,4 @@
-import { AwsDataType, AwsResourceType } from '@src/utils';
+import type { AwsDataType, AwsResourceType } from '@src/utils';
 
 export enum TFNodeType {
   Body = 'Body',

@@ -1,4 +1,4 @@
-import { TFIdentifier } from '@src/types';
+import type { TFIdentifier } from '@src/types';
 
 export const printTFIdentifier = (identifier: TFIdentifier): string =>
   [

@@ -4,7 +4,7 @@ import {
   parseCommaSeparatedLiteralExpressionsBrackets,
   parseTFIdentifier
 } from '@src/parser';
-import { TFFunctionCall } from '@src/types';
+import type { TFFunctionCall } from '@src/types';
 
 export const parseTFFunctionCall = (cursor: StringCursor): TFFunctionCall => {
   const name = parseTFIdentifier(cursor);

@@ -1,7 +1,7 @@
 import { Command, flags } from '@oclif/command';
 import { format } from '@src/formatter';
 import { printTFFileContents } from '@src/printer';
-import {
+import type {
   DataType,
   TFBlock,
   TFBlocks,

@@ -1,5 +1,5 @@
 import { printTFBlocks } from '@src/printer';
-import { TFFileContents } from '@src/types';
+import type { TFFileContents } from '@src/types';
 
 export const printTFFileContents = (contents: TFFileContents): string =>
   [

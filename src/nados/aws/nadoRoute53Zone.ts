@@ -6,7 +6,7 @@ import {
   collectRoute53RecordDetails,
   collectRoute53ZoneDetails
 } from '@src/collectors';
-import { TFBlocks } from '@src/types';
+import type { TFBlocks } from '@src/types';
 
 export const nadoRoute53Zone = async (
   zoneId: string,

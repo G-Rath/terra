@@ -1,6 +1,6 @@
 import { format } from '@src/formatter';
 import { makeTFResourceBlock } from '@src/makers';
-import { TFFileContents } from '@src/types';
+import type { TFFileContents } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 describe('format', () => {

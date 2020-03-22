@@ -1,6 +1,6 @@
 import { makeTFMapExpression } from '@src/makers';
 import { StringCursor, parseTFAttribute } from '@src/parser';
-import { TFAttribute, TFMapExpression } from '@src/types';
+import type { TFAttribute, TFMapExpression } from '@src/types';
 
 export const parseTFMapExpression = (cursor: StringCursor): TFMapExpression => {
   let leadingOuterText = '';

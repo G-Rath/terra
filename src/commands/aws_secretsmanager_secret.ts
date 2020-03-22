@@ -1,7 +1,7 @@
-import * as Parser from '@oclif/parser';
+import type * as Parser from '@oclif/parser';
 import { buildSecretsManagerSecretResource } from '@src/builders';
 import { collectSecretsManagerSecretDetails } from '@src/collectors';
-import { TFBlock, TFBlocks } from '@src/types';
+import type { TFBlock, TFBlocks } from '@src/types';
 import { AwsResourceType, BaseNadoCommand, ParseResults } from '@src/utils';
 import * as path from 'path';
 

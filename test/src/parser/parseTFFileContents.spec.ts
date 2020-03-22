@@ -1,6 +1,6 @@
 import * as parser from '@src/parser';
 import { parseTFFileContents } from '@src/parser';
-import { TFFileContents } from '@src/types';
+import type { TFFileContents } from '@src/types';
 import { cwdAsJson } from '@test/setupMockFs';
 import dedent from 'dedent';
 import { promises as fs } from 'fs';
