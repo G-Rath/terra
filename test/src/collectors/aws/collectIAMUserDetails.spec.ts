@@ -1,4 +1,4 @@
-import { IAMUserDetails } from '@src/builders';
+import type { IAMUserDetails } from '@src/builders';
 import { collectIAMUserDetails } from '@src/collectors';
 import { mockAwsClientEndpoints } from '@test/setupAwsSdkMock';
 import { IAM } from 'aws-sdk';

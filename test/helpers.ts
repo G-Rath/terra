@@ -1,4 +1,4 @@
-import { Ensurer } from '@src/formatter';
+import type { Ensurer } from '@src/formatter';
 import { parseTFFileContents } from '@src/parser';
 import { printTFBlocks } from '@src/printer';
 import dedent from 'dedent';

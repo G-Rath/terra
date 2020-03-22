@@ -1,6 +1,6 @@
 import { makeTFIdentifier } from '@src/makers';
 import { StringCursor } from '@src/parser';
-import { TFIdentifier } from '@src/types';
+import type { TFIdentifier } from '@src/types';
 import { assertQuotedStringIsClosed } from '@src/utils';
 
 export const parseTFIdentifier = (cursor: StringCursor): TFIdentifier => {

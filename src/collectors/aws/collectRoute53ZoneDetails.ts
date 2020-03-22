@@ -1,4 +1,4 @@
-import { Route53ZoneDetails } from '@src/builders';
+import type { Route53ZoneDetails } from '@src/builders';
 import { Route53 } from 'aws-sdk';
 
 /**

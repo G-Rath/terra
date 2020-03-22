@@ -1,5 +1,5 @@
 import { TokenType, ensureTextEndsWithTokens, ensurers } from '@src/formatter';
-import { TFFileContents } from '@src/types';
+import type { TFFileContents } from '@src/types';
 
 const cloneBlocks = (
   blocks: TFFileContents['blocks']

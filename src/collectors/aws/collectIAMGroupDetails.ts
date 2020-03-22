@@ -1,4 +1,4 @@
-import { IAMGroupDetails } from '@src/builders';
+import type { IAMGroupDetails } from '@src/builders';
 import { collectAllFromPaginatedAwsEndpoint } from '@src/utils';
 import { IAM } from 'aws-sdk';
 

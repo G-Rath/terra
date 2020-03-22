@@ -6,7 +6,7 @@ import {
   parseTFListExpression,
   parseTFMapExpression
 } from '@src/parser';
-import { TFLiteralExpression } from '@src/types';
+import type { TFLiteralExpression } from '@src/types';
 
 const isFunctionCall = (cursor: StringCursor): boolean => {
   const next = cursor.collectUntilWithComments(/[^/\s]/u);

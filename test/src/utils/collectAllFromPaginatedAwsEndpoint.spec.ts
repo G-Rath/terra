@@ -1,4 +1,4 @@
-import { IAMUserDetails } from '@src/builders';
+import type { IAMUserDetails } from '@src/builders';
 import { collectAllFromPaginatedAwsEndpoint } from '@src/utils';
 import { IAM, SecretsManager } from 'aws-sdk';
 

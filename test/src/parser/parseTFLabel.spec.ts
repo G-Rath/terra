@@ -1,6 +1,6 @@
 import { makeTFLabel } from '@src/makers';
 import { StringCursor, parseTFLabel } from '@src/parser';
-import { TFLabel } from '@src/types';
+import type { TFLabel } from '@src/types';
 
 describe('parseTFLabel', () => {
   describe('leading outer text', () => {

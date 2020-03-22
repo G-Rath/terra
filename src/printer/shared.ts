@@ -1,5 +1,5 @@
 import { printTFLiteralExpression } from '@src/printer/printTFLiteralExpression';
-import { SurroundingText, TFLiteralExpression } from '@src/types';
+import type { SurroundingText, TFLiteralExpression } from '@src/types';
 
 interface PrintCommaSeparatedLiteralExpressionsOptions {
   hasTrailingComma: boolean;

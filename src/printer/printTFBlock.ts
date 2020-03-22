@@ -1,5 +1,5 @@
 import { printTFBlockBody, printTFLabel } from '@src/printer';
-import { TFBlock } from '@src/types';
+import type { TFBlock } from '@src/types';
 
 export const printTFBlock = (block: TFBlock): string =>
   [

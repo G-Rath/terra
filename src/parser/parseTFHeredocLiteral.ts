@@ -1,6 +1,6 @@
 import { makeTFHeredocLiteral } from '@src/makers';
 import { StringCursor } from '@src/parser';
-import { TFHeredocLiteral } from '@src/types';
+import type { TFHeredocLiteral } from '@src/types';
 
 export const parseTFHeredocLiteral = (
   cursor: StringCursor

@@ -5,7 +5,7 @@ import {
   makeTFSimpleLiteral,
   makeTFStringArgument
 } from '@src/makers';
-import { TFBlockBody, TFBlockBodyBody } from '@src/types';
+import type { TFBlockBody, TFBlockBodyBody } from '@src/types';
 
 import './toContainTFArgumentWithExpression';
 

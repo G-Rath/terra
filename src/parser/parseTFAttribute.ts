@@ -4,7 +4,7 @@ import {
   parseTFExpression,
   parseTFIdentifier
 } from '@src/parser';
-import { TFAttribute, TFAttributeKey } from '@src/types';
+import type { TFAttribute, TFAttributeKey } from '@src/types';
 
 /**
  * Parses the key for a {@link TFAttribute}.

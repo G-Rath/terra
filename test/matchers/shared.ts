@@ -1,5 +1,5 @@
 import { TFBlock, TFBlockBody, TFNodeType } from '@src/types';
-import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
+import type { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export const isAsymmetricMatcher = (
   v: unknown

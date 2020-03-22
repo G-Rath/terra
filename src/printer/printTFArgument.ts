@@ -1,5 +1,5 @@
 import { printTFIdentifier, printTFLiteralExpression } from '@src/printer';
-import { TFArgument } from '@src/types';
+import type { TFArgument } from '@src/types';
 
 export const printTFArgument = (blockArgument: TFArgument): string =>
   [

@@ -15,7 +15,7 @@ import {
   TFNodeType,
   TFResourceBlock
 } from '@src/types';
-import { AwsResourceType } from '@src/utils';
+import type { AwsResourceType } from '@src/utils';
 
 interface ResourceIdentifierMap {
   [AwsResourceType.AWS_IAM_GROUP]: keyof TFIAMGroupResource;

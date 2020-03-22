@@ -4,7 +4,7 @@ import {
   parseTFExpression,
   parseTFIdentifier
 } from '@src/parser';
-import { TFArgument } from '@src/types';
+import type { TFArgument } from '@src/types';
 
 export const parseTFArgument = (cursor: StringCursor): TFArgument => {
   const identifier = parseTFIdentifier(cursor);

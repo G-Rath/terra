@@ -1,6 +1,6 @@
 import { makeTFBlock } from '@src/makers';
 import { StringCursor, parseTFBlockBody, parseTFLabel } from '@src/parser';
-import { TFBlock, TFLabel } from '@src/types';
+import type { TFBlock, TFLabel } from '@src/types';
 
 export const parseTFBlock = (cursor: StringCursor): TFBlock => {
   const leadingOuterText = cursor.collectUntilWithComments(/\w/u).slice(0, -1);

@@ -5,7 +5,7 @@ import {
   makeTFResourceBlock,
   makeTFStringArgument
 } from '@src/makers';
-import {
+import type {
   TFArgument,
   TFBlock,
   TFBlockBodyBody,

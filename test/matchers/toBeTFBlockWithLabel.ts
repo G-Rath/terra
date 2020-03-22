@@ -1,7 +1,7 @@
 import { makeTFLabel } from '@src/makers';
 import { TFBlock, TFLabel, TFNodeType } from '@src/types';
 import { failMatcherDueToNotTFNode, isTFBlock } from '@test/matchers';
-import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
+import type { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
 

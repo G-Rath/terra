@@ -1,5 +1,5 @@
 import { makeTFBlockBody, makeTFDynamicBlock } from '@src/makers';
-import { TFBlockBody } from '@src/types';
+import type { TFBlockBody } from '@src/types';
 
 import './toContainTFDynamicBlock';
 

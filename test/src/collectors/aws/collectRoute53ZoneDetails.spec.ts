@@ -1,4 +1,4 @@
-import { Route53ZoneDetails } from '@src/builders';
+import type { Route53ZoneDetails } from '@src/builders';
 import { collectRoute53ZoneDetails } from '@src/collectors';
 import { mockAwsClientEndpoints } from '@test/setupAwsSdkMock';
 import { Route53 } from 'aws-sdk';

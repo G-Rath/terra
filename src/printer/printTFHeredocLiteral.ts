@@ -1,4 +1,4 @@
-import { TFHeredocLiteral } from '@src/types';
+import type { TFHeredocLiteral } from '@src/types';
 
 export const printTFHeredocLiteral = (literal: TFHeredocLiteral): string =>
   [

@@ -1,6 +1,6 @@
 import { makeTFBlockBody } from '@src/makers';
 import { StringCursor, parseTFArgument, parseTFBlock } from '@src/parser';
-import { TFBlockBody, TFBlockBodyBody } from '@src/types';
+import type { TFBlockBody, TFBlockBodyBody } from '@src/types';
 
 export const parseTFBlockBody = (cursor: StringCursor): TFBlockBody => {
   let leadingOuterText = '';

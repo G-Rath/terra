@@ -1,5 +1,5 @@
 import { StringCursor, parseTFExpression } from '@src/parser';
-import { TFLiteralExpression } from '@src/types';
+import type { TFLiteralExpression } from '@src/types';
 
 const BRACKET_PAIRS = {
   '(': ')',

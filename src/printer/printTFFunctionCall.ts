@@ -2,7 +2,7 @@ import {
   printCommaSeparatedLiteralExpressionsWithinBrackets,
   printTFIdentifier
 } from '@src/printer';
-import { TFFunctionCall } from '@src/types';
+import type { TFFunctionCall } from '@src/types';
 
 export const printTFFunctionCall = (call: TFFunctionCall): string =>
   [

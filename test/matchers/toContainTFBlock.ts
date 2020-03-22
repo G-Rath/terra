@@ -1,6 +1,6 @@
 import { TFBlock, TFBlockBody, TFNodeType } from '@src/types';
 import { failMatcherDueToNotTFNode, isTFBlockBody } from '@test/matchers';
-import { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
+import type { AsymmetricMatcher } from 'expect/build/asymmetricMatchers';
 
 export {};
 

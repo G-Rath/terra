@@ -1,4 +1,4 @@
-import {
+import type {
   Route53RecordDetails,
   Route53RecordTargetDetails,
   Route53ZoneDetails

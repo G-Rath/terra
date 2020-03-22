@@ -1,4 +1,4 @@
-import { TFFileContents } from '@src/types';
+import type { TFFileContents } from '@src/types';
 
 export type DiscardSurroundingTextBehaviour =
   | 'except-comments'

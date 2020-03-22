@@ -21,7 +21,7 @@ const fillCommandTemplate = ({
   argName
 }: TemplateValues): string => {
   return `
-import * as Parser from '@oclif/parser';
+import type * as Parser from '@oclif/parser';
 import { build${awsService}${awsResource}Resource } from '@src/builders';
 import { collect${awsService}${awsResource}Details } from '@src/collectors';
 import { TFBlock, TFBlocks } from '@src/types';
