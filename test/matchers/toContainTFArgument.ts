@@ -27,7 +27,7 @@ declare global {
   }
 }
 
-const toContainTFArgument: jest.CustomMatcher = function<
+const toContainTFArgument: jest.CustomMatcher = function <
   TIdentifier extends string = string
 >(
   this: jest.MatcherUtils,
