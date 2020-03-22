@@ -7,17 +7,16 @@ import {
   walkNodes
 } from '@src/formatter';
 
-export const ensureSpaceBeforeOpeningBrace: Ensurer = blocks => {
-  const formatLeadingOuterText = (node: NodeWithOuterText): void => {
-    mutateProp(node.surroundingText, 'leadingOuterText', text =>
-      ensureTextStartsWithTokens(text, [
-        { type: TokenType.Whitespace, content: ' ' }
-      ])
-    );
-  };
+const formatLeadingOuterText = (node: NodeWithOuterText): void => {
+  mutateProp(node.surroundingText, 'leadingOuterText', text =>
+    ensureTextStartsWithTokens(text, [
+      { type: TokenType.Whitespace, content: ' ' }
+    ])
+  );
+};
 
-  return walkNodes(blocks, {
+export const ensureSpaceBeforeOpeningBrace: Ensurer = blocks =>
+  walkNodes(blocks, {
     Body: formatLeadingOuterText,
     Map: formatLeadingOuterText
   });
-};

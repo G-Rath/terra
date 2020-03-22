@@ -19,6 +19,64 @@ import {
   TFNodeType
 } from '@src/types';
 
+/**
+ * Access the appropriate surrounding text of the given `expression`
+ * that should be used to format the "outside" of the complete node.
+ *
+ * For all expression nodes except function calls,
+ * this is the top-level `surroundingText` property.
+ *
+ * For function calls, this is the `surroundingText`
+ * of the `Identifier` node assigned to `name`.
+ *
+ * @param {TFLiteralExpression} expression
+ *
+ * @return {TFLiteralExpression["surroundingText"]}
+ */
+const accessSurroundingText = (
+  expression: TFLiteralExpression
+): TFLiteralExpression['surroundingText'] =>
+  expression.type === TFNodeType.Function
+    ? expression.name.surroundingText
+    : expression.surroundingText;
+
+/**
+ * Gets the expressions that should be indented from the given `node`,
+ * based on if the expressions have a newline in their `leadingOuterText`.
+ *
+ * @param {TFFunctionCall | TFListExpression} node
+ *
+ * @return {TFLiteralExpression[]}
+ */
+const getExpressionsToIndent = (
+  node: TFFunctionCall | TFListExpression
+): TFLiteralExpression[] =>
+  (node.type === TFNodeType.Function ? node.args : node.values).filter(exp =>
+    accessSurroundingText(exp).leadingOuterText.includes('\n')
+  );
+
+/**
+ * Chunks the given `text` into lines starting with a newline.
+ *
+ * @param {string} text
+ *
+ * @return {string[]}
+ */
+const chunkTextByNewlines = (text: string): string[] => {
+  const parsedText = parseSurroundingText(text);
+  const lines: Token[][] = [];
+
+  for (const token of parsedText) {
+    if (lines.length === 0 || token.type === TokenType.Newline) {
+      lines.push([]);
+    }
+
+    lines[lines.length - 1].push(token);
+  }
+
+  return lines.map(printTokens);
+};
+
 export const ensureIndentation: Ensurer = blocks => {
   const indentAmount = 2;
   let depth = 0;
@@ -93,64 +151,6 @@ export const ensureIndentation: Ensurer = blocks => {
 
   const indentLeadingOuterText = (node: NodeWithOuterText): void =>
     mutateProp(node.surroundingText, 'leadingOuterText', indentText);
-
-  /**
-   * Access the appropriate surrounding text of the given `expression`
-   * that should be used to format the "outside" of the complete node.
-   *
-   * For all expression nodes except function calls,
-   * this is the top-level `surroundingText` property.
-   *
-   * For function calls, this is the `surroundingText`
-   * of the `Identifier` node assigned to `name`.
-   *
-   * @param {TFLiteralExpression} expression
-   *
-   * @return {TFLiteralExpression["surroundingText"]}
-   */
-  const accessSurroundingText = (
-    expression: TFLiteralExpression
-  ): TFLiteralExpression['surroundingText'] =>
-    expression.type === TFNodeType.Function
-      ? expression.name.surroundingText
-      : expression.surroundingText;
-
-  /**
-   * Gets the expressions that should be indented from the given `node`,
-   * based on if the expressions have a newline in their `leadingOuterText`.
-   *
-   * @param {TFFunctionCall | TFListExpression} node
-   *
-   * @return {TFLiteralExpression[]}
-   */
-  const getExpressionsToIndent = (
-    node: TFFunctionCall | TFListExpression
-  ): TFLiteralExpression[] =>
-    (node.type === TFNodeType.Function ? node.args : node.values).filter(exp =>
-      accessSurroundingText(exp).leadingOuterText.includes('\n')
-    );
-
-  /**
-   * Chunks the given `text` into lines starting with a newline.
-   *
-   * @param {string} text
-   *
-   * @return {string[]}
-   */
-  const chunkTextByNewlines = (text: string): string[] => {
-    const parsedText = parseSurroundingText(text);
-    const lines: Token[][] = [];
-
-    for (const token of parsedText) {
-      if (lines.length === 0 || token.type === TokenType.Newline) {
-        lines.push([]);
-      }
-
-      lines[lines.length - 1].push(token);
-    }
-
-    return lines.map(printTokens);
-  };
 
   const indentTrailingInnerText = (
     node: TFFunctionCall | TFMapExpression | TFListExpression | TFBlockBody

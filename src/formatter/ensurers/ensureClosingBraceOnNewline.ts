@@ -8,8 +8,8 @@ import {
   walkNodes
 } from '@src/formatter';
 
-export const ensureClosingBraceOnNewline: Ensurer = blocks => {
-  return walkNodes(blocks, {
+export const ensureClosingBraceOnNewline: Ensurer = blocks =>
+  walkNodes(blocks, {
     Body: node => {
       mutateProp(node.surroundingText, 'trailingInnerText', text =>
         ensureTextStartsWithTokens(text, [{ type: TokenType.Newline }])
@@ -33,4 +33,3 @@ export const ensureClosingBraceOnNewline: Ensurer = blocks => {
       node.surroundingText.trailingInnerText = printTokens(parsedText);
     }
   });
-};
