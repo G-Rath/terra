@@ -18,7 +18,7 @@ declare global {
   }
 }
 
-const toContainTFBlock: jest.CustomMatcher = function(
+const toContainTFBlock: jest.CustomMatcher = function (
   this: jest.MatcherUtils,
   bodi: TFBlockBody | unknown,
   blockType: string | AsymmetricMatcher<unknown>

@@ -60,7 +60,7 @@ const buildExpectedExpression = (
   return expression;
 };
 
-const toContainTFArgumentWithExpression: jest.CustomMatcher = function<
+const toContainTFArgumentWithExpression: jest.CustomMatcher = function <
   TIdentifier extends string = string
 >(
   this: jest.MatcherUtils,

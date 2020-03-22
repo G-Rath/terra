@@ -19,7 +19,7 @@ declare global {
   }
 }
 
-const toBeTFBlockWithLabel: jest.CustomMatcher = function(
+const toBeTFBlockWithLabel: jest.CustomMatcher = function (
   this: jest.MatcherUtils,
   block: TFBlock | unknown,
   value: string | TFLabel | AsymmetricMatcher<unknown>,
