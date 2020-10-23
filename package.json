@@ -77,12 +77,12 @@
     "prettier": "^2.1.2",
     "prettier-config-ackama": "^0.1.2",
     "ts-jest": "^26.4.1",
-    "ts-nameof": "^4.2.2",
-    "ts-node": "^8.8.1",
+    "ts-nameof": "^5.0.0",
+    "ts-node": "^9.0.0",
     "ts-transform-paths": "^2.0.1",
     "tsconfig-paths": "^3.9.0",
-    "ttypescript": "^1.5.10",
-    "typescript": "^3.8.3",
+    "ttypescript": "^1.5.12",
+    "typescript": "^4.0.3",
     "unionfs": "^4.4.0"
   },
   "oclif": {

@@ -51,21 +51,22 @@ export const callWithProp = <TObj extends object, TProp extends keyof TObj>(
 ) => (obj: TObj): void => fn(obj[prop]);
 
 /**
- * Mutates the specified `prop` on the given `objs`, by assigning the value
+ * Mutates the specified `prop` on the given `obj`, by assigning the value
  * returned when calling the given `callback` with the current value of the prop.
  *
- * @param {TObj[] | TObj} objs
+ * @param {TObj} obj
  * @param {TKey} key
  * @param {(value: TObj[TKey]) => TObj[TKey]} callback
  *
  * @template TObj, TKey
  */
 export const mutateProp = <TObj extends object, TKey extends keyof TObj>(
-  objs: TObj | TObj[],
+  obj: TObj,
   key: TKey,
   callback: (value: TObj[TKey]) => TObj[TKey]
 ): void => {
-  [objs].flat().forEach((obj: TObj) => (obj[key] = callback(obj[key])));
+  // eslint-disable-next-line node/callback-return
+  obj[key] = callback(obj[key]);
 };
 
 /**
