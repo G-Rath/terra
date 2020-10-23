@@ -40,45 +40,6 @@
     "typecheck": "tsc -p . --noEmit"
   },
   "prettier": "prettier-config-ackama",
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "index.ts"
-    ],
-    "globals": {
-      "ts-jest": {
-        "isolatedModules": true,
-        "astTransformers": [
-          "ts-nameof"
-        ]
-      }
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "^@src/(.*)$": "<rootDir>/src/$1",
-      "^@test/(.*)$": "<rootDir>/test/$1"
-    },
-    "resetMocks": true,
-    "restoreMocks": true,
-    "setupFilesAfterEnv": [
-      "./test/setupOClifEnv.ts",
-      "./test/setupMockFs.ts",
-      "./test/setupExpectEachTestHasAssertions.ts",
-      "./test/setupAwsSdkMock.ts",
-      "./test/matchers/index.ts"
-    ],
-    "testEnvironment": "node",
-    "testRunner": "jest-circus/runner",
-    "transform": {
-      "\\.tsx?": "ts-jest"
-    }
-  },
   "dependencies": {
     "@oclif/command": "^1.5.19",
     "@oclif/config": "^1.14.0",
@@ -94,7 +55,7 @@
     "@oclif/dev-cli": "^1.22.2",
     "@types/dedent": "^0.7.0",
     "@types/eslint": "^7.2.4",
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^26.0.15",
     "@types/ts-nameof": "^4.2.1",
     "@types/uuid": "^7.0.2",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
@@ -109,13 +70,13 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
-    "jest": "^25.1.0",
-    "jest-circus": "^25.1.0",
+    "jest": "^26.6.0",
+    "jest-circus": "^26.6.0",
     "lint-staged": "^10.4.2",
     "memfs": "^3.1.2",
     "prettier": "^2.1.2",
     "prettier-config-ackama": "^0.1.2",
-    "ts-jest": "^25.2.1",
+    "ts-jest": "^26.4.1",
     "ts-nameof": "^4.2.2",
     "ts-node": "^8.8.1",
     "ts-transform-paths": "^2.0.1",
