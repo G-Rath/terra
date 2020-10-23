@@ -29,7 +29,6 @@
     "build": "npm run build-codebase && npm run build-manifest",
     "build-codebase": "npm run clean && ttsc -b tsconfig.build.json",
     "build-manifest": "node -r tsconfig-paths/register node_modules/.bin/oclif-dev manifest",
-    "check": "tsc --noEmit",
     "clean": "rm -rf lib",
     "cli": "node -r tsconfig-paths/register bin/terra",
     "lint": "eslint . --ignore-pattern '!.eslintrc.js' --ext js,ts",
@@ -37,7 +36,8 @@
     "test": "jest --coverage",
     "tools:formatter-watcher": "ts-node -T -r tsconfig-paths/register tools/formatter-watcher.ts",
     "tools:generate-aws-port-command": "ts-node -T tools/generate-aws-port-command.ts",
-    "tools:generate-barrels": "ts-node -T tools/generate-barrels.ts"
+    "tools:generate-barrels": "ts-node -T tools/generate-barrels.ts",
+    "typecheck": "tsc -p . --noEmit"
   },
   "prettier": "prettier-config-ackama",
   "jest": {

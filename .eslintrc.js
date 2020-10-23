@@ -3,8 +3,7 @@ const config = {
   root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.eslint.json',
-    createDefaultProgram: false,
+    project: 'tsconfig.json',
     ecmaVersion: 2019,
     sourceType: 'module'
   },

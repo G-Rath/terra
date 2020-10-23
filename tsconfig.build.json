@@ -2,11 +2,15 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "declarationMap": false,
+    "sourceMap": false,
     "rootDir": "src",
     "outDir": "lib",
     "paths": {
       "@src/*": [ "./src/*" ]
-    }
+    },
+    "noEmit": false,
+    "listEmittedFiles": true
   },
+  "files": [],
   "include": [ "src/**/*" ]
 }
