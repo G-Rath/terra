@@ -47,7 +47,7 @@
     "@oclif/plugin-autocomplete": "^0.1.5",
     "@oclif/plugin-help": "^2.2.3",
     "aws-sdk": "^2.777.0",
-    "disparity": "^3.0.0",
+    "disparity": "^3.1.0",
     "indent-string": "^4.0.0",
     "uuid": "^8.3.1"
   },
