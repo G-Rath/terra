@@ -18,10 +18,12 @@ import {
 } from '@src/utils';
 import { Route53 } from 'aws-sdk';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFRoute53WeightedRoutingPolicy {
   weight: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFRoute53FailOverRoutingPolicy {
   type: 'PRIMARY' | 'SECONDARY';
 }
@@ -32,6 +34,7 @@ export interface TFRoute53RecordAlias {
   evaluate_target_health: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFRoute53RecordAttributes {
   name: string;
   fqdn: string;
@@ -90,7 +93,7 @@ const buildAliasBlock = (
       makeTFStringArgument('name', aliasTarget.dnsName),
       makeTFArgument(
         'evaluate_target_health',
-        `${aliasTarget.evaluateTargetHealth}`
+        aliasTarget.evaluateTargetHealth ? 'true' : 'false'
       )
     ]
   );

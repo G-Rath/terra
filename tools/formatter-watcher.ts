@@ -1,4 +1,4 @@
-/* eslint-disable no-sync, max-classes-per-file */
+/* eslint-disable node/no-sync, max-classes-per-file */
 import * as assert from 'assert';
 import disparity from 'disparity';
 import * as fs from 'fs';
@@ -110,8 +110,10 @@ const clearFilesAlongPathFromRequireCache = (thePath: string): void => {
   if (itemsToClear.length) {
     console.log('removing', itemsToClear.length, 'items from require.cache');
 
-    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-    itemsToClear.forEach(name => delete require.cache[name]);
+    itemsToClear.forEach(
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      name => delete (require.cache as Record<string, unknown>)[name]
+    );
 
     refresh();
   }
@@ -141,12 +143,25 @@ const formatInputFile = (): string => {
   const inputFileContents = fs.readFileSync(inputFilepath).toString();
 
   // needs to be required since we want to cache-bust if they're changed
-  /* eslint-disable @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports,global-require */
+  /*
+    eslint-disable
+      @typescript-eslint/no-unsafe-assignment,
+      @typescript-eslint/no-var-requires,
+      @typescript-eslint/no-require-imports,
+      node/global-require
+   */
   const { parseTFFileContents } = require('@src/parser');
   const { format } = require('@src/formatter');
   const { printTFFileContents } = require('@src/printer');
-  /* eslint-enable @typescript-eslint/no-var-requires,@typescript-eslint/no-require-imports,global-require */
+  /*
+    eslint-enable
+      @typescript-eslint/no-unsafe-assignment,
+      @typescript-eslint/no-var-requires,
+      @typescript-eslint/no-require-imports,
+      node/global-require
+  */
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
   return printTFFileContents(format(parseTFFileContents(inputFileContents)));
 };
 
@@ -168,7 +183,7 @@ const refresh = (): void => {
   try {
     successfulFormattingResults = formatInputFile();
   } catch (error) {
-    formattingError = error;
+    formattingError = error as Error;
   }
   ConsoleProxy.restoreGlobalConsole();
 

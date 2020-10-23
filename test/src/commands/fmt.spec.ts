@@ -5,6 +5,7 @@ import {
   discardSurroundingText
 } from '@src/formatter';
 import * as printers from '@src/printer';
+import type { SurroundingText, TFBlock } from '@src/types';
 import { cwdAsJson } from '@test/setupMockFs';
 import { vol } from 'memfs';
 
@@ -50,8 +51,8 @@ describe('fmt', () => {
             Parameters<typeof discardSurroundingText>
           >(
             {
-              blocks: expect.any(Array),
-              surroundingText: expect.any(Object)
+              blocks: expect.any(Array) as TFBlock[],
+              surroundingText: expect.any(Object) as SurroundingText
             },
             theBehaviour
           );

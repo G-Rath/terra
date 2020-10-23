@@ -29,6 +29,7 @@ describe('StringCursor', () => {
       expect(cursor.hasNextChar()).toBe(false);
     });
   });
+
   describe('instance methods', () => {
     describe('#rewind', () => {
       beforeEach(() => {
@@ -241,6 +242,7 @@ describe('StringCursor', () => {
           world
         `);
       });
+
       describe('when the predicate is only in comments', () => {
         it('throws', () => {
           cursor = new StringCursor('hello # hello world');

@@ -33,13 +33,15 @@ describe('makeTFAttribute', () => {
       ).toStrictEqual<TFAttribute>({
         type: TFNodeType.Attribute,
         key: expect.objectContaining<Partial<TFAttributeKey>>({
-          type: expect.stringMatching(/Label|Identifier/u),
+          type: expect.stringMatching(
+            /Label|Identifier/u
+          ) as TFAttributeKey['type'],
           value: 'key',
           surroundingText: {
             leadingOuterText: '',
             trailingOuterText: ''
           }
-        }),
+        }) as TFAttributeKey,
         value: makeTFSimpleLiteral('"hello world"'),
         surroundingText: {
           leadingInnerText: '',

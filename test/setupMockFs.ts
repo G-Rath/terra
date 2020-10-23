@@ -1,4 +1,4 @@
-/* eslint-disable jest/require-top-level-describe, no-sync, @typescript-eslint/no-explicit-any */
+/* eslint-disable jest/require-top-level-describe, node/no-sync, @typescript-eslint/no-explicit-any */
 
 import { DirectoryJSON, createFsFromVolume, vol } from 'memfs';
 import { ufs } from 'unionfs';
@@ -23,7 +23,7 @@ jest.mock('fs', () => {
   beforeEach(() => vol.mkdirSync(process.cwd(), { recursive: true }));
   afterEach(() => vol.reset());
 
-  return ufs
+  return ufs //
     .use(jest.requireActual('fs'))
-    .use(createFsFromVolume(vol) as any) as any;
+    .use(createFsFromVolume(vol) as any);
 });

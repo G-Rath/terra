@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import('eslint').Linter.Config} */
+const config = {
   root: true,
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -9,6 +10,7 @@ module.exports = {
   },
   env: { node: true },
   extends: ['ackama', 'ackama/@typescript-eslint'],
+  ignorePatterns: ['recordings/*'],
   overrides: [
     {
       files: ['bin/**'],
@@ -21,9 +23,19 @@ module.exports = {
       files: ['test/**'],
       extends: ['ackama/jest'],
       rules: {
-        'jest/prefer-expect-assertions': 'off'
+        'jest/prefer-expect-assertions': 'off',
+        'jest/no-large-snapshots': 'off'
       }
     }
   ],
-  rules: {}
+  rules: {
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: { object: false }
+      }
+    ]
+  }
 };
+
+module.exports = config;

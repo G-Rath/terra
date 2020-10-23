@@ -11,6 +11,7 @@ interface TFRoute53VPC {
   vpc_region?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFRoute53ZoneAttributes {
   zone_id: string;
   name_servers: string[];

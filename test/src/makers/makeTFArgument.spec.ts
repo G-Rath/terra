@@ -44,6 +44,7 @@ describe('makeTFArgument', () => {
       });
     });
   });
+
   describe('when expression is a string', () => {
     it('makes it into a TFSimpleLiteral node', () => {
       expect(
@@ -61,6 +62,7 @@ describe('makeTFArgument', () => {
       });
     });
   });
+
   describe('when expression is an array', () => {
     it('makes it into a TFListExpression node', () => {
       expect(

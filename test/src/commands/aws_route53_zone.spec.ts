@@ -14,12 +14,12 @@ describe('aws_route53_zone', () => {
 
   let consoleLogSpy: jest.SpiedFunction<typeof console.log>;
 
-  beforeEach(() => (consoleLogSpy = jest.spyOn(console, 'log')));
-  beforeEach(() =>
+  beforeEach(() => {
+    consoleLogSpy = jest.spyOn(console, 'log');
     nadoRoute53ZoneMock.mockResolvedValue([
       makeTFResourceBlock(AwsResourceType.AWS_ROUTE53_ZONE, 'my_zone_com', [])
-    ])
-  );
+    ]);
+  });
 
   it('should require the zoneId', async () => {
     await expect(AwsRoute53Zone.run([])).rejects.toThrow(dedent`

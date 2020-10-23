@@ -51,6 +51,7 @@ describe('makeTFFunctionCall', () => {
       });
     });
   });
+
   describe('when args includes a string', () => {
     it('makes it into a TFSimpleLiteral node', () => {
       expect(

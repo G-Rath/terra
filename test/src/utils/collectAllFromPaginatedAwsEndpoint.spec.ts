@@ -64,7 +64,11 @@ describe('collectAllFromPaginatedAwsEndpoint', () => {
   });
 
   it('calls the requester with the response from the previous page', async () => {
-    const requester = jest.fn(response => ({ Marker: response?.Marker }));
+    const requester: (
+      previous: IAM.ListUsersResponse | undefined
+    ) => IAM.ListUsersRequest = jest.fn(previous => ({
+      Marker: previous?.Marker
+    }));
 
     const responses: readonly IAM.ListUsersResponse[] = [
       { Users: [], Marker: '1' },

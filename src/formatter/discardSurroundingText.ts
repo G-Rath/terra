@@ -23,18 +23,20 @@ export const discardSurroundingText = (
   discardBehaviour: DiscardSurroundingTextBehaviour
 ): TFFileContents =>
   JSON.parse(
-    JSON.stringify(contents, (key, value) => {
+    JSON.stringify(contents, (key, value: unknown) => {
       if (key !== 'surroundingText') {
         return value;
       }
 
-      const surroundingText: Record<string, string> = { ...value };
+      const surroundingText: Record<string, string> = {
+        ...(value as Record<string, string>)
+      };
 
-      Object.keys(value).forEach(k => {
+      Object.keys(value as Record<string, string>).forEach(k => {
         surroundingText[k] = '';
 
         if (discardBehaviour !== 'all') {
-          const text: string = value[k];
+          const text: string = (value as Record<string, string>)[k];
 
           if (/#|\*\/|\/\*|\/\//u.test(text)) {
             surroundingText[k] = text;
@@ -50,4 +52,4 @@ export const discardSurroundingText = (
 
       return surroundingText;
     })
-  );
+  ) as TFFileContents;

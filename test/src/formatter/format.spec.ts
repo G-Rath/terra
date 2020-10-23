@@ -1,6 +1,6 @@
 import { format } from '@src/formatter';
 import { makeTFResourceBlock } from '@src/makers';
-import type { TFFileContents } from '@src/types';
+import type { TFBlock, TFFileContents } from '@src/types';
 import { AwsResourceType } from '@src/utils';
 
 describe('format', () => {
@@ -41,7 +41,7 @@ describe('format', () => {
           }
         })
       ).toStrictEqual<TFFileContents>({
-        blocks: expect.any(Array),
+        blocks: expect.any(Array) as TFBlock[],
         surroundingText: {
           leadingOuterText: '',
           trailingOuterText: '\n'
@@ -66,7 +66,7 @@ describe('format', () => {
             }
           })
         ).toStrictEqual<TFFileContents>({
-          blocks: expect.any(Array),
+          blocks: expect.any(Array) as TFBlock[],
           surroundingText: {
             leadingOuterText: '',
             trailingOuterText: '\n'

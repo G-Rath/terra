@@ -21,7 +21,7 @@ export {};
 
 declare global {
   namespace jest {
-    interface Matchers<R, T> {
+    interface Matchers<R> {
       /**
        * Tests that the expected {@link TFBlockBody} contains only one `TFArgument` with
        * the given `identifier`, and that that `TFArgument` has the given`expression`.
@@ -48,8 +48,8 @@ const buildExpectedExpression = (
 ): TFLiteralExpression => {
   if (typeof expression === 'string' || isAsymmetricMatcher(expression)) {
     return makeTFSimpleLiteral(expression as string, {
-      leadingOuterText: expect.any(String),
-      trailingOuterText: expect.any(String)
+      leadingOuterText: expect.any(String) as string,
+      trailingOuterText: expect.any(String) as string
     });
   }
 
@@ -82,8 +82,8 @@ const toContainTFArgumentWithExpression: jest.CustomMatcher = function <
   const theIdentifier =
     typeof identifier === 'string' || isAsymmetricMatcher(identifier)
       ? makeTFIdentifier(identifier as string, {
-          leadingOuterText: expect.any(String),
-          trailingOuterText: expect.any(String)
+          leadingOuterText: expect.any(String) as string,
+          trailingOuterText: expect.any(String) as string
         })
       : identifier;
 

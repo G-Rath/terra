@@ -34,6 +34,7 @@ describe('parseTFAttribute', () => {
       expect(key.type).toBe(TFNodeType.Identifier);
     });
   });
+
   it('uses parseTFIdentifier', () => {
     const parseTFIdentifierSpy = jest.spyOn(parser, 'parseTFIdentifier');
 

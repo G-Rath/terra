@@ -122,6 +122,7 @@ describe('printTFFunctionCall', () => {
         )"
     `);
   });
+
   it('prints map-type arguments correctly', () => {
     expect(
       printTFFunctionCall(

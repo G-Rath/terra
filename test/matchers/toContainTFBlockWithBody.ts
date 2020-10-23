@@ -6,7 +6,7 @@ export {};
 
 declare global {
   namespace jest {
-    interface Matchers<R, T> {
+    interface Matchers<R> {
       /**
        * Tests that the expected {@link TFBlockBody} contains only one {@link TFBlock}
        * with the given `blockType`, and with the given `body`.

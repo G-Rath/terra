@@ -7,7 +7,7 @@ export {};
 
 declare global {
   namespace jest {
-    interface Matchers<R, T> {
+    interface Matchers<R> {
       /**
        * Tests that the expected is a `TFBlock` with the given label in the given position.
        *

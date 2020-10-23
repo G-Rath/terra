@@ -7,7 +7,9 @@ import { promises as fs } from 'fs';
 
 describe('parseTFFileContents', () => {
   beforeEach(async () => fs.mkdir('recordings'));
+
   beforeEach(() => jest.spyOn(Date, 'now').mockReturnValue(1234567890));
+
   beforeEach(() =>
     jest.spyOn(JSON, 'stringify').mockReturnValue('I swear this is valid json')
   );

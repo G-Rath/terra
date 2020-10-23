@@ -52,6 +52,7 @@ describe('normaliseRoute53Name', () => {
         expect(normaliseRoute53Name(`${name}.${zone}`, zone)).toBe(name);
       });
     });
+
     describe('when is name is the same as the zone', () => {
       it('returns an empty string', () => {
         const name = 'imnotcrazy.info.';

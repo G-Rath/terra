@@ -195,6 +195,7 @@ export interface TFFileContents {
  * A Terraform module, made up of ASTs of the files in the module.
  * Note that a "module" is different from a "module block".
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFModule {
   files: { [K: string]: TFFileContents };
 }

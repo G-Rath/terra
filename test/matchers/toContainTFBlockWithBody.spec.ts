@@ -123,7 +123,7 @@ describe('toContainTFBlockWithBody', () => {
     });
   });
 
-  describe('WithBody behaviour', () => {
+  describe('withBody behaviour', () => {
     describe('when all the elements are present', () => {
       const blockBody = [
         makeTFStringArgument('zone_id', 'Z2FDTNDATAQYW2'),

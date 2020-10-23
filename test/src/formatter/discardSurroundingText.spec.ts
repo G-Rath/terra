@@ -19,7 +19,7 @@ const extractSurroundingText = (contents: object): object =>
           : undefined,
       2
     )
-  );
+  ) as object;
 
 describe('discardSurroundingText', () => {
   describe('behaviours', () => {

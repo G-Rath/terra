@@ -29,6 +29,7 @@ hello world from ./src/hello.ts!
 
   public async run(): Promise<void> {
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       args: { zoneId },
       flags: { greedy }
     } = this.parse(AwsRoute53Zone);

@@ -15,7 +15,7 @@ describe('ensureOneArgumentPerLine', () => {
 
     it.each(irlFixtures)('it formats this %s as expected', (_, content) => {
       try {
-        // eslint-disable-next-line jest/prefer-inline-snapshots
+        // eslint-disable-next-line jest/no-restricted-matchers
         expect(ensureOneArgumentPerLineFormatter(content)).toMatchSnapshot();
       } catch (error) {
         console.log(content);

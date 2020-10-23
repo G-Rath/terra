@@ -44,7 +44,9 @@ export const buildIAMUserResource = (
   }
 
   if (typeof details.forceDestroy === 'boolean') {
-    body.push(makeTFArgument('force_destroy', `${details.forceDestroy}`));
+    body.push(
+      makeTFArgument('force_destroy', details.forceDestroy ? 'true' : 'false')
+    );
   }
 
   return makeTFResourceBlock(

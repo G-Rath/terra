@@ -116,7 +116,7 @@ export class StringCursorRecorder {
 
         return value;
       } catch (err) {
-        this.stop(cursor, 'threw', err.stack);
+        this.stop(cursor, 'threw', (err as Error).stack);
 
         throw err;
       }
@@ -129,7 +129,7 @@ export class StringCursorRecorder {
       stoppedAt: Number(process.hrtime.bigint())
     };
 
-    // eslint-disable-next-line no-sync
+    // eslint-disable-next-line node/no-sync
     fs.writeFileSync(
       path.join(filePath, `${fileName}.json`),
       JSON.stringify(recording, null, 2)

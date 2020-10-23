@@ -8,6 +8,7 @@ import {
 import type { TFBlockBodyBody, TFResourceBlock } from '@src/types';
 import { AwsResourceType, asResourceName } from '@src/utils';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface TFEC2EIPAttributes {
   id: string;
   private_ip: string;
@@ -53,7 +54,7 @@ export const buildEC2ElasticIPResource = (
   const body: TFBlockBodyBody<keyof TFEC2EIPResource> = [];
 
   if (details.isInVPC) {
-    body.push(makeTFArgument('vpc', `${details.isInVPC}`));
+    body.push(makeTFArgument('vpc', 'true'));
   }
 
   if (details.association) {

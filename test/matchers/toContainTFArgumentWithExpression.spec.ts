@@ -194,6 +194,7 @@ describe('toContainTFArgumentWithExpression', () => {
       }).toThrow('Argument has unexpected expression.');
     });
   });
+
   describe('when the expression is an array', () => {
     it('converts it to a TFListExpression', () => {
       const body = makeTFBlockBody([expectedArgument]);
