@@ -50,5 +50,41 @@ describe('ensureClosingBraceOnNewline', () => {
         }"
       `);
     });
+
+    it('leaves them be (really)', () => {
+      expect(
+        makeFormatter(ensureClosingBraceOnNewline)(`
+          resource "aws_iam_policy" "client_account_assume_role" {
+            policy = <<EOF
+          {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Action": "sts:AssumeRole",
+                "Resource": ""
+              }
+            ]
+          }
+          EOF
+          }
+        `)
+      ).toMatchInlineSnapshot(`
+        "resource \\"aws_iam_policy\\" \\"client_account_assume_role\\" {
+          policy = <<EOF
+        {
+          \\"Version\\": \\"2012-10-17\\",
+          \\"Statement\\": [
+            {
+              \\"Effect\\": \\"Allow\\",
+              \\"Action\\": \\"sts:AssumeRole\\",
+              \\"Resource\\": \\"\\"
+            }
+          ]
+        }
+        EOF
+        }"
+      `);
+    });
   });
 });
