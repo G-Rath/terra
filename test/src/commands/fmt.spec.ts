@@ -33,7 +33,7 @@ describe('fmt', () => {
 
           await Fmt.run(['file.tf']);
 
-          expect(discardSurroundingTextSpy).not.toHaveBeenCalledWith();
+          expect(discardSurroundingTextSpy).not.toHaveBeenCalled();
         });
       });
 
